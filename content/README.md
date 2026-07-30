@@ -36,7 +36,9 @@ See [`examples/document.xml`](./examples/document.xml) for the complete authorin
 
 ## Navigation boards
 
-See [`examples/navigation-board.xml`](./examples/navigation-board.xml). A board has a registered application theme and one or more independently collapsible sections. Every section begins collapsed. Themes and named layouts must already exist in `src/content/board-registry.ts`; XML cannot define CSS.
+See [`examples/navigation-board.xml`](./examples/navigation-board.xml). A board has a registered application theme and either one general `<body>` disclosure or one or more independently collapsible `<section>` elements. Every disclosure begins collapsed. Header, section, and entry images are optional repository assets. Themes and named layouts must already exist in `src/content/board-registry.ts`; XML cannot define CSS.
+
+Include a given board at most once in the same document. The compiler stores one shared board body per article pack and rejects duplicate inclusion that would create repeated control and anchor identifiers.
 
 ## Media
 
@@ -45,7 +47,7 @@ Media IDs use lowercase letters, digits, `_`, and `-`. Supported repository form
 - Non-decorative figures require Korean alternative text.
 - Arbitrary remote images are rejected.
 - SVG scripts, event handlers, `foreignObject`, embedded styles, and external resources are rejected.
-- External video is limited to the allowlisted YouTube and Vimeo provider records and is loaded only after reader interaction.
+- External video is limited to the allowlisted YouTube and Vimeo provider records, requires a local poster image, and is loaded only after reader interaction.
 - Autoplay and authored iframe markup are not supported.
 
 ## Validation
