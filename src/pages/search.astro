@@ -1,0 +1,142 @@
+---
+import SearchField from '../components/SearchField.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout title="검색 — Astronet" description="Astronet 문서를 검색합니다.">
+  <div class="outer-container search-page">
+    <header class="search-page__header">
+      <h1>검색</h1>
+    </header>
+
+    <SearchField id="search-query" />
+
+    <section class="search-state" id="search-state" aria-labelledby="search-state-title" aria-live="polite">
+      <h2 id="search-state-title">검색어를 입력해 주세요</h2>
+    </section>
+
+    <section class="search-results" id="search-results" aria-labelledby="search-result-count" hidden>
+      <p id="search-result-count"></p>
+      <ol id="search-result-list"></ol>
+      <nav class="search-pagination" id="search-pagination" aria-label="검색 결과 페이지" hidden></nav>
+    </section>
+  </div>
+</SiteLayout>
+
+<script>
+  import '../scripts/search-runtime';
+</script>
+
+<style>
+  .search-page {
+    width: min(100%, calc(960px + (var(--page-gutter) * 2)));
+    padding-block: var(--space-section);
+  }
+
+  .search-page__header {
+    margin-bottom: var(--space-12);
+  }
+
+  .search-page h1 {
+    margin-bottom: 0;
+    color: var(--color-ink);
+    font-size: var(--font-size-display-sm);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: var(--line-height-title);
+  }
+
+  .search-state {
+    margin-top: var(--space-12);
+    padding-block: var(--space-12);
+    border-top: 1px solid var(--color-hairline);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  .search-state h2 {
+    margin-bottom: 0;
+    color: var(--color-ink);
+    font-size: var(--font-size-title-md);
+    font-weight: 400;
+  }
+
+  .search-results {
+    margin-top: var(--space-8);
+  }
+
+  .search-results > p {
+    margin-bottom: var(--space-4);
+    color: var(--color-muted);
+    font-size: var(--font-size-utility);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .search-results ol {
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-hairline);
+    list-style: none;
+  }
+
+  :global(#search-result-list li) {
+    padding-block: var(--space-6);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  :global(#search-result-list h2) {
+    margin-bottom: var(--space-3);
+    font-size: var(--font-size-title-md);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  :global(#search-result-list h2 a) {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  :global(#search-result-list li p) {
+    max-width: 760px;
+    margin: 0;
+    color: var(--color-body);
+    line-height: var(--line-height-body);
+  }
+
+  :global(#search-result-list mark) {
+    padding: 0;
+    background: var(--color-signature-cream);
+    color: inherit;
+  }
+
+  .search-pagination {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    gap: var(--space-1);
+    margin-top: var(--space-8);
+  }
+
+  :global(#search-pagination button),
+  :global(#search-pagination > span:not(.visually-hidden)) {
+    display: grid;
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--space-2);
+    place-items: center;
+  }
+
+  :global(#search-pagination button) {
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(#search-pagination button[aria-current='page']) {
+    border-bottom-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+
+</style>

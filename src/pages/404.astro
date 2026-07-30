@@ -1,0 +1,63 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ArticleShell from '../components/ArticleShell.astro';
+import '../styles/article.css';
+---
+
+<SiteLayout title="페이지를 찾을 수 없음 — Astronet" description="요청한 Astronet 페이지를 찾을 수 없습니다.">
+  <div class="outer-container not-found" id="not-found">
+    <p class="not-found__code">404</p>
+    <h1>페이지를 찾을 수 없습니다.</h1>
+    <p>주소가 바뀌었거나 존재하지 않는 문서입니다. 검색으로 다른 지식을 찾아보세요.</p>
+    <div class="not-found__actions">
+      <a class="button" href="/search">검색</a>
+      <a class="button button--secondary" href="/">홈으로 돌아가기</a>
+    </div>
+  </div>
+  <ArticleShell />
+</SiteLayout>
+
+<script>
+  import '../scripts/article-runtime';
+</script>
+
+<style>
+  .not-found {
+    display: flex;
+    min-height: calc(100svh - var(--header-height));
+    max-width: calc(760px + (var(--page-gutter) * 2));
+    flex-direction: column;
+    justify-content: center;
+    padding-block: var(--space-section);
+  }
+
+  .not-found__code {
+    margin-bottom: var(--space-4);
+    color: var(--color-link);
+    font-size: var(--font-size-utility);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  .not-found h1 {
+    max-width: 680px;
+    margin-bottom: var(--space-6);
+    color: var(--color-ink);
+    font-size: var(--font-size-display-sm);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: var(--line-height-title);
+  }
+
+  .not-found > p:not(.not-found__code) {
+    max-width: 600px;
+    margin-bottom: var(--space-8);
+    color: var(--color-muted);
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

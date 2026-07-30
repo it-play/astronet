@@ -1,18 +1,239 @@
 ---
-const title = 'Astronet';
+import SearchField from '../components/SearchField.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Astronet" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main>
-      <h1>{title}</h1>
-    </main>
-  </body>
-</html>
+<SiteLayout title="Astronet">
+  <div class="outer-container home-page">
+    <section class="home-search" aria-labelledby="home-title">
+      <h1 id="home-title">무엇을 찾고 있나요?</h1>
+      <SearchField id="home-search" />
+      <div class="home-search__actions">
+        <button class="button button--secondary" id="random-document" type="button" disabled>무작위 문서</button>
+      </div>
+      <p class="home-random-status" id="home-random-status" role="status" hidden></p>
+
+      <section class="home-random" id="home-random-list" aria-labelledby="home-random-title" hidden>
+        <h2 id="home-random-title">둘러보기</h2>
+        <ul id="home-random-titles"></ul>
+      </section>
+    </section>
+
+    <section class="graph-entry" aria-labelledby="graph-entry-title">
+      <div class="graph-entry__copy">
+        <h2 id="graph-entry-title">문서 관계 보기</h2>
+        <a href="/graph">
+          그래프 열기
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M4 10h11m-4-4 4 4-4 4"></path>
+          </svg>
+        </a>
+      </div>
+
+      <svg class="graph-entry__map" viewBox="0 0 600 320" aria-hidden="true">
+        <g class="graph-entry__edges">
+          <path d="M92 188 193 118 295 172 391 91 509 148"></path>
+          <path d="M193 118 224 238 361 239 509 148"></path>
+          <path d="M295 172 361 239 391 91"></path>
+          <path class="is-weak" d="M92 188 224 238M295 172 509 148"></path>
+        </g>
+        <g class="graph-entry__nodes">
+          <circle cx="92" cy="188" r="8"></circle>
+          <circle cx="193" cy="118" r="13"></circle>
+          <circle cx="224" cy="238" r="7"></circle>
+          <circle cx="295" cy="172" r="17"></circle>
+          <circle cx="361" cy="239" r="9"></circle>
+          <circle cx="391" cy="91" r="12"></circle>
+          <circle cx="509" cy="148" r="10"></circle>
+        </g>
+        <g class="graph-entry__stars">
+          <circle cx="68" cy="77" r="1.5"></circle>
+          <circle cx="139" cy="271" r="1"></circle>
+          <circle cx="267" cy="68" r="1"></circle>
+          <circle cx="453" cy="265" r="1.5"></circle>
+          <circle cx="543" cy="77" r="1"></circle>
+          <circle cx="560" cy="243" r="1"></circle>
+        </g>
+      </svg>
+    </section>
+  </div>
+</SiteLayout>
+
+<script>
+  import '../scripts/home-runtime';
+</script>
+
+<style>
+  .home-page {
+    padding-bottom: var(--space-section);
+  }
+
+  .home-search {
+    width: min(100%, 880px);
+    padding-block: var(--space-section);
+  }
+
+  .home-search h1 {
+    margin-bottom: var(--space-12);
+    color: var(--color-ink);
+    font-size: var(--font-size-display-md);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: var(--line-height-title);
+  }
+
+  .home-search__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-3);
+  }
+
+  .home-search__actions .button {
+    min-height: 44px;
+    padding-block: var(--space-2);
+  }
+
+  .home-random-status {
+    margin: var(--space-4) 0 0;
+    color: var(--color-muted);
+    font-size: var(--font-size-utility);
+  }
+
+  .home-random {
+    margin-top: var(--space-8);
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .home-random h2 {
+    margin: var(--space-4) 0 var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--font-size-utility);
+    font-weight: 500;
+  }
+
+  .home-random ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  :global(#home-random-titles li) {
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  :global(#home-random-titles a) {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .graph-entry {
+    position: relative;
+    display: grid;
+    min-height: 420px;
+    overflow: hidden;
+    grid-template-columns: minmax(280px, 0.8fr) minmax(420px, 1.2fr);
+    align-items: stretch;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-dark);
+    color: var(--color-on-dark);
+  }
+
+  .graph-entry__copy {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    padding: var(--space-12);
+  }
+
+  .graph-entry h2 {
+    margin-bottom: var(--space-8);
+    font-size: var(--font-size-display-sm);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+  }
+
+  .graph-entry a {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    gap: var(--space-2);
+    border-bottom: 1px solid rgb(255 255 255 / 52%);
+    color: var(--color-on-dark);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .graph-entry a:active {
+    color: var(--color-signature-mint);
+  }
+
+  .graph-entry a svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+
+  .graph-entry__map {
+    width: 100%;
+    height: 100%;
+  }
+
+  .graph-entry__edges path {
+    fill: none;
+    stroke: rgb(255 255 255 / 45%);
+    stroke-width: 1.25;
+  }
+
+  .graph-entry__edges .is-weak {
+    stroke: rgb(255 255 255 / 18%);
+    stroke-width: 0.75;
+  }
+
+  .graph-entry__nodes circle {
+    fill: rgb(255 255 255 / 88%);
+    stroke: #fff;
+    stroke-width: 1;
+  }
+
+  .graph-entry__stars {
+    fill: rgb(255 255 255 / 62%);
+  }
+
+  @media (max-width: 900px) {
+    .graph-entry {
+      grid-template-columns: 1fr;
+    }
+
+    .graph-entry__copy {
+      padding-bottom: 0;
+    }
+
+    .graph-entry__map {
+      min-height: 300px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .home-search h1 {
+      margin-bottom: var(--space-8);
+      font-size: 2.25rem;
+    }
+
+    .graph-entry__copy {
+      padding: var(--space-8) var(--space-6) 0;
+    }
+
+    .graph-entry__map {
+      min-height: 240px;
+      transform: scale(1.16);
+    }
+  }
+</style>

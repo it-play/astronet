@@ -1,0 +1,247 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout
+  title="그래프 — Astronet"
+  description="문서 간 관계를 살펴봅니다."
+  surface="dark"
+  mainClass="graph-main"
+>
+  <section class="graph-workspace" aria-labelledby="graph-title">
+    <header class="graph-toolbar">
+      <h1 id="graph-title">그래프</h1>
+      <label class="weak-edge-control">
+        <input id="graph-weak-edges" type="checkbox" checked />
+        <span>약한 연결</span>
+      </label>
+    </header>
+
+    <div class="graph-canvas" id="graph-canvas-wrap">
+      <canvas
+        id="graph-canvas"
+        tabindex="0"
+        role="application"
+        aria-label="문서 그래프. 드래그하거나 방향키로 이동하고, 휠 또는 더하기와 빼기 키로 확대할 수 있습니다."
+      ></canvas>
+      <p class="graph-status" id="graph-status" role="status">그래프를 불러오는 중입니다.</p>
+    </div>
+
+    <aside class="graph-node-panel" id="graph-node-panel" aria-labelledby="graph-node-title" aria-live="polite" hidden>
+      <button class="graph-node-panel__close" id="graph-node-close" type="button" aria-label="선택 닫기">닫기</button>
+      <h2 id="graph-node-title"></h2>
+      <div class="graph-node-panel__actions">
+        <a id="graph-node-open" href="/">문서 열기</a>
+        <button id="graph-node-center" type="button">가운데로 이동</button>
+      </div>
+    </aside>
+
+    <div class="graph-zoom-controls" aria-label="그래프 확대와 축소">
+      <button id="graph-zoom-in" type="button" aria-label="확대">+</button>
+      <button id="graph-zoom-out" type="button" aria-label="축소">−</button>
+    </div>
+  </section>
+</SiteLayout>
+
+<script>
+  import '../scripts/graph-runtime';
+</script>
+
+<style>
+  :global(.graph-main) {
+    overflow: hidden;
+  }
+
+  .graph-workspace {
+    position: relative;
+    min-height: calc(100svh - var(--header-height));
+    overflow: hidden;
+    background: var(--color-surface-dark);
+  }
+
+  .graph-toolbar {
+    position: absolute;
+    z-index: 3;
+    top: var(--space-6);
+    right: var(--page-gutter);
+    left: var(--page-gutter);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .graph-toolbar h1,
+  .weak-edge-control {
+    pointer-events: auto;
+  }
+
+  .graph-toolbar h1 {
+    margin: 0;
+    color: var(--color-on-dark);
+    font-size: var(--font-size-title-lg);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+
+  .weak-edge-control {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: var(--space-2);
+    padding-inline: var(--space-4);
+    border: 1px solid rgb(255 255 255 / 22%);
+    border-radius: var(--radius-sm);
+    background: rgb(29 31 37 / 92%);
+    color: rgb(255 255 255 / 76%);
+    font-size: var(--font-size-utility);
+  }
+
+  .weak-edge-control input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #fff;
+  }
+
+  .graph-canvas {
+    position: absolute;
+    inset: 0;
+  }
+
+  .graph-canvas canvas {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .graph-canvas canvas.is-dragging {
+    cursor: grabbing;
+  }
+
+  .graph-status {
+    position: absolute;
+    bottom: var(--space-6);
+    left: 50%;
+    min-height: 44px;
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    transform: translateX(-50%);
+    border: 1px solid rgb(255 255 255 / 16%);
+    border-radius: var(--radius-sm);
+    background: rgb(29 31 37 / 92%);
+    color: rgb(255 255 255 / 72%);
+    font-size: var(--font-size-utility);
+    white-space: nowrap;
+  }
+
+  .graph-node-panel {
+    position: absolute;
+    z-index: 4;
+    right: var(--page-gutter);
+    bottom: var(--space-6);
+    width: min(360px, calc(100% - (var(--page-gutter) * 2)));
+    padding: var(--space-6);
+    border: 1px solid rgb(255 255 255 / 24%);
+    border-radius: var(--radius-sm);
+    background: rgb(29 31 37 / 96%);
+    color: var(--color-on-dark);
+  }
+
+  .graph-node-panel__close {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    min-width: 44px;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: rgb(255 255 255 / 68%);
+    cursor: pointer;
+    font-size: var(--font-size-utility);
+  }
+
+  .graph-node-panel h2 {
+    max-width: calc(100% - 48px);
+    margin: 0 0 var(--space-6);
+    color: var(--color-on-dark);
+    font-size: var(--font-size-title-md);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .graph-node-panel__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+  }
+
+  .graph-node-panel__actions a,
+  .graph-node-panel__actions button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 44%);
+    background: transparent;
+    color: var(--color-on-dark);
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .graph-zoom-controls {
+    position: absolute;
+    z-index: 3;
+    bottom: var(--space-6);
+    left: var(--page-gutter);
+    display: flex;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 20%);
+    border-radius: var(--radius-sm);
+    background: rgb(29 31 37 / 92%);
+  }
+
+  .graph-zoom-controls button {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    color: var(--color-on-dark);
+    cursor: pointer;
+    font-size: var(--font-size-title-md);
+  }
+
+  .graph-zoom-controls button + button {
+    border-left: 1px solid rgb(255 255 255 / 20%);
+  }
+
+  @media (max-width: 600px) {
+    .graph-toolbar {
+      top: var(--space-4);
+    }
+
+    .graph-node-panel {
+      right: var(--page-gutter);
+      bottom: calc(var(--space-6) + 52px);
+      left: var(--page-gutter);
+      width: auto;
+    }
+
+    .graph-status {
+      bottom: calc(var(--space-6) + 52px);
+      max-width: calc(100% - (var(--page-gutter) * 2));
+      white-space: normal;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .graph-node-panel,
+    .weak-edge-control,
+    .graph-zoom-controls {
+      border: 1px solid CanvasText;
+    }
+  }
+</style>

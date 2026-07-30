@@ -1,0 +1,187 @@
+---
+import BrandMark from './BrandMark.astro';
+
+const pathname = Astro.url.pathname;
+const isSearch = pathname.startsWith('/search');
+const isGraph = pathname.startsWith('/graph');
+---
+
+<header class="site-header">
+  <div class="site-header__inner outer-container">
+    <a class="site-brand" href="/" aria-label="Astronet 홈">
+      <BrandMark />
+      <span>Astronet</span>
+    </a>
+
+    <nav class="global-nav" aria-label="주요 메뉴">
+      <a class:list={['global-nav__link', { 'is-current': isSearch }]} href="/search" aria-current={isSearch ? 'page' : undefined}>
+        검색
+      </a>
+      <a class:list={['global-nav__link', { 'is-current': isGraph }]} href="/graph" aria-current={isGraph ? 'page' : undefined}>
+        그래프
+      </a>
+    </nav>
+
+    <details class="mobile-nav">
+      <summary aria-label="메뉴 열기">
+        <span></span>
+        <span></span>
+      </summary>
+      <nav class="mobile-nav__panel" aria-label="모바일 주요 메뉴">
+        <a href="/search" aria-current={isSearch ? 'page' : undefined}>검색</a>
+        <a href="/graph" aria-current={isGraph ? 'page' : undefined}>그래프</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    height: var(--header-height);
+    border-bottom: 1px solid var(--color-hairline);
+    background: var(--color-canvas);
+    color: var(--color-ink);
+  }
+
+  .site-header__inner {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-brand {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-ink);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  .global-nav {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: var(--space-8);
+    font-size: var(--font-size-utility);
+  }
+
+  .global-nav__link {
+    position: relative;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--color-muted);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .global-nav__link::after {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    left: 0;
+    height: 1px;
+    background: transparent;
+    content: '';
+  }
+
+  .global-nav__link.is-current {
+    color: var(--color-link);
+  }
+
+  .global-nav__link.is-current::after {
+    background: currentColor;
+  }
+
+  .global-nav__link:active {
+    color: var(--color-link-active);
+  }
+
+  .mobile-nav {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .global-nav {
+      display: none;
+    }
+
+    .mobile-nav {
+      display: block;
+    }
+
+    .mobile-nav summary {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      padding: 12px 9px;
+      place-content: center;
+      gap: 6px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .mobile-nav summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .mobile-nav summary span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: currentColor;
+      transform-origin: center;
+    }
+
+    .mobile-nav[open] summary span:first-child {
+      transform: translateY(3.75px) rotate(45deg);
+    }
+
+    .mobile-nav[open] summary span:last-child {
+      transform: translateY(-3.75px) rotate(-45deg);
+    }
+
+    .mobile-nav__panel {
+      position: fixed;
+      top: var(--header-height);
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-8) var(--page-gutter);
+      border-top: 1px solid var(--color-hairline);
+      background: var(--color-canvas);
+    }
+
+    .mobile-nav__panel a {
+      display: flex;
+      min-height: 64px;
+      align-items: center;
+      border: 0;
+      border-bottom: 1px solid var(--color-hairline);
+      background: transparent;
+      color: var(--color-ink);
+      font-size: var(--font-size-title-md);
+      font-weight: 400;
+      text-align: left;
+      text-decoration: none;
+    }
+
+    .mobile-nav__panel a[aria-current='page'] {
+      color: var(--color-link);
+    }
+
+  }
+</style>

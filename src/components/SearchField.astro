@@ -1,0 +1,132 @@
+---
+interface Props {
+  id: string;
+  label?: string;
+  placeholder?: string;
+  value?: string;
+}
+
+const {
+  id,
+  label = '검색어',
+  placeholder = '제목이나 문장 검색',
+  value = '',
+} = Astro.props;
+---
+
+<form class="search-field" action="/search" method="get" role="search">
+  <label for={id}>{label}</label>
+  <div class="search-field__control">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5"></circle>
+      <path d="m15.5 15.5 5 5"></path>
+    </svg>
+    <input id={id} name="q" type="search" value={value} placeholder={placeholder} autocomplete="off" />
+    <button type="submit">검색</button>
+  </div>
+</form>
+
+<style>
+  .search-field {
+    width: 100%;
+  }
+
+  .search-field label {
+    display: block;
+    margin-bottom: var(--space-3);
+    color: var(--color-muted);
+    font-size: var(--font-size-utility);
+    font-weight: 500;
+  }
+
+  .search-field__control {
+    display: grid;
+    min-height: 64px;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 7px 7px 7px var(--space-4);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-canvas);
+  }
+
+  .search-field__control:focus-within {
+    border-color: var(--color-focus);
+    box-shadow: var(--focus-ring);
+  }
+
+  .search-field svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: var(--color-muted);
+    stroke-linecap: round;
+    stroke-width: 1.5;
+  }
+
+  .search-field input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--color-ink);
+    font-size: var(--font-size-title-sm);
+  }
+
+  .search-field input::placeholder {
+    color: var(--color-muted);
+    opacity: 0.72;
+  }
+
+  .search-field input::-webkit-search-cancel-button {
+    width: 20px;
+    height: 20px;
+  }
+
+  .search-field button {
+    min-width: 88px;
+    min-height: 48px;
+    padding: var(--space-3) var(--space-6);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--color-ink);
+    color: var(--color-on-dark);
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .search-field button:active {
+    background: #0d1218;
+  }
+
+  .search-field__control:focus-within input:focus-visible {
+    box-shadow: none;
+    outline: none;
+  }
+
+  @media (max-width: 520px) {
+    .search-field__control {
+      min-height: 56px;
+      grid-template-columns: 20px minmax(0, 1fr) auto;
+      gap: var(--space-2);
+      padding: 5px 5px 5px var(--space-3);
+    }
+
+    .search-field svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .search-field input {
+      font-size: var(--font-size-body);
+    }
+
+    .search-field button {
+      min-width: 68px;
+      min-height: 44px;
+      padding-inline: var(--space-4);
+    }
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+import '../styles/global.css';
+import GlobalHeader from '../components/GlobalHeader.astro';
+import buildManifest from '../generated/build-manifest.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  surface?: 'light' | 'dark';
+  mainClass?: string;
+}
+
+const {
+  title = 'Astronet',
+  description = 'Astronet',
+  surface = 'light',
+  mainClass,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={surface === 'dark' ? '#181d26' : '#ffffff'} />
+    <script id="astronet-build" type="application/json" set:html={JSON.stringify(buildManifest)} is:inline></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><circle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%23181d26%22/><circle cx=%2222%22 cy=%2210%22 r=%223%22 fill=%22%23fcab79%22/></svg>" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+    <GlobalHeader />
+    <main id="main-content" class:list={['site-main', `site-main--${surface}`, mainClass]}>
+      <slot />
+    </main>
+  </body>
+</html>

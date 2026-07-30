@@ -1,0 +1,59 @@
+<div class="article-route" id="article-route" hidden>
+  <div class="article-loading outer-container" id="article-loading" role="status">
+    문서를 불러오는 중입니다.
+  </div>
+
+  <div class="article-error outer-container" id="article-error" hidden>
+    <p class="article-error__label">문서</p>
+    <h1 id="article-error-title">문서를 열 수 없습니다.</h1>
+    <p id="article-error-message">잠시 후 다시 시도하거나 검색에서 다른 문서를 찾아보세요.</p>
+    <div class="article-error__actions">
+      <button class="button" id="article-retry" type="button">다시 시도</button>
+      <a class="button button--secondary" href="/search">검색</a>
+    </div>
+  </div>
+
+  <div class="article-page outer-container" id="article-page" hidden>
+    <header class="article-header">
+      <h1 id="article-title"></h1>
+    </header>
+
+    <details class="article-toc-mobile" id="article-toc-mobile" hidden>
+      <summary>목차</summary>
+      <nav aria-label="문서 목차" data-toc></nav>
+    </details>
+
+    <div class="article-layout">
+      <aside class="article-toc" id="article-toc" hidden>
+        <p>목차</p>
+        <nav aria-label="문서 목차" data-toc></nav>
+      </aside>
+
+      <article class="article-prose" id="article-body"></article>
+    </div>
+
+    <footer class="article-footer">
+      <section class="article-related" id="article-related" aria-labelledby="article-related-title" hidden>
+        <h2 id="article-related-title">관련 문서</h2>
+        <ul id="article-related-list"></ul>
+      </section>
+
+      <a class="article-graph-link" id="article-graph-link" href="/graph">
+        <span>그래프에서 보기</span>
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M4 10h11m-4-4 4 4-4 4"></path>
+        </svg>
+      </a>
+    </footer>
+  </div>
+
+  <dialog class="image-viewer" id="image-viewer" aria-labelledby="image-viewer-caption">
+    <div class="image-viewer__bar">
+      <p id="image-viewer-caption"></p>
+      <button type="button" id="image-viewer-close" aria-label="이미지 닫기">닫기</button>
+    </div>
+    <div class="image-viewer__stage">
+      <img id="image-viewer-image" src="" alt="" />
+    </div>
+  </dialog>
+</div>
