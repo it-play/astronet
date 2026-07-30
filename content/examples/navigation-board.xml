@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigation-board id="DDDDDDDDDDDDDDDDDDDDDw" theme="default">
+  <header>
+    <title>예시 문서 모음</title>
+    <subtitle>필요할 때만 펼쳐보는 관련 문서</subtitle>
+  </header>
+  <section id="documents" label="문서" group="examples">
+    <document-links>
+      <document target="AAAAAAAAAAAAAAAAAAAAAA">예시 문서</document>
+      <document target="BBBBBBBBBBBBBBBBBBBBBQ">다른 문서</document>
+    </document-links>
+  </section>
+  <section id="visual" label="시각 목록" group="examples">
+    <document-grid layout="default-grid">
+      <document target="AAAAAAAAAAAAAAAAAAAAAA" asset="example-image">예시 문서</document>
+    </document-grid>
+  </section>
+</navigation-board>

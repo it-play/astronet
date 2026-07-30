@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:simpleType name="immutableId">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z0-9_-]{21}[AQgw]"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="stableName">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-z][a-z0-9_-]{0,63}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="inlineContent" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="em" type="inlineContent"/>
+      <xs:element name="strong" type="inlineContent"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="ref">
+        <xs:complexType>
+          <xs:complexContent mixed="true"><xs:extension base="inlineNoLinks"><xs:attribute name="href" type="xs:string" use="required"/></xs:extension></xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="external">
+        <xs:complexType>
+          <xs:complexContent mixed="true"><xs:extension base="inlineNoLinks"><xs:attribute name="href" type="xs:anyURI" use="required"/></xs:extension></xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="footnote" type="inlineNoLinks"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="inlineNoLinks" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="em" type="inlineNoLinks"/>
+      <xs:element name="strong" type="inlineNoLinks"/>
+      <xs:element name="code" type="xs:string"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:group name="blocks">
+    <xs:choice>
+      <xs:element name="section" type="sectionType"/>
+      <xs:element name="p" type="inlineContent"/>
+      <xs:element name="ul" type="listType"/>
+      <xs:element name="ol" type="listType"/>
+      <xs:element name="blockquote" type="bodyType"/>
+      <xs:element name="table" type="articleTableType"/>
+      <xs:element name="figure" type="figureType"/>
+      <xs:element name="video-figure" type="videoType"/>
+      <xs:element name="include-board">
+        <xs:complexType>
+          <xs:attribute name="ref" type="immutableId" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="hr">
+        <xs:complexType/>
+      </xs:element>
+    </xs:choice>
+  </xs:group>
+
+  <xs:complexType name="bodyType">
+    <xs:group ref="blocks" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:complexType>
+
+  <xs:complexType name="sectionType">
+    <xs:sequence>
+      <xs:element name="title" type="xs:string"/>
+      <xs:group ref="blocks" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="stableName"/>
+  </xs:complexType>
+
+  <xs:complexType name="listType">
+    <xs:sequence>
+      <xs:element name="li" type="inlineContent" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="articleTableType">
+    <xs:sequence>
+      <xs:element name="thead" type="tableHeadType"/>
+      <xs:element name="tbody" type="tableBodyType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="tableHeadType">
+    <xs:sequence><xs:element name="tr" type="headerRowType"/></xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="tableBodyType">
+    <xs:sequence><xs:element name="tr" type="bodyRowType" minOccurs="1" maxOccurs="unbounded"/></xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="headerRowType">
+    <xs:sequence><xs:element name="th" type="inlineContent" minOccurs="1" maxOccurs="unbounded"/></xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bodyRowType">
+    <xs:sequence><xs:element name="td" type="inlineContent" minOccurs="1" maxOccurs="unbounded"/></xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="figureType">
+    <xs:sequence><xs:element name="caption" type="inlineContent" minOccurs="0"/></xs:sequence>
+    <xs:attribute name="asset" type="stableName" use="required"/>
+    <xs:attribute name="alt" type="xs:string"/>
+    <xs:attribute name="decorative" type="xs:boolean"/>
+    <xs:attribute name="target" type="immutableId"/>
+  </xs:complexType>
+
+  <xs:complexType name="videoType">
+    <xs:sequence><xs:element name="caption" type="inlineContent" minOccurs="0"/></xs:sequence>
+    <xs:attribute name="label" type="xs:string" use="required"/>
+    <xs:attribute name="asset" type="stableName"/>
+    <xs:attribute name="provider" type="xs:string"/>
+    <xs:attribute name="video-id" type="xs:string"/>
+    <xs:attribute name="direct-url" type="xs:anyURI"/>
+    <xs:attribute name="poster" type="stableName"/>
+    <xs:attribute name="track" type="stableName"/>
+  </xs:complexType>
+
+  <xs:element name="document">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="title" type="xs:string"/>
+        <xs:element name="aliases" minOccurs="0">
+          <xs:complexType><xs:sequence><xs:element name="alias" type="xs:string" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="tags" minOccurs="0">
+          <xs:complexType><xs:sequence><xs:element name="tag" type="xs:string" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="connections" minOccurs="0">
+          <xs:complexType><xs:sequence><xs:element name="connection" minOccurs="0" maxOccurs="unbounded"><xs:complexType><xs:attribute name="target" type="immutableId" use="required"/></xs:complexType></xs:element></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="body" type="bodyType"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="immutableId" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="navigation-board">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="header">
+          <xs:complexType>
+            <xs:sequence><xs:element name="title" type="xs:string"/><xs:element name="subtitle" type="xs:string" minOccurs="0"/></xs:sequence>
+            <xs:attribute name="asset" type="stableName"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="section" type="boardSectionType" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="immutableId" use="required"/>
+      <xs:attribute name="theme" type="stableName"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="boardSectionType">
+    <xs:choice>
+      <xs:element name="document-links" type="boardEntriesType"/>
+      <xs:element name="document-grid" type="boardLayoutEntriesType"/>
+      <xs:element name="document-table" type="boardTableType"/>
+      <xs:element name="diagram" type="boardLayoutEntriesType"/>
+    </xs:choice>
+    <xs:attribute name="id" type="stableName" use="required"/>
+    <xs:attribute name="label" type="xs:string" use="required"/>
+    <xs:attribute name="group" type="stableName"/>
+  </xs:complexType>
+
+  <xs:complexType name="boardEntriesType">
+    <xs:sequence><xs:element name="document" type="boardDocumentType" minOccurs="1" maxOccurs="unbounded"/></xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="boardLayoutEntriesType">
+    <xs:complexContent><xs:extension base="boardEntriesType"><xs:attribute name="layout" type="stableName" use="required"/></xs:extension></xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="boardTableType">
+    <xs:sequence><xs:element name="row" minOccurs="1" maxOccurs="unbounded"><xs:complexType><xs:complexContent><xs:extension base="boardEntriesType"><xs:attribute name="label" type="xs:string" use="required"/></xs:extension></xs:complexContent></xs:complexType></xs:element></xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="boardDocumentType" mixed="true">
+    <xs:attribute name="target" type="immutableId" use="required"/>
+    <xs:attribute name="asset" type="stableName"/>
+    <xs:attribute name="icon" type="stableName"/>
+    <xs:attribute name="accent" type="stableName"/>
+    <xs:attribute name="slot" type="stableName"/>
+  </xs:complexType>
+</xs:schema>
