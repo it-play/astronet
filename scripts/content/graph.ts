@@ -4,7 +4,10 @@ import type { GraphEdge, GraphNode, GraphTile } from '../../src/content/types';
 import type { BoardHub } from './analysis';
 import type { SourceDocument } from './model';
 
-export const GRAPH_LAYOUT_VERSION = 'hierarchy-v3';
+export const GRAPH_LAYOUT_VERSION = 'hierarchy-v5';
+const DISTANT_CLUSTER_GRID = 12;
+const MEDIUM_CLUSTER_GRID = 64;
+const MEDIUM_EDGE_NEIGHBOR_LIMIT = 16;
 
 export interface GraphArtifacts {
   levels: {
@@ -30,19 +33,56 @@ export function buildGraphArtifacts(
   hubs: BoardHub[],
 ): GraphArtifacts {
   const communities = detectCommunities(documents, strongEdges, weakEdges, hubs);
-  const nearNodes = positionDocuments(documents, communities, strongEdges, weakEdges);
-  const allEdges = [...strongEdges, ...weakEdges];
-  const distant = buildDistantLevel(buildId, nearNodes, allEdges);
-  const medium = buildMediumLevel(buildId, nearNodes, allEdges);
-  const nearGridSize = Math.min(64, Math.max(8, Math.ceil(Math.sqrt(Math.max(1, nearNodes.length) / 120))));
-  const near = createLevel(buildId, 'near', nearNodes, allEdges, nearGridSize);
+  const documentNodes = positionDocuments(documents, communities, strongEdges, weakEdges);
+  const hubNodes = positionHubs(hubs, documentNodes);
+  const documentEdges = [...strongEdges, ...weakEdges];
+  const membershipEdges = hubs.flatMap((hub) =>
+    hub.members.map((member) => {
+      const [source, target] = canonicalPair(hub.id, member);
+      return { source, target, strength: 'strong' as const, weight: 0.5 };
+    }),
+  );
+  const distant = buildDistantLevel(buildId, documentNodes, documentEdges);
+  const medium = buildMediumLevel(buildId, documentNodes, documentEdges);
+  const nearNodes = [...documentNodes, ...hubNodes];
+  const nearEdges = [...documentEdges, ...membershipEdges];
+  const nearGridSize = Math.min(64, Math.max(8, Math.ceil(Math.sqrt(Math.max(1, nearNodes.length) / 32))));
+  const near = createLevel(buildId, 'near', nearNodes, nearEdges, nearGridSize);
   const focus = Object.fromEntries(
-    nearNodes.map((node) => [
+    documentNodes.map((node) => [
       node.id,
       { x: node.x, y: node.y, tile: tileKey(node.x, node.y, near.gridSize) },
     ]),
   );
   return { levels: { distant, medium, near }, focus };
+}
+
+function positionHubs(hubs: BoardHub[], documentNodes: GraphNode[]): GraphNode[] {
+  const documentsById = new Map(documentNodes.map((node) => [node.id, node]));
+  return hubs.flatMap((hub) => {
+    const members = hub.members.flatMap((id) => {
+      const node = documentsById.get(id);
+      return node ? [node] : [];
+    });
+    if (members.length === 0) return [];
+    const communityCounts = new Map<string, number>();
+    for (const member of members) {
+      communityCounts.set(member.community, (communityCounts.get(member.community) ?? 0) + 1);
+    }
+    const community = [...communityCounts].sort(
+      (left, right) => right[1] - left[1] || left[0].localeCompare(right[0]),
+    )[0]![0];
+    return [{
+      id: hub.id,
+      title: '',
+      url: '',
+      kind: 'hub' as const,
+      x: average(members.map((node) => node.x)),
+      y: average(members.map((node) => node.y)),
+      weight: Number(Math.max(1, Math.log1p(members.length)).toFixed(4)),
+      community,
+    }];
+  });
 }
 
 function detectCommunities(
@@ -157,46 +197,45 @@ function positionDocuments(
 }
 
 function buildDistantLevel(buildId: string, nodes: GraphNode[], edges: GraphEdge[]): GraphLevel {
-  const byCommunity = new Map<string, GraphNode[]>();
+  const { clusters, clusterByDocument } = clusterSpatially(nodes, DISTANT_CLUSTER_GRID, 'community');
+  const aggregateEdges = aggregateEdgesByGroup(edges, clusterByDocument);
+  return createLevel(buildId, 'distant', clusters, aggregateEdges, 1);
+}
+
+function buildMediumLevel(buildId: string, nodes: GraphNode[], edges: GraphEdge[]): GraphLevel {
+  const { clusters, clusterByDocument } = clusterSpatially(nodes, MEDIUM_CLUSTER_GRID, 'subcommunity');
+  const mediumEdges = aggregateEdgesByGroup(edges, clusterByDocument, MEDIUM_EDGE_NEIGHBOR_LIMIT);
+  return createLevel(buildId, 'medium', clusters, mediumEdges, 16);
+}
+
+function clusterSpatially(
+  nodes: GraphNode[],
+  gridSize: number,
+  prefix: string,
+): { clusters: GraphNode[]; clusterByDocument: Map<string, string> } {
+  const grouped = new Map<string, GraphNode[]>();
+  const clusterByDocument = new Map<string, string>();
   for (const node of nodes) {
-    const members = byCommunity.get(node.community) ?? [];
+    const cell = tileKey(node.x, node.y, gridSize);
+    const clusterId = `${prefix}-${cell}`;
+    const members = grouped.get(clusterId) ?? [];
     members.push(node);
-    byCommunity.set(node.community, members);
+    grouped.set(clusterId, members);
+    clusterByDocument.set(node.id, clusterId);
   }
-  const clusters: GraphNode[] = [...byCommunity]
+  const clusters: GraphNode[] = [...grouped]
     .sort(([left], [right]) => left.localeCompare(right))
-    .map(([community, members]) => ({
-      id: `community-${community}`,
+    .map(([id, members]) => ({
+      id,
       title: '',
       url: '',
       kind: 'cluster',
       x: average(members.map((node) => node.x)),
       y: average(members.map((node) => node.y)),
       weight: members.reduce((sum, node) => sum + node.weight, 0),
-      community,
+      community: members[0]!.community,
     }));
-  const aggregateEdges = aggregateCommunityEdges(edges, new Map(nodes.map((node) => [node.id, node.community])));
-  return createLevel(buildId, 'distant', clusters, aggregateEdges, 1);
-}
-
-function buildMediumLevel(buildId: string, nodes: GraphNode[], edges: GraphEdge[]): GraphLevel {
-  const selected = new Set<string>();
-  const byCommunity = new Map<string, GraphNode[]>();
-  for (const node of nodes) {
-    const members = byCommunity.get(node.community) ?? [];
-    members.push(node);
-    byCommunity.set(node.community, members);
-  }
-  for (const members of byCommunity.values()) {
-    const limit = Math.min(12, Math.max(3, Math.ceil(Math.sqrt(members.length))));
-    members
-      .sort((left, right) => right.weight - left.weight || left.id.localeCompare(right.id))
-      .slice(0, limit)
-      .forEach((node) => selected.add(node.id));
-  }
-  const mediumNodes = nodes.filter((node) => selected.has(node.id));
-  const mediumEdges = edges.filter((edge) => selected.has(edge.source) && selected.has(edge.target));
-  return createLevel(buildId, 'medium', mediumNodes, mediumEdges, 4);
+  return { clusters, clusterByDocument };
 }
 
 function createLevel(
@@ -229,13 +268,17 @@ function createLevel(
   return { gridSize, tiles, nodeCount: nodes.length, edgeCount: edges.length };
 }
 
-function aggregateCommunityEdges(edges: GraphEdge[], communityByNode: Map<string, string>): GraphEdge[] {
+function aggregateEdgesByGroup(
+  edges: GraphEdge[],
+  groupByNode: Map<string, string>,
+  neighborLimit?: number,
+): GraphEdge[] {
   const aggregate = new Map<string, GraphEdge>();
   for (const edge of edges) {
-    const sourceCommunity = communityByNode.get(edge.source);
-    const targetCommunity = communityByNode.get(edge.target);
-    if (!sourceCommunity || !targetCommunity || sourceCommunity === targetCommunity) continue;
-    const [source, target] = canonicalPair(`community-${sourceCommunity}`, `community-${targetCommunity}`);
+    const sourceGroup = groupByNode.get(edge.source);
+    const targetGroup = groupByNode.get(edge.target);
+    if (!sourceGroup || !targetGroup || sourceGroup === targetGroup) continue;
+    const [source, target] = canonicalPair(sourceGroup, targetGroup);
     const key = `${source}\0${target}`;
     const previous = aggregate.get(key);
     aggregate.set(key, {
@@ -245,7 +288,29 @@ function aggregateCommunityEdges(edges: GraphEdge[], communityByNode: Map<string
       weight: Number(((previous?.weight ?? 0) + edge.weight).toFixed(6)),
     });
   }
-  return [...aggregate.values()];
+  const values = [...aggregate.values()];
+  if (!neighborLimit) return values;
+  const selected = new Set<string>();
+  const byEndpoint = new Map<string, GraphEdge[]>();
+  for (const edge of values) {
+    for (const endpoint of [edge.source, edge.target]) {
+      const candidates = byEndpoint.get(endpoint) ?? [];
+      candidates.push(edge);
+      byEndpoint.set(endpoint, candidates);
+    }
+  }
+  for (const candidates of byEndpoint.values()) {
+    candidates
+      .sort((left, right) =>
+        Number(right.strength === 'strong') - Number(left.strength === 'strong') ||
+        right.weight - left.weight ||
+        left.source.localeCompare(right.source) ||
+        left.target.localeCompare(right.target),
+      )
+      .slice(0, neighborLimit)
+      .forEach((edge) => selected.add(`${edge.source}\0${edge.target}`));
+  }
+  return values.filter((edge) => selected.has(`${edge.source}\0${edge.target}`));
 }
 
 function connect(

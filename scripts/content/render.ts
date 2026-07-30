@@ -32,6 +32,15 @@ interface RenderContext extends RenderInput {
   sectionSequence: number;
   footnotes: FootnoteRecord[];
   toc: TocItem[];
+  boardIds: Set<string>;
+}
+
+type BoardRenderContext = Pick<RenderInput, 'documents' | 'media'>;
+
+export interface RenderedNavigationBoard {
+  fullHtml: string;
+  shellHtml: string;
+  sections: Record<string, string>;
 }
 
 export function renderDocument(input: RenderInput): CompiledArticle {
@@ -40,15 +49,27 @@ export function renderDocument(input: RenderInput): CompiledArticle {
     sectionSequence: 0,
     footnotes: [],
     toc: [],
+    boardIds: new Set(),
   };
   const body = renderBlocks(input.document.body, context, [], context.toc);
   const notes = renderNotes(context.footnotes);
-  const text = extractDocumentText(input.document);
   const slug = slugifyTitle(input.document.title);
   const url = articleUrl(input.document.id, input.document.title);
   const html = `${body}${notes}`;
+  const boardIds = [...context.boardIds].sort();
   const integrity = createHash('sha256')
-    .update(JSON.stringify({ id: input.document.id, title: input.document.title, slug, html, related: input.related }))
+    .update(
+      JSON.stringify({
+        id: input.document.id,
+        title: input.document.title,
+        slug,
+        url,
+        html,
+        toc: context.toc,
+        boardIds,
+        related: input.related,
+      }),
+    )
     .digest('base64url');
 
   return {
@@ -57,8 +78,8 @@ export function renderDocument(input: RenderInput): CompiledArticle {
     slug,
     url,
     html,
-    text,
     toc: context.toc,
+    boardIds,
     related: input.related,
     integrity,
   };
@@ -108,7 +129,8 @@ function renderBlocks(
         case 'board': {
           const board = context.boards.get(block.boardId);
           if (!board) return '';
-          return renderBoard(board, context);
+          context.boardIds.add(board.id);
+          return `<div data-board-include="${escapeAttribute(board.id)}"></div>`;
         }
         case 'rule':
           return '<hr />';
@@ -162,14 +184,16 @@ function renderNotes(footnotes: FootnoteRecord[]): string {
 function renderFigure(block: Extract<BlockNode, { type: 'figure' }>, context: RenderContext): string {
   const asset = requireMedia(context.media, block.assetId, 'image', block.source);
   const image = `<img src="${escapeAttribute(asset.publicPath)}" width="${asset.width}" height="${asset.height}" alt="${escapeAttribute(block.alt)}" loading="lazy" decoding="async" />`;
+  const captionHtml = block.caption ? renderInline(block.caption, context, true) : '';
+  const captionText = block.caption ? inlineText(block.caption) : '';
   let content: string;
   if (block.targetId) {
     const target = context.documents.get(block.targetId);
     content = target ? `<a class="linked-figure" href="${escapeAttribute(articleUrl(target.id, target.title))}">${image}</a>` : image;
   } else {
-    content = `<button class="figure-open" type="button" data-image-src="${escapeAttribute(asset.publicPath)}" data-image-alt="${escapeAttribute(block.alt)}" aria-label="이미지 크게 보기: ${escapeAttribute(block.alt || '장식 이미지')}">${image}</button>`;
+    content = `<button class="figure-open" type="button" data-image-src="${escapeAttribute(asset.publicPath)}" data-image-alt="${escapeAttribute(block.alt)}" data-image-caption="${escapeAttribute(captionText)}" aria-label="이미지 크게 보기: ${escapeAttribute(block.alt || captionText || '이미지')}">${image}</button>`;
   }
-  const caption = block.caption ? `<figcaption>${renderInline(block.caption, context, true)}</figcaption>` : '';
+  const caption = captionHtml ? `<figcaption>${captionHtml}</figcaption>` : '';
   return `<figure>${content}${caption}</figure>`;
 }
 
@@ -181,7 +205,7 @@ function renderVideo(block: Extract<BlockNode, { type: 'video' }>, context: Rend
   if (block.assetId) {
     const video = requireMedia(context.media, block.assetId, 'video', block.source);
     const track = block.trackId ? requireMedia(context.media, block.trackId, 'track', block.source) : undefined;
-    player = `<video controls preload="metadata" aria-label="${escapeAttribute(block.label)}"${posterAttribute}><source src="${escapeAttribute(video.publicPath)}" />${track ? `<track kind="captions" srclang="ko" label="한국어" src="${escapeAttribute(track.publicPath)}" default />` : ''}<p>이 브라우저에서는 영상을 재생할 수 없습니다.</p></video>`;
+    player = `<video controls preload="metadata" aria-label="${escapeAttribute(block.label)}"${posterAttribute}><source src="${escapeAttribute(video.publicPath)}" />${track ? `<track kind="captions" srclang="ko" label="한국어" src="${escapeAttribute(track.publicPath)}" default />` : ''}<p>이 브라우저에서는 영상을 재생할 수 없습니다.</p></video><a class="video-direct-link" href="${escapeAttribute(video.publicPath)}">영상 파일 열기</a>`;
   } else {
     const posterImage = poster
       ? `<img src="${escapeAttribute(poster.publicPath)}" width="${poster.width}" height="${poster.height}" alt="" loading="lazy" />`
@@ -193,23 +217,50 @@ function renderVideo(block: Extract<BlockNode, { type: 'video' }>, context: Rend
   return `<figure class="video-figure">${player}${caption}</figure>`;
 }
 
-function renderBoard(board: SourceBoard, context: RenderContext): string {
-  const headerAsset = board.headerAssetId ? requireMedia(context.media, board.headerAssetId, 'image', board.source) : undefined;
-  return `<aside class="navigation-board navigation-board--${escapeAttribute(board.theme)}" data-board-theme="${escapeAttribute(board.theme)}" aria-labelledby="board-${escapeAttribute(board.id)}-title"><header class="navigation-board__header">${headerAsset ? `<img src="${escapeAttribute(headerAsset.publicPath)}" width="${headerAsset.width}" height="${headerAsset.height}" alt="" loading="lazy" />` : ''}<div><h2 id="board-${escapeAttribute(board.id)}-title">${escapeHtml(board.title)}</h2>${board.subtitle ? `<p>${escapeHtml(board.subtitle)}</p>` : ''}</div></header><div class="navigation-board__sections">${board.sections.map((section) => renderBoardSection(board, section, context)).join('')}</div></aside>`;
+export function renderNavigationBoard(board: SourceBoard, context: BoardRenderContext): RenderedNavigationBoard {
+  const sections = Object.fromEntries(
+    board.sections.map((section) => [section.id, renderBoardSectionContent(section, context)]),
+  );
+  return {
+    fullHtml: renderBoardContainer(board, context, sections, false),
+    shellHtml: renderBoardContainer(board, context, sections, true),
+    sections,
+  };
 }
 
-function renderBoardSection(board: SourceBoard, section: BoardSection, context: RenderContext): string {
+function renderBoardContainer(
+  board: SourceBoard,
+  context: BoardRenderContext,
+  sections: Record<string, string>,
+  lazy: boolean,
+): string {
+  const headerAsset = board.headerAssetId ? requireMedia(context.media, board.headerAssetId, 'image', board.source) : undefined;
+  return `<aside class="navigation-board navigation-board--${escapeAttribute(board.theme)}" data-board-root="${escapeAttribute(board.id)}" data-board-theme="${escapeAttribute(board.theme)}" aria-labelledby="board-${escapeAttribute(board.id)}-title"><header class="navigation-board__header">${headerAsset ? `<img src="${escapeAttribute(headerAsset.publicPath)}" width="${headerAsset.width}" height="${headerAsset.height}" alt="" loading="lazy" />` : ''}<div><h2 id="board-${escapeAttribute(board.id)}-title">${escapeHtml(board.title)}</h2>${board.subtitle ? `<p>${escapeHtml(board.subtitle)}</p>` : ''}</div></header><div class="navigation-board__sections">${board.sections.map((section) => renderBoardSection(board, section, context, sections[section.id] ?? '', lazy)).join('')}</div></aside>`;
+}
+
+function renderBoardSection(
+  board: SourceBoard,
+  section: BoardSection,
+  context: BoardRenderContext,
+  content: string,
+  lazy: boolean,
+): string {
   const id = `board-${board.id}-${section.id}`;
+  const sectionAsset = section.assetId ? requireMedia(context.media, section.assetId, 'image', section.source) : undefined;
+  return `<details class="navigation-board__section" data-board-section="${escapeAttribute(section.id)}"><summary aria-controls="${escapeAttribute(id)}">${sectionAsset ? `<img src="${escapeAttribute(sectionAsset.publicPath)}" width="${sectionAsset.width}" height="${sectionAsset.height}" alt="" loading="lazy" />` : ''}<span>${escapeHtml(section.label)}</span></summary><div id="${escapeAttribute(id)}" data-board-section-body>${lazy ? '' : content}</div></details>`;
+}
+
+function renderBoardSectionContent(section: BoardSection, context: BoardRenderContext): string {
   let content: string;
   if (section.layout === 'table') {
     content = `<div class="navigation-board__table-scroll" tabindex="0"><table><tbody>${section.rows.map((row) => `<tr><th scope="row">${escapeHtml(row.label)}</th><td>${row.entries.map((entry) => renderBoardEntry(entry, context)).join('')}</td></tr>`).join('')}</tbody></table></div>`;
   } else {
     content = `<ul class="navigation-board__${section.layout}"${section.layoutName ? ` data-layout="${escapeAttribute(section.layoutName)}"` : ''}>${section.entries.map((entry) => `<li${entry.slot ? ` data-slot="${escapeAttribute(entry.slot)}"` : ''}>${renderBoardEntry(entry, context)}</li>`).join('')}</ul>`;
   }
-  return `<details class="navigation-board__section"><summary aria-controls="${escapeAttribute(id)}">${escapeHtml(section.label)}</summary><div id="${escapeAttribute(id)}">${content}</div></details>`;
+  return content;
 }
 
-function renderBoardEntry(entry: BoardEntry, context: RenderContext): string {
+function renderBoardEntry(entry: BoardEntry, context: BoardRenderContext): string {
   const target = context.documents.get(entry.targetId);
   if (!target) return '';
   const media = entry.assetId ? requireMedia(context.media, entry.assetId, 'image', entry.source) : undefined;

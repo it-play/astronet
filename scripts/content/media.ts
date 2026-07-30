@@ -62,10 +62,16 @@ export async function inspectMedia(
       }
       width = dimensions.width;
       height = dimensions.height;
-      if (!width || !height || width > 12_000 || height > 12_000) {
-        fail('Image dimensions are missing or exceed the 12000px limit', { source: sourcePath, target: id });
+      if (!width || !height || width > 12_000 || height > 12_000 || width * height > 64_000_000) {
+        fail('Image dimensions are missing or exceed the 12000px or 64-megapixel limit', {
+          source: sourcePath,
+          target: id,
+        });
       }
+      validateImageFormat(dimensions.type, extension, sourcePath);
     }
+
+    if (kind === 'video') validateVideo(buffer, extension, sourcePath);
 
     if (kind === 'track') validateVtt(buffer.toString('utf8'), sourcePath);
 
@@ -120,6 +126,14 @@ function mediaKind(extension: string, source: string): MediaKind {
   fail('Media file format is not allowed', { source, target: extension });
 }
 
+function validateImageFormat(detected: string | undefined, extension: string, sourcePath: string): void {
+  const expected = extension === '.jpg' || extension === '.jpeg' ? 'jpg' : extension.slice(1);
+  const normalized = detected === 'jpeg' ? 'jpg' : detected;
+  if (normalized !== expected) {
+    fail('Image file signature does not match its approved extension', { source: sourcePath, target: extension });
+  }
+}
+
 function validateSvg(source: string, sourcePath: string): void {
   const forbidden = [
     /<!doctype/i,
@@ -146,5 +160,19 @@ function validateVtt(source: string, sourcePath: string): void {
   }
   if (/<script\b|<style\b|<iframe\b/i.test(source)) {
     fail('Caption track contains unsafe markup', { source: sourcePath });
+  }
+}
+
+function validateVideo(buffer: Buffer, extension: string, sourcePath: string): void {
+  const isMp4 = extension === '.mp4' && buffer.length >= 12 && buffer.subarray(4, 8).toString('ascii') === 'ftyp';
+  const isWebm =
+    extension === '.webm' &&
+    buffer.length >= 4 &&
+    buffer[0] === 0x1a &&
+    buffer[1] === 0x45 &&
+    buffer[2] === 0xdf &&
+    buffer[3] === 0xa3;
+  if (!isMp4 && !isWebm) {
+    fail('Video file signature does not match its approved format', { source: sourcePath });
   }
 }

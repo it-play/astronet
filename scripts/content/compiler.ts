@@ -4,8 +4,11 @@ import path from 'node:path';
 import { ARTICLE_BUCKET_COUNT, articleBucket, articleUrl, slugifyTitle } from '../../src/content/shared';
 import type {
   ArticlePack,
+  BoardPack,
   BuildManifest,
   CompiledArticle,
+  CompiledBoard,
+  GraphFocusPack,
   RandomDocument,
   RelatedDocument,
 } from '../../src/content/types';
@@ -14,15 +17,24 @@ import { ContentError, fail } from './diagnostics';
 import { buildGraphArtifacts, GRAPH_LAYOUT_VERSION } from './graph';
 import { copyReferencedMedia, inspectMedia } from './media';
 import { parseBoard, parseDocument, type SourceBoard, type SourceDocument } from './model';
-import { extractDocumentText, renderDocument } from './render';
+import {
+  extractDocumentText,
+  renderDocument,
+  renderNavigationBoard,
+  type RenderedNavigationBoard,
+} from './render';
 import { buildSearchArtifacts } from './search-index';
 import { parseXml } from './xml';
 
-export const COMPILER_VERSION = '1.0.0';
-const SCHEMA_VERSION = 1;
+export const COMPILER_VERSION = '1.3.0';
+const SCHEMA_VERSION = 3;
 const RANDOM_PACK_SIZE = 256;
 const ARTICLE_PACK_BYTE_LIMIT = 4 * 1024 * 1024;
 const ARTICLE_BYTE_LIMIT = 1024 * 1024;
+const BOARD_INLINE_BYTE_LIMIT = 256 * 1024;
+const BOARD_PACK_BYTE_LIMIT = 4 * 1024 * 1024;
+const GRAPH_TILE_BYTE_LIMIT = 2 * 1024 * 1024;
+const GRAPH_FOCUS_BUCKET_COUNT = 1024;
 
 export interface CompileResult {
   manifest: BuildManifest;
@@ -60,6 +72,11 @@ export async function compileContent(rootDirectory: string): Promise<CompileResu
   const relationships = analyzeRelationships(documents, boards, documentText);
   const relatedByDocument = buildRelatedDocuments(documents, relationships.relatedScores);
   const compiledArticles = new Map<string, CompiledArticle>();
+  const renderedBoards = new Map(
+    [...boards.values()]
+      .sort((left, right) => left.id.localeCompare(right.id))
+      .map((board) => [board.id, renderNavigationBoard(board, { documents, media })]),
+  );
 
   for (const document of [...documents.values()].sort((left, right) => left.id.localeCompare(right.id))) {
     const article = renderDocument({
@@ -75,8 +92,9 @@ export async function compileContent(rootDirectory: string): Promise<CompileResu
     compiledArticles.set(document.id, article);
   }
 
-  const articlePacks = await writeArticlePacks(outputDirectory, buildId, compiledArticles);
-  const randomPacks = await writeRandomPacks(outputDirectory, buildId, documents);
+  const compiledBoards = await writeBoardPacks(outputDirectory, buildId, renderedBoards);
+  await writeArticlePacks(outputDirectory, buildId, compiledArticles, compiledBoards);
+  const randomPackCount = await writeRandomPacks(outputDirectory, buildId, documents);
   const searchArtifacts = buildSearchArtifacts(buildId, documents, documentText);
   const searchPaths = await writeSearchArtifacts(outputDirectory, searchArtifacts);
   const graphArtifacts = buildGraphArtifacts(
@@ -95,8 +113,7 @@ export async function compileContent(rootDirectory: string): Promise<CompileResu
     buildId,
     basePath: `/generated/${buildId}`,
     bucketCount: ARTICLE_BUCKET_COUNT,
-    articlePacks,
-    randomPacks,
+    randomPackCount,
     randomPackSize: RANDOM_PACK_SIZE,
     search: searchPaths,
     graph: graphPaths,
@@ -150,15 +167,20 @@ async function writeArticlePacks(
   outputDirectory: string,
   buildId: string,
   articles: Map<string, CompiledArticle>,
-): Promise<Record<string, string>> {
+  boards: Map<string, CompiledBoard>,
+): Promise<void> {
   const packs = new Map<string, ArticlePack>();
   for (const article of articles.values()) {
     const bucket = articleBucket(article.id);
-    const pack = packs.get(bucket) ?? { buildId, bucket, articles: {} };
+    const pack = packs.get(bucket) ?? { buildId, bucket, articles: {}, boards: {} };
     pack.articles[article.id] = article;
+    for (const boardId of article.boardIds) {
+      const board = boards.get(boardId);
+      if (!board) fail('Compiled navigation board is missing', { source: article.id, target: boardId });
+      pack.boards[boardId] = board;
+    }
     packs.set(bucket, pack);
   }
-  const paths: Record<string, string> = {};
   for (const [bucket, pack] of [...packs].sort(([left], [right]) => left.localeCompare(right))) {
     const relative = `articles/${bucket}.json`;
     const serialized = JSON.stringify(pack);
@@ -169,20 +191,48 @@ async function writeArticlePacks(
       });
     }
     await writeSerialized(path.join(outputDirectory, relative), serialized);
-    paths[bucket] = `/generated/${buildId}/${relative}`;
   }
-  return paths;
+}
+
+async function writeBoardPacks(
+  outputDirectory: string,
+  buildId: string,
+  boards: Map<string, RenderedNavigationBoard>,
+): Promise<Map<string, CompiledBoard>> {
+  const compiled = new Map<string, CompiledBoard>();
+  for (const [boardId, board] of boards) {
+    if (Buffer.byteLength(board.fullHtml) <= BOARD_INLINE_BYTE_LIMIT) {
+      compiled.set(boardId, { html: board.fullHtml });
+      continue;
+    }
+
+    const relative = `boards/${articleBucket(boardId, 1024)}/${boardId}.json`;
+    const pack: BoardPack = { buildId, boardId, sections: board.sections };
+    const serialized = JSON.stringify(pack);
+    if (Buffer.byteLength(serialized) > BOARD_PACK_BYTE_LIMIT) {
+      fail(`Navigation board pack exceeds the ${BOARD_PACK_BYTE_LIMIT} byte limit`, {
+        source: `generated:${relative}`,
+        target: boardId,
+      });
+    }
+    await writeSerialized(path.join(outputDirectory, relative), serialized);
+    compiled.set(boardId, {
+      html: board.shellHtml,
+      packPath: `/generated/${buildId}/${relative}`,
+    });
+  }
+  return compiled;
 }
 
 async function writeRandomPacks(
   outputDirectory: string,
   buildId: string,
   documents: Map<string, SourceDocument>,
-): Promise<string[]> {
+): Promise<number> {
   const records: RandomDocument[] = [...documents.values()]
     .sort((left, right) => stableOrder(buildId, left.id).localeCompare(stableOrder(buildId, right.id)))
     .map((document) => ({ id: document.id, slug: slugifyTitle(document.title), title: document.title }));
-  const paths: string[] = [];
+  let packCount = 0;
   for (let offset = 0; offset < records.length; offset += RANDOM_PACK_SIZE) {
     const index = offset / RANDOM_PACK_SIZE;
     const relative = `random/${index.toString(16).padStart(3, '0')}.json`;
@@ -191,34 +241,34 @@ async function writeRandomPacks(
       offset,
       documents: records.slice(offset, offset + RANDOM_PACK_SIZE),
     });
-    paths.push(`/generated/${buildId}/${relative}`);
+    packCount += 1;
   }
-  return paths;
+  return packCount;
 }
 
 async function writeSearchArtifacts(
   outputDirectory: string,
   artifacts: ReturnType<typeof buildSearchArtifacts>,
 ): Promise<BuildManifest['search']> {
-  const recordPacks: Record<string, string> = {};
-  const termShards: Record<string, string> = {};
-  const titleShards: Record<string, string> = {};
+  const recordShards: string[] = [];
+  const termShards: string[] = [];
+  const titleShards: string[] = [];
   for (const [bucket, pack] of [...artifacts.recordPacks].sort(([left], [right]) => left.localeCompare(right))) {
     const relative = `search/records/${bucket}.json`;
     await writeJson(path.join(outputDirectory, relative), pack);
-    recordPacks[bucket] = toPublicPath(outputDirectory, relative);
+    recordShards.push(bucket);
   }
   for (const [shard, value] of [...artifacts.termShards].sort(([left], [right]) => left.localeCompare(right))) {
     const relative = `search/terms/${shard}.json`;
     await writeJson(path.join(outputDirectory, relative), value);
-    termShards[shard] = toPublicPath(outputDirectory, relative);
+    termShards.push(shard);
   }
   for (const [shard, value] of [...artifacts.titleShards].sort(([left], [right]) => left.localeCompare(right))) {
     const relative = `search/titles/${shard}.json`;
     await writeJson(path.join(outputDirectory, relative), value);
-    titleShards[shard] = toPublicPath(outputDirectory, relative);
+    titleShards.push(shard);
   }
-  return { recordPacks, termShards, titleShards };
+  return { recordShards, termShards, titleShards };
 }
 
 async function writeGraphArtifacts(
@@ -226,15 +276,19 @@ async function writeGraphArtifacts(
   buildId: string,
   artifacts: ReturnType<typeof buildGraphArtifacts>,
 ): Promise<BuildManifest['graph']> {
-  const tiles: Record<string, string> = {};
   const levels: Record<string, { gridSize: number; nodeCount: number; edgeCount: number; tiles: string[] }> = {};
   for (const [levelName, level] of Object.entries(artifacts.levels)) {
     const tileKeys: string[] = [];
     for (const [tileKey, tile] of [...level.tiles].sort(([left], [right]) => left.localeCompare(right))) {
       const relative = `graph/${levelName}/${tileKey}.json`;
-      await writeJson(path.join(outputDirectory, relative), tile);
-      const key = `${levelName}:${tileKey}`;
-      tiles[key] = `/generated/${buildId}/${relative}`;
+      const serialized = JSON.stringify(tile);
+      if (Buffer.byteLength(serialized) > GRAPH_TILE_BYTE_LIMIT) {
+        fail(`Graph tile exceeds the ${GRAPH_TILE_BYTE_LIMIT} byte limit`, {
+          source: `generated:${relative}`,
+          target: `${levelName}:${tileKey}`,
+        });
+      }
+      await writeSerialized(path.join(outputDirectory, relative), serialized);
       tileKeys.push(tileKey);
     }
     levels[levelName] = {
@@ -244,14 +298,24 @@ async function writeGraphArtifacts(
       tiles: tileKeys,
     };
   }
+  const focusByBucket = new Map<string, GraphFocusPack>();
+  for (const [id, focus] of Object.entries(artifacts.focus)) {
+    const bucket = articleBucket(id, GRAPH_FOCUS_BUCKET_COUNT);
+    const pack = focusByBucket.get(bucket) ?? { buildId, bucket, focus: {} };
+    pack.focus[id] = focus;
+    focusByBucket.set(bucket, pack);
+  }
+  for (const [bucket, pack] of [...focusByBucket].sort(([left], [right]) => left.localeCompare(right))) {
+    const relative = `graph/focus/${bucket}.json`;
+    await writeJson(path.join(outputDirectory, relative), pack);
+  }
   const relative = 'graph/manifest.json';
   await writeJson(path.join(outputDirectory, relative), {
     buildId,
     layoutVersion: GRAPH_LAYOUT_VERSION,
     levels,
-    focus: artifacts.focus,
   });
-  return { manifest: `/generated/${buildId}/${relative}`, tiles };
+  return { manifest: `/generated/${buildId}/${relative}` };
 }
 
 function buildRelatedDocuments(
@@ -332,11 +396,6 @@ async function writeJson(file: string, value: unknown): Promise<void> {
 async function writeSerialized(file: string, value: string): Promise<void> {
   await mkdir(path.dirname(file), { recursive: true });
   await writeFile(file, `${value}\n`, 'utf8');
-}
-
-function toPublicPath(outputDirectory: string, relative: string): string {
-  const buildId = path.basename(outputDirectory);
-  return `/generated/${buildId}/${relative}`;
 }
 
 function relativeDisplay(file: string): string {

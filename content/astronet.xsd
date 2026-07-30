@@ -148,7 +148,10 @@
             <xs:attribute name="asset" type="stableName"/>
           </xs:complexType>
         </xs:element>
-        <xs:element name="section" type="boardSectionType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:choice>
+          <xs:element name="body" type="boardBodyType"/>
+          <xs:element name="section" type="boardSectionType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="id" type="immutableId" use="required"/>
       <xs:attribute name="theme" type="stableName"/>
@@ -165,6 +168,19 @@
     <xs:attribute name="id" type="stableName" use="required"/>
     <xs:attribute name="label" type="xs:string" use="required"/>
     <xs:attribute name="group" type="stableName"/>
+    <xs:attribute name="asset" type="stableName"/>
+  </xs:complexType>
+
+  <xs:complexType name="boardBodyType">
+    <xs:choice>
+      <xs:element name="document-links" type="boardEntriesType"/>
+      <xs:element name="document-grid" type="boardLayoutEntriesType"/>
+      <xs:element name="document-table" type="boardTableType"/>
+      <xs:element name="diagram" type="boardLayoutEntriesType"/>
+    </xs:choice>
+    <xs:attribute name="label" type="xs:string"/>
+    <xs:attribute name="group" type="stableName"/>
+    <xs:attribute name="asset" type="stableName"/>
   </xs:complexType>
 
   <xs:complexType name="boardEntriesType">

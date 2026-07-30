@@ -11,11 +11,13 @@ import type {
   SourceDocument,
 } from './model';
 
-export const RELATIONSHIP_ALGORITHM_VERSION = 'lexical-v1';
+export const RELATIONSHIP_ALGORITHM_VERSION = 'lexical-v2';
 const WEAK_NEIGHBOR_LIMIT = 8;
 const WEAK_SIMILARITY_THRESHOLD = 0.08;
-const RELATED_THRESHOLD = 6;
+const RELATED_THRESHOLD = 3;
 const TWO_HOP_NEIGHBOR_LIMIT = 32;
+const TWO_HOP_CANDIDATE_LIMIT = 32;
+const BOARD_AFFINITY_NEIGHBOR_LIMIT = 8;
 const KOREAN_WORD_SEGMENTER = new Intl.Segmenter('ko', { granularity: 'word' });
 
 interface LocatedReference {
@@ -58,6 +60,7 @@ export function validateSemantics(
   }
 
   for (const document of documents.values()) {
+    const includedBoards = new Set<string>();
     for (const targetId of document.connections) {
       if (targetId === document.id) {
         semanticError('Manual connection cannot target its own document', document.source, targetId);
@@ -68,6 +71,10 @@ export function validateSemantics(
     visitBlocks(document.body, (block) => {
       if (block.type === 'board') {
         if (!boards.has(block.boardId)) semanticError('Included navigation board does not exist', block.source, block.boardId);
+        if (includedBoards.has(block.boardId)) {
+          semanticError('Navigation board cannot be included more than once in one document', block.source, block.boardId);
+        }
+        includedBoards.add(block.boardId);
       }
       if (block.type === 'figure') {
         requireMedia(media, block.assetId, 'image', block.source);
@@ -87,7 +94,7 @@ export function validateSemantics(
           requireMedia(media, block.trackId, 'track', block.source);
           referencedMedia.add(block.trackId);
         }
-        validateProviderUrl(block.provider, block.directUrl, block.source);
+        validateProviderUrl(block.provider, block.videoId, block.directUrl, block.source);
       }
       for (const reference of referencesInBlock(block)) {
         requireDocument(documents, reference.targetId, reference.source);
@@ -104,6 +111,10 @@ export function validateSemantics(
       referencedMedia.add(board.headerAssetId);
     }
     for (const section of board.sections) {
+      if (section.assetId) {
+        requireMedia(media, section.assetId, 'image', section.source);
+        referencedMedia.add(section.assetId);
+      }
       for (const entry of section.entries) {
         requireDocument(documents, entry.targetId, entry.source);
         if (entry.assetId) {
@@ -160,12 +171,18 @@ export function analyzeRelationships(
     return selected;
   };
   for (const [source, neighbors] of adjacency) {
+    const candidates = new Set<string>();
     for (const middle of boundedNeighbors(source)) {
       for (const target of boundedNeighbors(middle)) {
         if (source === target || neighbors.has(target)) continue;
-        const key = pairKey(source, target);
-        scoreByPair.set(key, Math.max(scoreByPair.get(key) ?? 0, 15));
+        candidates.add(target);
       }
+    }
+    for (const target of [...candidates]
+      .sort((left, right) => (adjacency.get(right)?.size ?? 0) - (adjacency.get(left)?.size ?? 0) || left.localeCompare(right))
+      .slice(0, TWO_HOP_CANDIDATE_LIMIT)) {
+      const key = pairKey(source, target);
+      scoreByPair.set(key, Math.max(scoreByPair.get(key) ?? 0, 15));
     }
   }
 
@@ -177,6 +194,10 @@ export function analyzeRelationships(
       const groups = groupsByDocument.get(member) ?? new Set<string>();
       groups.add(hub.id);
       groupsByDocument.set(member, groups);
+    }
+    for (const [source, target] of boundedBoardPairs(hub)) {
+      const key = pairKey(source, target);
+      if (!scoreByPair.has(key)) scoreByPair.set(key, 0);
     }
   }
 
@@ -211,6 +232,20 @@ export function analyzeRelationships(
     relatedScores,
     lexicalTerms,
   };
+}
+
+function boundedBoardPairs(hub: BoardHub): Array<[string, string]> {
+  const pairs = new Map<string, [string, string]>();
+  const limit = Math.min(BOARD_AFFINITY_NEIGHBOR_LIMIT, hub.members.length - 1);
+  for (let index = 0; index < hub.members.length; index += 1) {
+    const source = hub.members[index]!;
+    for (let offset = 1; offset <= limit; offset += 1) {
+      const target = hub.members[(index + offset) % hub.members.length]!;
+      const pair = canonicalPair(source, target);
+      pairs.set(pairKey(...pair), pair);
+    }
+  }
+  return [...pairs.values()];
 }
 
 export function tokenizeText(text: string): string[] {
@@ -376,14 +411,25 @@ function visitBlocks(blocks: BlockNode[], visitor: (block: BlockNode) => void): 
 
 function validateProviderUrl(
   provider: 'youtube' | 'vimeo' | undefined,
+  videoId: string | undefined,
   directUrl: string | undefined,
   source: string,
 ): void {
-  if (!provider || !directUrl) return;
-  const host = new URL(directUrl).hostname.replace(/^www\./, '');
+  if (!provider || !videoId || !directUrl) return;
+  const url = new URL(directUrl);
+  const host = url.hostname.replace(/^www\./, '');
   const allowed = provider === 'youtube' ? ['youtube.com', 'youtu.be'] : ['vimeo.com'];
   if (!allowed.some((domain) => host === domain || host.endsWith(`.${domain}`))) {
     semanticError('External video URL does not match its allowlisted provider', source, directUrl);
+  }
+  const segments = url.pathname.split('/').filter(Boolean);
+  const directVideoId = provider === 'youtube'
+    ? host === 'youtu.be'
+      ? segments[0]
+      : url.searchParams.get('v') ?? (['embed', 'shorts', 'live'].includes(segments[0] ?? '') ? segments[1] : undefined)
+    : segments.at(-1);
+  if (directVideoId !== videoId) {
+    semanticError('External video URL does not identify the declared video', source, directUrl);
   }
 }
 

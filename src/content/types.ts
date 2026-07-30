@@ -18,8 +18,8 @@ export interface CompiledArticle {
   slug: string;
   url: string;
   html: string;
-  text: string;
   toc: TocItem[];
+  boardIds: string[];
   related: RelatedDocument[];
   integrity: string;
 }
@@ -28,6 +28,18 @@ export interface ArticlePack {
   buildId: string;
   bucket: string;
   articles: Record<string, CompiledArticle>;
+  boards: Record<string, CompiledBoard>;
+}
+
+export interface CompiledBoard {
+  html: string;
+  packPath?: string;
+}
+
+export interface BoardPack {
+  buildId: string;
+  boardId: string;
+  sections: Record<string, string>;
 }
 
 export interface RandomDocument {
@@ -74,7 +86,7 @@ export interface GraphNode {
   id: string;
   title: string;
   url: string;
-  kind: 'document' | 'cluster';
+  kind: 'document' | 'cluster' | 'hub';
   x: number;
   y: number;
   weight: number;
@@ -96,23 +108,27 @@ export interface GraphTile {
   edges: GraphEdge[];
 }
 
+export interface GraphFocusPack {
+  buildId: string;
+  bucket: string;
+  focus: Record<string, { x: number; y: number; tile: string }>;
+}
+
 export interface BuildManifest {
   schemaVersion: number;
   compilerVersion: string;
   buildId: string;
   basePath: string;
   bucketCount: number;
-  articlePacks: Record<string, string>;
-  randomPacks: string[];
+  randomPackCount: number;
   randomPackSize: number;
   search: {
-    recordPacks: Record<string, string>;
-    termShards: Record<string, string>;
-    titleShards: Record<string, string>;
+    recordShards: string[];
+    termShards: string[];
+    titleShards: string[];
   };
   graph: {
     manifest: string;
-    tiles: Record<string, string>;
   };
   counts: {
     documents: number;

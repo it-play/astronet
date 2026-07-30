@@ -130,6 +130,7 @@ export interface BoardSection extends Located {
   id: string;
   label: string;
   group: string;
+  assetId?: string;
   layout: 'links' | 'grid' | 'table' | 'diagram';
   layoutName?: string;
   entries: BoardEntry[];
@@ -234,11 +235,19 @@ export function parseBoard(root: XmlElementNode, source: string): SourceBoard {
   }
 
   const children = elementChildren(root);
-  assertAllowedChildren(root, source, children, ['header', 'section']);
+  assertAllowedChildren(root, source, children, ['header', 'body', 'section']);
+  if (children[0]?.name !== 'header') {
+    fail('Navigation board must begin with a <header>', location(root, source));
+  }
   const header = singleChild(root, source, 'header');
-  const sections = children.filter((child) => child.name === 'section').map((section) => parseBoardSection(section, source));
+  const bodies = children.filter((child) => child.name === 'body');
+  const sectionElements = children.filter((child) => child.name === 'section');
+  if (bodies.length > 1 || (bodies.length > 0 && sectionElements.length > 0)) {
+    fail('Navigation board must use either one <body> or one or more <section> elements', location(root, source));
+  }
+  const sections = (bodies.length > 0 ? bodies : sectionElements).map((section) => parseBoardSection(section, source));
   if (sections.length === 0) {
-    fail('Navigation board requires at least one section', location(root, source));
+    fail('Navigation board requires one body or at least one section', location(root, source));
   }
 
   const sectionIds = new Set<string>();
@@ -463,6 +472,7 @@ function parseVideo(element: XmlElementNode, source: string): VideoBlock {
   const provider = providerValue === undefined ? undefined : parseProvider(providerValue, element, source);
   const videoId = optionalAttribute(element, 'video-id');
   const directUrl = optionalAttribute(element, 'direct-url');
+  const posterId = parseOptionalResourceId(optionalAttribute(element, 'poster'), element, source, 'poster');
 
   if (assetId && (provider || videoId || directUrl)) {
     fail('Video must use either a local asset or an external provider, not both', location(element, source));
@@ -470,8 +480,20 @@ function parseVideo(element: XmlElementNode, source: string): VideoBlock {
   if (!assetId && (!provider || !videoId || !directUrl)) {
     fail('External video requires provider, video-id, and direct-url', location(element, source));
   }
+  if (!assetId && !posterId) {
+    fail('External video requires a repository-owned poster image', {
+      ...location(element, source),
+      element: element.name,
+      attribute: 'poster',
+    });
+  }
   if (directUrl) validateExternalUrl(directUrl, element, source, 'direct-url');
-  if (videoId && !/^[A-Za-z0-9_-]{3,64}$/.test(videoId)) {
+  const validVideoId = provider === 'youtube'
+    ? /^[A-Za-z0-9_-]{11}$/.test(videoId ?? '')
+    : provider === 'vimeo'
+      ? /^\d{3,12}$/.test(videoId ?? '')
+      : videoId === undefined;
+  if (!validVideoId) {
     fail('External video ID is malformed', {
       ...location(element, source),
       element: element.name,
@@ -489,7 +511,7 @@ function parseVideo(element: XmlElementNode, source: string): VideoBlock {
     provider,
     videoId,
     directUrl,
-    posterId: parseOptionalResourceId(optionalAttribute(element, 'poster'), element, source, 'poster'),
+    posterId,
     trackId: parseOptionalResourceId(optionalAttribute(element, 'track'), element, source, 'track'),
     caption: caption ? requiredInline(caption, source, false) : undefined,
   };
@@ -568,9 +590,10 @@ function trimInline(nodes: InlineNode[]): InlineNode[] {
 }
 
 function parseBoardSection(element: XmlElementNode, source: string): BoardSection {
-  assertAttributes(element, source, ['id', 'label', 'group']);
+  const isBody = element.name === 'body';
+  assertAttributes(element, source, isBody ? ['label', 'group', 'asset'] : ['id', 'label', 'group', 'asset']);
   assertNoMixedText(element, source);
-  const id = requiredAttribute(element, source, 'id');
+  const id = isBody ? 'body' : requiredAttribute(element, source, 'id');
   if (!SECTION_ID_PATTERN.test(id)) {
     fail('Board section ID is malformed', {
       ...location(element, source),
@@ -583,11 +606,21 @@ function parseBoardSection(element: XmlElementNode, source: string): BoardSectio
   assertAllowedChildren(element, source, children, ['document-links', 'document-grid', 'document-table', 'diagram']);
   if (children.length !== 1) fail('Board section requires exactly one layout element', location(element, source));
   const layoutElement = children[0];
+  const group = optionalAttribute(element, 'group') ?? id;
+  if (!SECTION_ID_PATTERN.test(group)) {
+    fail('Board relationship group is malformed', {
+      ...location(element, source),
+      element: element.name,
+      attribute: 'group',
+      target: group,
+    });
+  }
   const base = {
     ...location(element, source),
     id,
-    label: limitedText(requiredAttribute(element, source, 'label'), 120, element, source),
-    group: optionalAttribute(element, 'group') ?? id,
+    label: limitedText(optionalAttribute(element, 'label') ?? (isBody ? '펼쳐보기' : requiredAttribute(element, source, 'label')), 120, element, source),
+    group,
+    assetId: parseOptionalResourceId(optionalAttribute(element, 'asset'), element, source, 'asset'),
   };
 
   if (layoutElement.name === 'document-table') {
@@ -884,6 +917,9 @@ function inlinePlainOptional(element: XmlElementNode, source: string): string | 
       .map((child) => child.value)
       .join(''),
   );
+  if (value.length > 160) {
+    fail('Board document label exceeds the 160 character limit', location(element, source));
+  }
   return value || undefined;
 }
 
