@@ -1,0 +1,23 @@
+groups: []
+
+overrides:
+  codex/config: true
+  codex/skills/api-design: true
+  codex/skills/database-schema: true
+  codex/skills/git-commit: true
+  codex/skills/planning: true
+  codex/skills/resolve-reviews: true
+  codex/skills/security-checklist: true
+  codex/skills/systematic-debugging: true
+  codex/agents/web-researcher: true
+  codex/hooks/dispatcher: true
+  codex/hooks-json: true
+  codex/hooks/command-guard: true
+  codex/hooks/secret-guard: true
+  codex/hooks/eslint: true
+  codex/hooks/ts-check: true
+
+base_branch: main
+language: ko
+pr_label: false
+enabled: true
