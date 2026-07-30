@@ -160,7 +160,7 @@ Color contract:
 - Use `{colors.canvas}`, `{colors.ink}`, `{colors.body}`, `{colors.muted}`, and `{colors.hairline}` for ordinary reading and search surfaces.
 - Use `{colors.link}` only for navigable text and active link states, not as a general brand fill.
 - Use `{colors.surface-dark}` and `{colors.surface-dark-elevated}` for the graph workspace and its elevated controls.
-- Use `{colors.signature-coral}`, `{colors.signature-forest}`, `{colors.signature-mint}`, `{colors.signature-peach}`, `{colors.signature-yellow}`, and `{colors.signature-mustard}` sparingly for visible graph communities and deliberate home-page graph entry surfaces.
+- Keep graph nodes monochrome white and edges neutral gray. Express communities, importance, and depth through density, scale, opacity, and stroke weight rather than node colors or a color legend.
 - Do not add an atmospheric gradient, glow-heavy card system, or unrelated accent palette.
 
 Typography contract:
@@ -568,7 +568,7 @@ The article action is an ordinary internal link that navigates in the same tab b
 - Use `{colors.surface-dark}` or `{colors.surface-dark-elevated}` for the dedicated graph workspace.
 - Use `{colors.on-primary}` for primary graph labels and controls on the dark surface.
 - Draw strong edges with a clearer solid stroke and weak edges with a lower-opacity, thinner solid stroke.
-- Use the documented coral, forest, mint, peach, yellow, and mustard signature colors sparingly to distinguish visible communities.
+- Keep all visible graph nodes white and all graph edges gray. Distinguish communities through spatial grouping and density, and distinguish importance through node size, opacity, and edge weight.
 - Keep the global navigation visually consistent with the article experience while the graph canvas occupies the remaining workspace.
 - Create depth through node density, scale, and restrained particles rather than introducing an unrelated gradient palette.
 - Provide clear keyboard focus, active, reduced-motion, and high-contrast behavior for graph controls.
