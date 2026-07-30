@@ -1,5 +1,5 @@
 import { articleBucket, DOCUMENT_ID_PATTERN } from '../content/shared';
-import type { ArticlePack, BuildManifest, CompiledArticle, TocItem } from '../content/types';
+import type { ArticlePack, BoardPack, BuildManifest, CompiledArticle, CompiledBoard, TocItem } from '../content/types';
 
 interface ArticleLocation {
   id: string;
@@ -26,7 +26,10 @@ const imageViewer = requiredElement<HTMLDialogElement>('image-viewer');
 const imageViewerImage = requiredElement<HTMLImageElement>('image-viewer-image');
 const imageViewerCaption = requiredElement<HTMLElement>('image-viewer-caption');
 const imageViewerClose = requiredElement<HTMLButtonElement>('image-viewer-close');
-const packCache = new Map<string, Promise<ArticlePack>>();
+const packCache = new Map<string, Promise<ArticlePack | undefined>>();
+const boardPackCache = new Map<string, Promise<BoardPack>>();
+const ARTICLE_PACK_CACHE_LIMIT = 48;
+const BOARD_PACK_CACHE_LIMIT = 8;
 let activeRequest = 0;
 let currentLocation: ArticleLocation | undefined;
 let headingObserver: IntersectionObserver | undefined;
@@ -97,6 +100,17 @@ body.addEventListener('click', (event) => {
   if (videoButton) loadExternalVideo(videoButton);
 });
 
+body.addEventListener(
+  'toggle',
+  (event) => {
+    const details = event.target;
+    if (details instanceof HTMLDetailsElement && details.open && details.matches('[data-board-section]')) {
+      void hydrateBoardSection(details);
+    }
+  },
+  true,
+);
+
 document.addEventListener('pointerdown', (event) => {
   if (!activeFootnoteMarker) return;
   const target = event.target;
@@ -125,14 +139,14 @@ async function loadArticle(location: ArticleLocation, force = false): Promise<vo
 
   try {
     const bucket = articleBucket(location.id, manifest.bucketCount);
-    const packPath = manifest.articlePacks[bucket];
-    if (!packPath) {
-      showError('문서를 찾을 수 없습니다.', '존재하지 않거나 아직 공개되지 않은 문서입니다.', false);
-      return;
-    }
+    const packPath = `${manifest.basePath}/articles/${bucket}.json`;
     if (force) packCache.delete(packPath);
     const pack = await fetchPack(packPath);
     if (request !== activeRequest) return;
+    if (!pack) {
+      showError('문서를 찾을 수 없습니다.', '존재하지 않거나 아직 공개되지 않은 문서입니다.', false);
+      return;
+    }
     const article = pack.articles[location.id];
     if (!article || !(await hasValidIntegrity(article))) {
       showError(
@@ -142,23 +156,28 @@ async function loadArticle(location: ArticleLocation, force = false): Promise<vo
       );
       return;
     }
-    renderArticle(article);
+    renderArticle(article, pack.boards);
   } catch {
     if (request !== activeRequest) return;
     showError('문서를 불러오지 못했습니다.', '연결 상태를 확인한 뒤 다시 시도해 주세요.', true);
   }
 }
 
-async function fetchPack(path: string): Promise<ArticlePack> {
+async function fetchPack(path: string): Promise<ArticlePack | undefined> {
   const existing = packCache.get(path);
-  if (existing) return existing;
+  if (existing) {
+    touchCache(packCache, path, existing);
+    return existing;
+  }
   const request = fetch(path, { cache: 'force-cache' }).then(async (response) => {
+    if (response.status === 404) return undefined;
     if (!response.ok) throw new Error('Article pack request failed');
     const value = (await response.json()) as ArticlePack;
     if (value.buildId !== manifest.buildId) throw new Error('Article pack build mismatch');
     return value;
   });
   packCache.set(path, request);
+  trimCache(packCache, ARTICLE_PACK_CACHE_LIMIT);
   try {
     return await request;
   } catch (cause) {
@@ -167,11 +186,12 @@ async function fetchPack(path: string): Promise<ArticlePack> {
   }
 }
 
-function renderArticle(article: CompiledArticle): void {
+function renderArticle(article: CompiledArticle, boards: Record<string, CompiledBoard>): void {
   closeFootnote(false);
   headingObserver?.disconnect();
   title.textContent = article.title;
   body.innerHTML = article.html;
+  hydrateNavigationBoards(article.boardIds, boards);
   graphLink.href = `/graph?focus=${encodeURIComponent(article.id)}`;
   document.title = `${article.title} — Astronet`;
   renderRelated(article);
@@ -195,6 +215,84 @@ function renderArticle(article: CompiledArticle): void {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
   });
+}
+
+function hydrateNavigationBoards(boardIds: string[], boards: Record<string, CompiledBoard>): void {
+  for (const boardId of boardIds) {
+    const board = boards[boardId];
+    const placeholder = body.querySelector<HTMLElement>(`[data-board-include="${CSS.escape(boardId)}"]`);
+    if (!board || !placeholder) throw new Error('Article navigation board is missing');
+    const template = document.createElement('template');
+    template.innerHTML = board.html;
+    const boardRoot = template.content.querySelector<HTMLElement>('[data-board-root]');
+    if (!boardRoot) throw new Error('Article navigation board root is missing');
+    if (board.packPath) boardRoot.dataset.boardPack = board.packPath;
+    placeholder.replaceWith(template.content);
+  }
+}
+
+async function hydrateBoardSection(details: HTMLDetailsElement): Promise<void> {
+  if (details.dataset.boardLoaded === 'true' || details.dataset.boardLoading === 'true') return;
+  const boardRoot = details.closest<HTMLElement>('[data-board-pack]');
+  const packPath = boardRoot?.dataset.boardPack;
+  const sectionId = details.dataset.boardSection;
+  const sectionBody = details.querySelector<HTMLElement>('[data-board-section-body]');
+  if (!packPath || !sectionId || !sectionBody) return;
+
+  details.dataset.boardLoading = 'true';
+  details.setAttribute('aria-busy', 'true');
+  try {
+    const pack = await fetchBoardPack(packPath);
+    if (pack.boardId !== boardRoot.dataset.boardRoot) throw new Error('Navigation board pack does not match');
+    const html = pack.sections[sectionId];
+    if (html === undefined) throw new Error('Navigation board section is missing');
+    sectionBody.innerHTML = html;
+    details.dataset.boardLoaded = 'true';
+  } catch {
+    const message = document.createElement('p');
+    message.className = 'navigation-board__error';
+    message.setAttribute('role', 'status');
+    message.textContent = '보드 내용을 불러오지 못했습니다. 닫았다가 다시 열어 주세요.';
+    sectionBody.replaceChildren(message);
+  } finally {
+    delete details.dataset.boardLoading;
+    details.removeAttribute('aria-busy');
+  }
+}
+
+async function fetchBoardPack(path: string): Promise<BoardPack> {
+  const cached = boardPackCache.get(path);
+  if (cached) {
+    touchCache(boardPackCache, path, cached);
+    return cached;
+  }
+  const request = fetch(path, { cache: 'force-cache' }).then(async (response) => {
+    if (!response.ok) throw new Error('Navigation board pack request failed');
+    const pack = (await response.json()) as BoardPack;
+    if (pack.buildId !== manifest.buildId) throw new Error('Navigation board pack build mismatch');
+    return pack;
+  });
+  boardPackCache.set(path, request);
+  trimCache(boardPackCache, BOARD_PACK_CACHE_LIMIT);
+  try {
+    return await request;
+  } catch (cause) {
+    boardPackCache.delete(path);
+    throw cause;
+  }
+}
+
+function touchCache<T>(cache: Map<string, T>, key: string, value: T): void {
+  cache.delete(key);
+  cache.set(key, value);
+}
+
+function trimCache<T>(cache: Map<string, T>, limit: number): void {
+  while (cache.size > limit) {
+    const oldest = cache.keys().next().value as string | undefined;
+    if (!oldest) return;
+    cache.delete(oldest);
+  }
 }
 
 function renderRelated(article: CompiledArticle): void {
@@ -303,10 +401,11 @@ function openImage(button: HTMLButtonElement): void {
   const src = button.dataset.imageSrc;
   if (!src) return;
   const alt = button.dataset.imageAlt ?? '';
+  const caption = button.dataset.imageCaption ?? '';
   imageTrigger = button;
   imageViewerImage.src = src;
   imageViewerImage.alt = alt;
-  imageViewerCaption.textContent = alt;
+  imageViewerCaption.textContent = caption || alt;
   imageViewer.showModal();
   imageViewerClose.focus();
 }
@@ -318,13 +417,13 @@ function loadExternalVideo(button: HTMLButtonElement): void {
   if (!provider || !videoId || !container) return;
   const iframe = document.createElement('iframe');
   iframe.title = button.getAttribute('aria-label') ?? '외부 영상';
-  iframe.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+  iframe.allow = 'encrypted-media; picture-in-picture';
   iframe.allowFullscreen = true;
   iframe.referrerPolicy = 'strict-origin-when-cross-origin';
   if (provider === 'youtube') {
-    iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1`;
+    iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`;
   } else if (provider === 'vimeo') {
-    iframe.src = `https://player.vimeo.com/video/${encodeURIComponent(videoId)}?autoplay=1`;
+    iframe.src = `https://player.vimeo.com/video/${encodeURIComponent(videoId)}`;
   } else {
     return;
   }
@@ -337,7 +436,10 @@ async function hasValidIntegrity(article: CompiledArticle): Promise<boolean> {
     id: article.id,
     title: article.title,
     slug: article.slug,
+    url: article.url,
     html: article.html,
+    toc: article.toc,
+    boardIds: article.boardIds,
     related: article.related,
   });
   const digest = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(serialized));

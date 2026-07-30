@@ -20,6 +20,7 @@ const isGraph = pathname.startsWith('/graph');
       <a class:list={['global-nav__link', { 'is-current': isGraph }]} href="/graph" aria-current={isGraph ? 'page' : undefined}>
         그래프
       </a>
+      <button class="global-nav__link" type="button" data-random-document disabled>무작위</button>
     </nav>
 
     <details class="mobile-nav">
@@ -30,8 +31,11 @@ const isGraph = pathname.startsWith('/graph');
       <nav class="mobile-nav__panel" aria-label="모바일 주요 메뉴">
         <a href="/search" aria-current={isSearch ? 'page' : undefined}>검색</a>
         <a href="/graph" aria-current={isGraph ? 'page' : undefined}>그래프</a>
+        <button type="button" data-random-document disabled>무작위 문서</button>
       </nav>
     </details>
+
+    <span class="visually-hidden" data-random-status role="status" hidden></span>
   </div>
 </header>
 
@@ -107,6 +111,11 @@ const isGraph = pathname.startsWith('/graph');
     color: var(--color-link-active);
   }
 
+  .global-nav__link:disabled {
+    color: var(--color-border-strong);
+    cursor: not-allowed;
+  }
+
   .mobile-nav {
     display: none;
   }
@@ -165,8 +174,10 @@ const isGraph = pathname.startsWith('/graph');
       background: var(--color-canvas);
     }
 
-    .mobile-nav__panel a {
+    .mobile-nav__panel a,
+    .mobile-nav__panel button {
       display: flex;
+      width: 100%;
       min-height: 64px;
       align-items: center;
       border: 0;
@@ -177,6 +188,11 @@ const isGraph = pathname.startsWith('/graph');
       font-weight: 400;
       text-align: left;
       text-decoration: none;
+    }
+
+    .mobile-nav__panel button:disabled {
+      color: var(--color-border-strong);
+      cursor: not-allowed;
     }
 
     .mobile-nav__panel a[aria-current='page'] {

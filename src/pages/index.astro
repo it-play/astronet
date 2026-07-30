@@ -9,9 +9,9 @@ import SiteLayout from '../layouts/SiteLayout.astro';
       <h1 id="home-title">무엇을 찾고 있나요?</h1>
       <SearchField id="home-search" />
       <div class="home-search__actions">
-        <button class="button button--secondary" id="random-document" type="button" disabled>무작위 문서</button>
+        <button class="button button--secondary" id="random-document" type="button" data-random-document disabled>무작위 문서</button>
       </div>
-      <p class="home-random-status" id="home-random-status" role="status" hidden></p>
+      <p class="home-random-status" id="home-random-status" data-random-status role="status" hidden></p>
 
       <section class="home-random" id="home-random-list" aria-labelledby="home-random-title" hidden>
         <h2 id="home-random-title">둘러보기</h2>

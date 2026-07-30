@@ -28,7 +28,7 @@ const resultsRegion = requiredElement<HTMLElement>('search-results');
 const resultCount = requiredElement<HTMLElement>('search-result-count');
 const resultsList = requiredElement<HTMLOListElement>('search-result-list');
 const pagination = requiredElement<HTMLElement>('search-pagination');
-const worker = new Worker(new URL('./search-worker.ts', import.meta.url), { type: 'module' });
+const worker = createSearchWorker();
 const pageSize = 20;
 let requestId = 0;
 let debounceTimer: number | undefined;
@@ -72,7 +72,7 @@ window.addEventListener('popstate', () => {
   void search(input.value, parsePage(url.searchParams.get('page')));
 });
 
-worker.addEventListener('message', (event: MessageEvent<SearchResponse>) => {
+worker?.addEventListener('message', (event: MessageEvent<SearchResponse>) => {
   const response = event.data;
   if (response.requestId !== requestId) return;
   if (response.type === 'error') {
@@ -94,7 +94,7 @@ worker.addEventListener('message', (event: MessageEvent<SearchResponse>) => {
   renderResults(response);
 });
 
-worker.addEventListener('error', () => {
+worker?.addEventListener('error', () => {
   showState('검색 결과를 불러오지 못했습니다.');
 });
 
@@ -102,7 +102,14 @@ async function search(query: string, page: number): Promise<void> {
   activeQuery = query;
   requestId += 1;
   showState(query.trim() ? '검색 중입니다.' : '검색어를 입력해 주세요');
-  if (!query.trim()) return;
+  if (!worker) {
+    if (query.trim()) showState('이 브라우저에서는 검색 인덱스를 불러올 수 없습니다.');
+    return;
+  }
+  if (!query.trim()) {
+    worker.postMessage({ type: 'cancel', requestId });
+    return;
+  }
   worker.postMessage({
     type: 'search',
     requestId,
@@ -111,6 +118,15 @@ async function search(query: string, page: number): Promise<void> {
     page,
     pageSize,
   });
+}
+
+function createSearchWorker(): Worker | undefined {
+  if (!('Worker' in window)) return undefined;
+  try {
+    return new Worker(new URL('./search-worker.ts', import.meta.url), { type: 'module' });
+  } catch {
+    return undefined;
+  }
 }
 
 function renderResults(response: SearchResponse): void {
@@ -210,10 +226,13 @@ function showState(message: string): void {
 function updateUrl(query: string, page: number, mode: 'push' | 'replace'): void {
   const url = new URL(window.location.href);
   const trimmed = query.trim();
-  if (trimmed) url.searchParams.set('q', trimmed);
-  else url.searchParams.delete('q');
-  if (page > 1) url.searchParams.set('page', String(page));
-  else url.searchParams.delete('page');
+  if (trimmed) {
+    url.searchParams.set('q', trimmed);
+    url.searchParams.set('page', String(page));
+  } else {
+    url.searchParams.delete('q');
+    url.searchParams.delete('page');
+  }
   const method = mode === 'push' ? 'pushState' : 'replaceState';
   history[method]({}, '', `${url.pathname}${url.search}`);
 }

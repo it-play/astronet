@@ -7,46 +7,37 @@ interface RandomPack {
 }
 
 const manifest = readManifest();
-const randomSection = requiredElement<HTMLElement>('home-random-list');
-const randomList = requiredElement<HTMLUListElement>('home-random-titles');
-const randomStatus = requiredElement<HTMLElement>('home-random-status');
+const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-random-document]')];
+const statuses = [...document.querySelectorAll<HTMLElement>('[data-random-status]')];
 const packCache = new Map<number, Promise<RandomPack>>();
+const PACK_CACHE_LIMIT = 16;
+const hasDocuments = manifest.counts.documents > 0 && manifest.randomPackCount > 0;
 
-if (manifest.counts.documents > 0 && manifest.randomPackCount > 0) {
-  void renderRandomTitles();
+if (hasDocuments) setButtonsDisabled(false);
+
+for (const button of buttons) {
+  button.addEventListener('click', async () => {
+    setButtonsDisabled(true);
+    setStatus('무작위 문서를 여는 중입니다.');
+    try {
+      const record = await randomRecord();
+      window.location.assign(`/wiki/${record.id}/${encodeURIComponent(record.slug)}`);
+    } catch {
+      setStatus('문서를 열지 못했습니다. 다시 시도해 주세요.');
+      setButtonsDisabled(false);
+    }
+  });
 }
 
 window.addEventListener('pageshow', (event) => {
-  if (event.persisted && manifest.counts.documents > 0) {
-    void renderRandomTitles();
+  if (event.persisted && hasDocuments) {
+    setButtonsDisabled(false);
+    clearStatus();
   }
 });
 
-async function renderRandomTitles(): Promise<void> {
-  randomSection.hidden = true;
-  randomStatus.hidden = true;
-  const targetCount = Math.min(5, manifest.counts.documents);
-  const indices = uniqueRandomIndices(manifest.counts.documents, targetCount);
-  try {
-    const records = await Promise.all(indices.map((index) => recordAt(index)));
-    randomList.replaceChildren(
-      ...records.map((record) => {
-        const item = document.createElement('li');
-        const anchor = document.createElement('a');
-        anchor.href = articlePath(record);
-        anchor.textContent = record.title;
-        item.append(anchor);
-        return item;
-      }),
-    );
-    randomSection.hidden = records.length === 0;
-  } catch {
-    randomStatus.textContent = '문서 목록을 불러오지 못했습니다.';
-    randomStatus.hidden = false;
-  }
-}
-
-async function recordAt(index: number): Promise<RandomDocument> {
+async function randomRecord(): Promise<RandomDocument> {
+  const index = randomInteger(manifest.counts.documents);
   const packIndex = Math.floor(index / manifest.randomPackSize);
   const pack = await fetchPack(packIndex);
   const record = pack.documents[index - pack.offset];
@@ -56,7 +47,11 @@ async function recordAt(index: number): Promise<RandomDocument> {
 
 async function fetchPack(index: number): Promise<RandomPack> {
   const cached = packCache.get(index);
-  if (cached) return cached;
+  if (cached) {
+    packCache.delete(index);
+    packCache.set(index, cached);
+    return cached;
+  }
   if (index < 0 || index >= manifest.randomPackCount) throw new Error('Random pack is missing');
   const path = `${manifest.basePath}/random/${index.toString(16).padStart(3, '0')}.json`;
   const request = fetch(path, { cache: 'force-cache' }).then(async (response) => {
@@ -66,18 +61,17 @@ async function fetchPack(index: number): Promise<RandomPack> {
     return pack;
   });
   packCache.set(index, request);
+  while (packCache.size > PACK_CACHE_LIMIT) {
+    const oldest = packCache.keys().next().value as number | undefined;
+    if (oldest === undefined) break;
+    packCache.delete(oldest);
+  }
   try {
     return await request;
   } catch (cause) {
     packCache.delete(index);
     throw cause;
   }
-}
-
-function uniqueRandomIndices(total: number, count: number): number[] {
-  const values = new Set<number>();
-  while (values.size < count) values.add(randomInteger(total));
-  return [...values];
 }
 
 function randomInteger(limit: number): number {
@@ -90,18 +84,26 @@ function randomInteger(limit: number): number {
   return (value[0] ?? 0) % limit;
 }
 
-function articlePath(record: RandomDocument): string {
-  return `/wiki/${record.id}/${encodeURIComponent(record.slug)}`;
+function setButtonsDisabled(disabled: boolean): void {
+  for (const button of buttons) button.disabled = disabled;
+}
+
+function setStatus(message: string): void {
+  for (const status of statuses) {
+    status.textContent = message;
+    status.hidden = false;
+  }
+}
+
+function clearStatus(): void {
+  for (const status of statuses) {
+    status.textContent = '';
+    status.hidden = true;
+  }
 }
 
 function readManifest(): BuildManifest {
   const element = document.getElementById('astronet-build');
   if (!element?.textContent) throw new Error('Build manifest is missing');
   return JSON.parse(element.textContent) as BuildManifest;
-}
-
-function requiredElement<T extends HTMLElement>(id: string): T {
-  const element = document.getElementById(id);
-  if (!element) throw new Error(`Required home element is missing: ${id}`);
-  return element as T;
 }

@@ -20,6 +20,11 @@ interface SearchRequest {
   pageSize: number;
 }
 
+interface SearchCancelRequest {
+  type: 'cancel';
+  requestId: number;
+}
+
 interface SearchResultItem {
   id: string;
   title: string;
@@ -40,17 +45,27 @@ interface SearchResponse {
 }
 
 const scope = self as unknown as DedicatedWorkerGlobalScope;
-const assetCache = new Map<string, Promise<unknown>>();
+const ASSET_CACHE_LIMIT = 96;
+const assetCache = new Map<string, unknown>();
+let activeController: AbortController | undefined;
 
-scope.addEventListener('message', (event: MessageEvent<SearchRequest>) => {
-  if (event.data.type !== 'search') return;
-  void executeSearch(event.data).then(
-    (response) => scope.postMessage(response),
-    () => {
+scope.addEventListener('message', (event: MessageEvent<SearchRequest | SearchCancelRequest>) => {
+  activeController?.abort();
+  activeController = undefined;
+  if (event.data.type === 'cancel') return;
+  const request = event.data;
+  const controller = new AbortController();
+  activeController = controller;
+  void executeSearch(request, controller.signal).then(
+    (response) => {
+      if (!controller.signal.aborted) scope.postMessage(response);
+    },
+    (cause: unknown) => {
+      if (controller.signal.aborted || (cause instanceof DOMException && cause.name === 'AbortError')) return;
       const response: SearchResponse = {
         type: 'error',
-        requestId: event.data.requestId,
-        query: event.data.query,
+        requestId: request.requestId,
+        query: request.query,
         page: 1,
         pageCount: 0,
         total: 0,
@@ -60,10 +75,12 @@ scope.addEventListener('message', (event: MessageEvent<SearchRequest>) => {
       };
       scope.postMessage(response);
     },
-  );
+  ).finally(() => {
+    if (activeController === controller) activeController = undefined;
+  });
 });
 
-async function executeSearch(request: SearchRequest): Promise<SearchResponse> {
+async function executeSearch(request: SearchRequest, signal: AbortSignal): Promise<SearchResponse> {
   const parsed = parseQuery(request.query);
   if (parsed.error) {
     return responseFor(request, { message: parsed.error });
@@ -72,20 +89,25 @@ async function executeSearch(request: SearchRequest): Promise<SearchResponse> {
 
   const scores = new Map<string, number>();
   const exactTitleIds = new Set<string>();
-  const exactEntries = await loadTitleEntries(request.manifest, new Set([`=${parsed.normalized}`]));
+  const exactEntries = await loadTitleEntries(request.manifest, new Set([`=${parsed.normalized}`]), signal);
   for (const entry of exactEntries.values()) {
     exactTitleIds.add(entry[0]);
     const score = entry[1] === 'title' ? 10_000 : 9_000;
     scores.set(entry[0], Math.max(scores.get(entry[0]) ?? 0, score));
   }
   if (!parsed.quoted && parsed.normalized.length >= 2) {
-    const prefixEntries = await loadTitleEntries(request.manifest, new Set([`^${parsed.normalized}`]));
+    const prefixEntries = await loadTitleEntries(request.manifest, new Set([`^${parsed.normalized}`]), signal);
     for (const entry of prefixEntries.values()) {
       const score = entry[1] === 'title' ? 7_000 : 6_500;
       scores.set(entry[0], Math.max(scores.get(entry[0]) ?? 0, score));
     }
-    const typoKeys = new Set([`~${parsed.normalized}`, ...deletions(parsed.normalized).map((value) => `~${value}`)]);
-    const typoEntries = await loadTitleEntries(request.manifest, typoKeys);
+    const deletedQueries = deletions(parsed.normalized);
+    const typoKeys = new Set([
+      `~${parsed.normalized}`,
+      ...deletedQueries.map((value) => `~${value}`),
+      ...deletedQueries.map((value) => `=${value}`),
+    ]);
+    const typoEntries = await loadTitleEntries(request.manifest, typoKeys, signal);
     for (const entry of typoEntries.values()) {
       const score = entry[1] === 'title' ? 5_000 : 4_500;
       scores.set(entry[0], Math.max(scores.get(entry[0]) ?? 0, score));
@@ -95,10 +117,11 @@ async function executeSearch(request: SearchRequest): Promise<SearchResponse> {
   const postingsByTerm = new Map<string, SearchPosting[]>();
   if (parsed.normalized.length >= 2) {
     await Promise.all(
-      parsed.terms.map(async (term) => {
-        const shardPath = request.manifest.search.termShards[searchShardKey(term)];
-        if (!shardPath) return;
-        const shard = await fetchAsset<SearchShard>(shardPath, request.manifest.buildId);
+      [...new Set(parsed.terms)].map(async (term) => {
+        const shardKey = searchShardKey(term);
+        if (!request.manifest.search.termShards.includes(shardKey)) return;
+        const shardPath = `${request.manifest.basePath}/search/terms/${shardKey}.json`;
+        const shard = await fetchAsset<SearchShard>(shardPath, request.manifest.buildId, signal);
         const postings = shard.terms[term] ?? [];
         postingsByTerm.set(term, postings);
         for (const posting of postings) {
@@ -107,15 +130,18 @@ async function executeSearch(request: SearchRequest): Promise<SearchResponse> {
       }),
     );
   }
+  signal.throwIfAborted();
 
-  if (parsed.quoted && parsed.terms.length > 0) {
-    const phraseIds = new Set<string>();
+  const phraseIds = new Set<string>();
+  if (parsed.terms.length > 0 && (parsed.quoted || parsed.terms.length > 1)) {
     for (const id of scores.keys()) {
       if (hasPhraseAtConsecutivePositions(id, parsed.terms, postingsByTerm)) {
         phraseIds.add(id);
         scores.set(id, (scores.get(id) ?? 0) + 3_000);
       }
     }
+  }
+  if (parsed.quoted && parsed.terms.length > 0) {
     for (const id of scores.keys()) {
       if (!exactTitleIds.has(id) && !phraseIds.has(id)) scores.delete(id);
     }
@@ -131,7 +157,7 @@ async function executeSearch(request: SearchRequest): Promise<SearchResponse> {
   const pageCount = Math.ceil(ranked.length / request.pageSize);
   const page = Math.min(Math.max(1, request.page), Math.max(1, pageCount));
   const visibleIds = ranked.slice((page - 1) * request.pageSize, page * request.pageSize);
-  const records = await loadRecords(request.manifest, visibleIds);
+  const records = await loadRecords(request.manifest, visibleIds, signal);
   const results = visibleIds
     .map((id) => records.get(id))
     .filter((record): record is SearchRecord => Boolean(record))
@@ -185,6 +211,7 @@ function parseQuery(rawQuery: string): {
 async function loadTitleEntries(
   manifest: BuildManifest,
   keys: Set<string>,
+  signal: AbortSignal,
 ): Promise<Map<string, TitleSearchEntry>> {
   const byShard = new Map<string, string[]>();
   for (const key of keys) {
@@ -197,9 +224,9 @@ async function loadTitleEntries(
   const entries = new Map<string, TitleSearchEntry>();
   await Promise.all(
     [...byShard].map(async ([shardKey, shardKeys]) => {
-      const path = manifest.search.titleShards[shardKey];
-      if (!path) return;
-      const shard = await fetchAsset<TitleSearchShard>(path, manifest.buildId);
+      if (!manifest.search.titleShards.includes(shardKey)) return;
+      const path = `${manifest.basePath}/search/titles/${shardKey}.json`;
+      const shard = await fetchAsset<TitleSearchShard>(path, manifest.buildId, signal);
       for (const key of shardKeys) {
         for (const entry of shard.keys[key] ?? []) entries.set(`${entry[0]}:${entry[1]}`, entry);
       }
@@ -208,7 +235,11 @@ async function loadTitleEntries(
   return entries;
 }
 
-async function loadRecords(manifest: BuildManifest, ids: string[]): Promise<Map<string, SearchRecord>> {
+async function loadRecords(
+  manifest: BuildManifest,
+  ids: string[],
+  signal: AbortSignal,
+): Promise<Map<string, SearchRecord>> {
   const byBucket = new Map<string, string[]>();
   for (const id of ids) {
     const bucket = searchRecordBucket(id);
@@ -219,9 +250,9 @@ async function loadRecords(manifest: BuildManifest, ids: string[]): Promise<Map<
   const records = new Map<string, SearchRecord>();
   await Promise.all(
     [...byBucket].map(async ([bucket, bucketIds]) => {
-      const path = manifest.search.recordPacks[bucket];
-      if (!path) return;
-      const pack = await fetchAsset<SearchRecordPack>(path, manifest.buildId);
+      if (!manifest.search.recordShards.includes(bucket)) return;
+      const path = `${manifest.basePath}/search/records/${bucket}.json`;
+      const pack = await fetchAsset<SearchRecordPack>(path, manifest.buildId, signal);
       for (const id of bucketIds) {
         const record = pack.records[id];
         if (record) records.set(id, record);
@@ -231,22 +262,29 @@ async function loadRecords(manifest: BuildManifest, ids: string[]): Promise<Map<
   return records;
 }
 
-async function fetchAsset<T extends { buildId: string }>(path: string, buildId: string): Promise<T> {
+async function fetchAsset<T extends { buildId: string }>(
+  path: string,
+  buildId: string,
+  signal: AbortSignal,
+): Promise<T> {
   const cached = assetCache.get(path);
-  if (cached) return (await cached) as T;
-  const request = fetch(path, { cache: 'force-cache' }).then(async (response) => {
-    if (!response.ok) throw new Error('Search asset request failed');
-    const value = (await response.json()) as T;
-    if (value.buildId !== buildId) throw new Error('Search asset build mismatch');
-    return value;
-  });
-  assetCache.set(path, request);
-  try {
-    return await request;
-  } catch (cause) {
+  if (cached) {
     assetCache.delete(path);
-    throw cause;
+    assetCache.set(path, cached);
+    return cached as T;
   }
+  const response = await fetch(path, { cache: 'force-cache', signal });
+  if (!response.ok) throw new Error('Search asset request failed');
+  const value = (await response.json()) as T;
+  signal.throwIfAborted();
+  if (value.buildId !== buildId) throw new Error('Search asset build mismatch');
+  assetCache.set(path, value);
+  while (assetCache.size > ASSET_CACHE_LIMIT) {
+    const oldest = assetCache.keys().next().value as string | undefined;
+    if (!oldest) break;
+    assetCache.delete(oldest);
+  }
+  return value;
 }
 
 function hasPhraseAtConsecutivePositions(
@@ -281,7 +319,7 @@ function tokenize(text: string): string[] {
     if (!segment.isWordLike || token.length < 2 || token.length > 64) continue;
     tokens.push(token);
   }
-  return [...new Set(tokens)];
+  return tokens;
 }
 
 function deletions(value: string): string[] {

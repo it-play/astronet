@@ -1,4 +1,5 @@
-import type { BuildManifest, GraphEdge, GraphNode, GraphTile } from '../content/types';
+import { articleBucket } from '../content/shared';
+import type { BuildManifest, GraphEdge, GraphFocusPack, GraphNode, GraphTile } from '../content/types';
 
 type GraphLevelName = 'distant' | 'medium' | 'near';
 
@@ -13,7 +14,6 @@ interface GraphManifest {
   buildId: string;
   layoutVersion: string;
   levels: Record<GraphLevelName, GraphLevelManifest>;
-  focus: Record<string, { x: number; y: number; tile: string }>;
 }
 
 interface Camera {
@@ -46,7 +46,9 @@ const zoomIn = requiredElement<HTMLButtonElement>('graph-zoom-in');
 const zoomOut = requiredElement<HTMLButtonElement>('graph-zoom-out');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mobile = window.matchMedia('(max-width: 700px)').matches;
+const tileCacheLimit = mobile ? 72 : 192;
 const tileCache = new Map<string, Promise<GraphTile>>();
+const loadedTileOrder = new Map<string, { level: GraphLevelName; key: string; path: string }>();
 const loadedTiles = new Map<GraphLevelName, Map<string, GraphTile>>([
   ['distant', new Map()],
   ['medium', new Map()],
@@ -200,7 +202,7 @@ async function initialize(): Promise<void> {
     }
 
     const restored = restoreHistoryState();
-    if (!restored) applyFocusFromUrl();
+    if (!restored) await applyFocusFromUrl();
     level = levelForZoom(camera.zoom);
     await loadVisibleTiles();
   } catch {
@@ -209,11 +211,22 @@ async function initialize(): Promise<void> {
   }
 }
 
-function applyFocusFromUrl(): void {
-  if (!graphManifest) return;
+async function applyFocusFromUrl(): Promise<void> {
   const focusId = new URL(window.location.href).searchParams.get('focus');
   if (!focusId) return;
-  const focus = graphManifest.focus[focusId];
+  const bucket = articleBucket(focusId, 1024);
+  const path = `${buildManifest.basePath}/graph/focus/${bucket}.json`;
+  const response = await fetch(path, { cache: 'force-cache' });
+  if (response.status === 404) {
+    showStatus('해당 문서를 그래프에서 찾을 수 없습니다.', true);
+    return;
+  }
+  if (!response.ok) throw new Error('Graph focus request failed');
+  const pack = (await response.json()) as GraphFocusPack;
+  if (pack.buildId !== buildManifest.buildId || pack.bucket !== bucket) {
+    throw new Error('Graph focus build mismatch');
+  }
+  const focus = pack.focus[focusId];
   if (!focus) {
     showStatus('해당 문서를 그래프에서 찾을 수 없습니다.', true);
     return;
@@ -235,14 +248,16 @@ async function loadVisibleTiles(): Promise<void> {
   const levelTiles = loadedTiles.get(level)!;
   const paths = [...keys]
     .filter((key) => !levelTiles.has(key))
-    .map((key) => ({ key, path: buildManifest.graph.tiles[`${level}:${key}`] }))
-    .filter((value): value is { key: string; path: string } => Boolean(value.path));
+    .map((key) => ({ key, path: `${buildManifest.basePath}/graph/${level}/${key}.json` }));
 
   if (paths.length > 0 && !persistentStatus) showStatus('그래프를 불러오는 중입니다.');
   await Promise.all(
     paths.map(async ({ key, path }) => {
       const tile = await fetchTile(path);
-      if (tile.level === level) levelTiles.set(key, tile);
+      if (tile.level === level) {
+        levelTiles.set(key, tile);
+        rememberLoadedTile(level, key, path);
+      }
     }),
   );
 
@@ -253,9 +268,27 @@ async function loadVisibleTiles(): Promise<void> {
     if (focused) selectNode(focused);
     pendingSelectionId = undefined;
   }
-  if (nodes.length > 0 && !persistentStatus) status.hidden = true;
-  else showStatus('이 위치에 표시할 문서가 없습니다.');
+  if (!persistentStatus) {
+    if (nodes.length > 0) status.hidden = true;
+    else showStatus('이 위치에 표시할 문서가 없습니다.');
+  }
   scheduleDraw();
+}
+
+function rememberLoadedTile(levelName: GraphLevelName, key: string, path: string): void {
+  const orderKey = `${levelName}:${key}`;
+  loadedTileOrder.delete(orderKey);
+  loadedTileOrder.set(orderKey, { level: levelName, key, path });
+  while (loadedTileOrder.size > tileCacheLimit) {
+    const candidate = [...loadedTileOrder].find(
+      ([, value]) => value.level !== level || !visibleTileKeys.has(value.key),
+    );
+    if (!candidate) return;
+    const [candidateKey, value] = candidate;
+    loadedTileOrder.delete(candidateKey);
+    loadedTiles.get(value.level)?.delete(value.key);
+    tileCache.delete(value.path);
+  }
 }
 
 async function fetchTile(path: string): Promise<GraphTile> {
@@ -359,6 +392,7 @@ function selectAt(clientX: number, clientY: number): void {
   const x = clientX - rect.left;
   const y = clientY - rect.top;
   const hit = currentNodes()
+    .filter((node) => node.kind !== 'hub')
     .map((node) => ({ node, point: project(node), distance: Math.hypot(project(node).x - x, project(node).y - y) }))
     .filter(({ node, distance }) => distance <= Math.max(12, nodeRadius(node) + 5))
     .sort((left, right) => left.distance - right.distance)[0]?.node;
@@ -451,7 +485,9 @@ function draw(): void {
     context.stroke();
   }
 
-  for (const node of [...nodes].sort((left, right) => left.weight - right.weight)) drawNode(node);
+  for (const node of [...nodes].filter((node) => node.kind !== 'hub').sort((left, right) => left.weight - right.weight)) {
+    drawNode(node);
+  }
   drawLabels(nodes, rect.width, rect.height);
 }
 
