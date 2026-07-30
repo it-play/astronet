@@ -1,4 +1,13 @@
-/.idea
-/.claude/command.logs
-/.codex/command.logs
-/.astro
+node_modules/
+dist/
+.astro/
+
+.env
+.env.*
+!.env.example
+
+.idea/
+.DS_Store
+.claude/command.logs
+.codex/command.logs
+.vercel
