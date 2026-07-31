@@ -4,7 +4,7 @@ import type { GraphEdge, GraphNode, GraphTile } from '../../src/content/types';
 import type { BoardHub } from './analysis';
 import type { SourceDocument } from './model';
 
-export const GRAPH_LAYOUT_VERSION = 'hierarchy-v5';
+export const GRAPH_LAYOUT_VERSION = 'galaxy-3d-v1';
 const DISTANT_CLUSTER_GRID = 12;
 const MEDIUM_CLUSTER_GRID = 64;
 const MEDIUM_EDGE_NEIGHBOR_LIMIT = 16;
@@ -15,7 +15,7 @@ export interface GraphArtifacts {
     medium: GraphLevel;
     near: GraphLevel;
   };
-  focus: Record<string, { x: number; y: number; tile: string }>;
+  focus: Record<string, { x: number; y: number; z: number; tile: string }>;
 }
 
 export interface GraphLevel {
@@ -51,7 +51,7 @@ export function buildGraphArtifacts(
   const focus = Object.fromEntries(
     documentNodes.map((node) => [
       node.id,
-      { x: node.x, y: node.y, tile: tileKey(node.x, node.y, near.gridSize) },
+      { x: node.x, y: node.y, z: node.z, tile: tileKey(node.x, node.y, near.gridSize) },
     ]),
   );
   return { levels: { distant, medium, near }, focus };
@@ -79,6 +79,7 @@ function positionHubs(hubs: BoardHub[], documentNodes: GraphNode[]): GraphNode[]
       kind: 'hub' as const,
       x: average(members.map((node) => node.x)),
       y: average(members.map((node) => node.y)),
+      z: average(members.map((node) => node.z)),
       weight: Number(Math.max(1, Math.log1p(members.length)).toFixed(4)),
       community,
     }];
@@ -149,17 +150,25 @@ function positionDocuments(
   strongEdges: GraphEdge[],
   weakEdges: GraphEdge[],
 ): GraphNode[] {
-  const communityIds = [...new Set(communities.values())].sort();
+  const communitySize = new Map<string, number>();
+  for (const community of communities.values()) {
+    communitySize.set(community, (communitySize.get(community) ?? 0) + 1);
+  }
+  const communityIds = [...communitySize]
+    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
+    .map(([id]) => id);
   const centers = new Map<string, { x: number; y: number }>();
-  const columns = Math.max(1, Math.ceil(Math.sqrt(communityIds.length)));
-  const rows = Math.max(1, Math.ceil(communityIds.length / columns));
+  const depthCenters = new Map<string, number>();
   communityIds.forEach((id, index) => {
-    const column = index % columns;
-    const row = Math.floor(index / columns);
+    const radialIndex = index - 1;
+    const radialProgress = Math.sqrt(Math.max(0, radialIndex) / Math.max(1, communityIds.length - 2));
+    const radius = index === 0 ? 0 : 0.17 + radialProgress * 0.2;
+    const angle = radialIndex * Math.PI * (3 - Math.sqrt(5)) - Math.PI / 2;
     centers.set(id, {
-      x: (column + 0.5) / columns,
-      y: (row + 0.5) / rows,
+      x: 0.5 + Math.cos(angle) * radius,
+      y: 0.5 + Math.sin(angle) * radius,
     });
+    depthCenters.set(id, index === 0 ? 0.5 : 0.28 + hashUnit(id, 'community-depth') * 0.44);
   });
 
   const degree = new Map<string, number>();
@@ -172,15 +181,15 @@ function positionDocuments(
     degree.set(edge.target, (degree.get(edge.target) ?? 0) + edge.weight);
   }
 
-  const communitySize = new Map<string, number>();
-  for (const community of communities.values()) communitySize.set(community, (communitySize.get(community) ?? 0) + 1);
   return [...documents.values()]
     .sort((left, right) => left.id.localeCompare(right.id))
     .map((document) => {
       const community = communities.get(document.id) ?? document.id;
       const center = centers.get(community) ?? { x: 0.5, y: 0.5 };
+      const depthCenter = depthCenters.get(community) ?? 0.5;
       const count = communitySize.get(community) ?? 1;
       const radius = Math.min(0.18, 0.025 + Math.sqrt(count) * 0.006);
+      const depthRadius = Math.min(0.16, 0.035 + Math.sqrt(count) * 0.004);
       const angle = hashUnit(document.id, 'angle') * Math.PI * 2;
       const distance = Math.sqrt(hashUnit(document.id, 'distance')) * radius;
       return {
@@ -190,6 +199,7 @@ function positionDocuments(
         kind: 'document' as const,
         x: clamp(center.x + Math.cos(angle) * distance),
         y: clamp(center.y + Math.sin(angle) * distance),
+        z: clamp(depthCenter + (hashUnit(document.id, 'depth') - 0.5) * depthRadius * 2),
         weight: Number((1 + Math.log1p(degree.get(document.id) ?? 0)).toFixed(4)),
         community,
       };
@@ -232,6 +242,7 @@ function clusterSpatially(
       kind: 'cluster',
       x: average(members.map((node) => node.x)),
       y: average(members.map((node) => node.y)),
+      z: average(members.map((node) => node.z)),
       weight: members.reduce((sum, node) => sum + node.weight, 0),
       community: members[0]!.community,
     }));

@@ -22,18 +22,15 @@ import SiteLayout from '../layouts/SiteLayout.astro';
         id="graph-canvas"
         tabindex="0"
         role="application"
-        aria-label="문서 그래프. 드래그하거나 방향키로 이동하고, 휠 또는 더하기와 빼기 키로 확대할 수 있습니다."
+        aria-label="3D 문서 그래프. 드래그하거나 방향키로 이동하고, 휠, 핀치 또는 더하기와 빼기 키로 부드럽게 확대할 수 있습니다. 가까이 확대하면 문서 노드를 선택해 자세히 볼 수 있습니다."
       ></canvas>
+      <div class="graph-labels" id="graph-labels" aria-hidden="true"></div>
       <p class="graph-status" id="graph-status" role="status">그래프를 불러오는 중입니다.</p>
     </div>
 
     <aside class="graph-node-panel" id="graph-node-panel" aria-labelledby="graph-node-title" aria-live="polite" hidden>
-      <button class="graph-node-panel__close" id="graph-node-close" type="button" aria-label="선택 닫기">닫기</button>
       <h2 id="graph-node-title"></h2>
-      <div class="graph-node-panel__actions">
-        <a id="graph-node-open" href="/">문서 열기</a>
-        <button id="graph-node-center" type="button">가운데로 이동</button>
-      </div>
+      <a id="graph-node-open" href="/">자세히 보기</a>
     </aside>
 
     <div class="graph-zoom-controls" aria-label="그래프 확대와 축소">
@@ -120,8 +117,31 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     cursor: grabbing;
   }
 
+  .graph-labels {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  :global(.graph-label) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 220px;
+    overflow: hidden;
+    color: rgb(255 255 255 / 78%);
+    font-size: 12px;
+    line-height: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    will-change: transform;
+  }
+
   .graph-status {
     position: absolute;
+    z-index: 2;
     bottom: var(--space-6);
     left: 50%;
     min-height: 44px;
@@ -139,57 +159,73 @@ import SiteLayout from '../layouts/SiteLayout.astro';
   .graph-node-panel {
     position: absolute;
     z-index: 4;
-    right: var(--page-gutter);
-    bottom: var(--space-6);
-    width: min(360px, calc(100% - (var(--page-gutter) * 2)));
-    padding: var(--space-6);
+    top: 0;
+    left: 0;
+    width: min(300px, calc(100% - (var(--space-4) * 2)));
+    padding: var(--space-4);
+    transform: translate(-50%, calc(-100% - 16px));
     border: 1px solid rgb(255 255 255 / 24%);
-    border-radius: var(--radius-sm);
-    background: rgb(29 31 37 / 96%);
+    border-radius: var(--radius-md);
+    background: rgb(29 31 37 / 98%);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 34%);
     color: var(--color-on-dark);
   }
 
-  .graph-node-panel__close {
+  .graph-node-panel::after {
     position: absolute;
-    top: var(--space-2);
-    right: var(--space-2);
-    min-width: 44px;
-    min-height: 44px;
+    bottom: -7px;
+    left: var(--graph-popover-pointer-x, 50%);
+    width: 12px;
+    height: 12px;
+    transform: translateX(-50%) rotate(45deg);
+    border-right: 1px solid rgb(255 255 255 / 24%);
+    border-bottom: 1px solid rgb(255 255 255 / 24%);
+    background: var(--color-surface-dark-elevated);
+    content: '';
+  }
+
+  .graph-node-panel.is-below {
+    transform: translate(-50%, 16px);
+  }
+
+  .graph-node-panel.is-below::after {
+    top: -7px;
+    bottom: auto;
     border: 0;
-    background: transparent;
-    color: rgb(255 255 255 / 68%);
-    cursor: pointer;
-    font-size: var(--font-size-utility);
+    border-top: 1px solid rgb(255 255 255 / 24%);
+    border-left: 1px solid rgb(255 255 255 / 24%);
   }
 
   .graph-node-panel h2 {
-    max-width: calc(100% - 48px);
-    margin: 0 0 var(--space-6);
+    margin: 0 0 var(--space-4);
     color: var(--color-on-dark);
-    font-size: var(--font-size-title-md);
+    font-size: var(--font-size-title-sm);
     font-weight: 500;
     line-height: 1.45;
   }
 
-  .graph-node-panel__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-6);
+  .graph-node-panel a {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--space-4);
+    border: 1px solid rgb(255 255 255 / 88%);
+    border-radius: var(--radius-sm);
+    background: var(--color-on-dark);
+    color: var(--color-surface-dark);
+    cursor: pointer;
+    font-size: var(--font-size-utility);
+    font-weight: 600;
+    text-decoration: none;
   }
 
-  .graph-node-panel__actions a,
-  .graph-node-panel__actions button {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-    padding: 0;
-    border: 0;
-    border-bottom: 1px solid rgb(255 255 255 / 44%);
-    background: transparent;
-    color: var(--color-on-dark);
-    cursor: pointer;
-    font-weight: 500;
-    text-decoration: none;
+  .graph-node-panel a:active {
+    background: rgb(255 255 255 / 82%);
+  }
+
+  .graph-node-panel a:focus-visible {
+    outline-offset: 2px;
   }
 
   .graph-zoom-controls {
@@ -224,10 +260,12 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     }
 
     .graph-node-panel {
-      right: var(--page-gutter);
-      bottom: calc(var(--space-6) + 52px);
-      left: var(--page-gutter);
-      width: auto;
+      width: min(280px, calc(100% - (var(--space-4) * 2)));
+    }
+
+    :global(.graph-label) {
+      max-width: 160px;
+      font-size: 11px;
     }
 
     .graph-status {

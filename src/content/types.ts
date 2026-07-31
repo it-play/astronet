@@ -89,6 +89,7 @@ export interface GraphNode {
   kind: 'document' | 'cluster' | 'hub';
   x: number;
   y: number;
+  z: number;
   weight: number;
   community: string;
 }
@@ -111,7 +112,7 @@ export interface GraphTile {
 export interface GraphFocusPack {
   buildId: string;
   bucket: string;
-  focus: Record<string, { x: number; y: number; tile: string }>;
+  focus: Record<string, { x: number; y: number; z: number; tile: string }>;
 }
 
 export interface BuildManifest {
