@@ -41,8 +41,15 @@ interface CameraState {
 interface SavedGraphState {
   buildId: string;
   camera: CameraState;
+  selectedNode?: GraphNode;
   selectedId?: string;
   weakEdges: boolean;
+}
+
+interface OverviewHit {
+  x: number;
+  y: number;
+  z: number;
 }
 
 interface LabelEntry {
@@ -107,6 +114,8 @@ let graphManifest: GraphManifest | undefined;
 let graphPoints: Points<BufferGeometry, ShaderMaterial> | undefined;
 let strongLines: LineSegments | undefined;
 let weakLines: LineSegments | undefined;
+let overviewCoordinates = new Float32Array();
+let overviewPointDiameters = new Float32Array();
 let camera: CameraState = { x: 0.5, y: 0.5, zoom: MIN_ZOOM };
 let targetCamera: CameraState = { ...camera };
 let selectedNode: GraphNode | undefined;
@@ -115,6 +124,7 @@ let labelEntries: LabelEntry[] = [];
 let tileTimer = 0;
 let stateTimer = 0;
 let tileRequestVersion = 0;
+let selectionRequestVersion = 0;
 let dragDistance = 0;
 let persistentStatus = false;
 let lastFrameTime = performance.now();
@@ -218,7 +228,7 @@ canvas.addEventListener('keydown', (event) => {
     case 'Enter':
     case ' ':
       event.preventDefault();
-      selectNearestToCenter();
+      void selectNearestToCenter().catch(() => showStatus('문서 정보를 불러오지 못했습니다.', true));
       break;
   }
 });
@@ -326,6 +336,7 @@ async function applyFocusFromUrl(): Promise<void> {
 interface DecodedOverview {
   nodeCount: number;
   edgeCount: number;
+  pointCoordinates: number[];
   pointPositions: number[];
   pointDiameters: number[];
   strongPositions: number[];
@@ -349,6 +360,7 @@ function decodeOverview(buffer: ArrayBuffer): DecodedOverview {
   if (buffer.byteLength !== expectedLength) throw new Error('Graph overview length mismatch');
 
   const allPositions = new Float32Array(nodeCount * 3);
+  const pointCoordinates: number[] = [];
   const pointPositions: number[] = [];
   const pointDiameters: number[] = [];
   let offset = OVERVIEW_HEADER_SIZE;
@@ -363,6 +375,7 @@ function decodeOverview(buffer: ArrayBuffer): DecodedOverview {
     allPositions[index * 3 + 1] = scratchVector.y;
     allPositions[index * 3 + 2] = scratchVector.z;
     if ((flags & 1) !== 0) {
+      pointCoordinates.push(x, y, z);
       pointPositions.push(scratchVector.x, scratchVector.y, scratchVector.z);
       pointDiameters.push(decodeNodeDiameter(encodedSize));
     }
@@ -387,10 +400,20 @@ function decodeOverview(buffer: ArrayBuffer): DecodedOverview {
     );
     offset += edgeStride;
   }
-  return { nodeCount, edgeCount, pointPositions, pointDiameters, strongPositions, weakPositions };
+  return {
+    nodeCount,
+    edgeCount,
+    pointCoordinates,
+    pointPositions,
+    pointDiameters,
+    strongPositions,
+    weakPositions,
+  };
 }
 
 function mountOverview(overview: DecodedOverview): void {
+  overviewCoordinates = new Float32Array(overview.pointCoordinates);
+  overviewPointDiameters = new Float32Array(overview.pointDiameters);
   const pointGeometry = new BufferGeometry();
   pointGeometry.setAttribute('position', new Float32BufferAttribute(overview.pointPositions, 3));
   pointGeometry.setAttribute('pointDiameter', new Float32BufferAttribute(overview.pointDiameters, 1));
@@ -479,18 +502,8 @@ async function loadVisibleDetailTiles(): Promise<void> {
   nextKeys.forEach((key) => visibleTileKeys.add(key));
   const requests: Promise<void>[] = [];
   for (const key of visibleTileKeys) {
-    if (loadedTiles.has(key)) {
-      rememberLoadedTile(key, `${buildManifest.basePath}/graph/detail/${key}.json`);
-      continue;
-    }
-    const tilePath = `${buildManifest.basePath}/graph/detail/${key}.json`;
-    requests.push(
-      fetchTile(tilePath).then((tile) => {
-        if (tile.level !== 'detail') throw new Error('Graph detail tile mismatch');
-        loadedTiles.set(key, tile);
-        rememberLoadedTile(key, tilePath);
-      }),
-    );
+    if (!loadedTiles.has(key)) requests.push(loadDetailTile(key).then(() => undefined));
+    else rememberLoadedTile(key, detailTilePath(key));
   }
   await Promise.all(requests);
   if (requestVersion !== tileRequestVersion) return;
@@ -503,6 +516,24 @@ async function loadVisibleDetailTiles(): Promise<void> {
       pendingSelectionId = undefined;
     }
   }
+}
+
+async function loadDetailTile(key: string): Promise<GraphTile> {
+  const loaded = loadedTiles.get(key);
+  if (loaded) {
+    rememberLoadedTile(key, detailTilePath(key));
+    return loaded;
+  }
+  const tilePath = detailTilePath(key);
+  const tile = await fetchTile(tilePath);
+  if (tile.level !== 'detail' || tile.tile !== key) throw new Error('Graph detail tile mismatch');
+  loadedTiles.set(key, tile);
+  rememberLoadedTile(key, tilePath);
+  return tile;
+}
+
+function detailTilePath(key: string): string {
+  return `${buildManifest.basePath}/graph/detail/${key}.json`;
 }
 
 function rememberLoadedTile(key: string, tilePath: string): void {
@@ -609,7 +640,6 @@ function cameraTargetChanged(): void {
     persistentStatus = false;
     status.hidden = true;
   }
-  if (targetCamera.zoom < DETAIL_LOAD_ZOOM && selectedNode) clearSelection();
   startAnimation();
   scheduleDetailUpdate();
   scheduleStateSave();
@@ -657,40 +687,89 @@ function finishPointer(event: PointerEvent): void {
   pointers.delete(event.pointerId);
   if (pointers.size === 0) canvas.classList.remove('is-dragging');
   if (wasSingle && point && dragDistance < 6 && event.type === 'pointerup') {
-    selectAt(event.clientX, event.clientY);
+    void selectAt(event.clientX, event.clientY).catch(() => showStatus('문서 정보를 불러오지 못했습니다.', true));
   }
   dragDistance = 0;
 }
 
-function selectAt(clientX: number, clientY: number): void {
-  if (camera.zoom < DETAIL_LOAD_ZOOM) {
-    clearSelection();
-    return;
-  }
+async function selectAt(clientX: number, clientY: number): Promise<void> {
+  const requestVersion = ++selectionRequestVersion;
   const rect = canvas.getBoundingClientRect();
   const x = clientX - rect.left;
   const y = clientY - rect.top;
-  const hit = currentDetailNodes()
-    .map((node) => {
-      const point = projectNode(node);
-      return { node, distance: Math.hypot(point.x - x, point.y - y) };
-    })
-    .filter(({ node, distance: nodeDistance }) => nodeDistance <= Math.max(12, projectedNodeRadius(node) + 5))
-    .sort((left, right) => left.distance - right.distance)[0]?.node;
+  const hit = findOverviewHit(x, y);
   if (!hit) {
     clearSelection();
     return;
   }
-  selectNode(hit);
+  const node = await resolveOverviewNode(hit);
+  if (requestVersion !== selectionRequestVersion) return;
+  if (node) selectNode(node);
 }
 
-function selectNearestToCenter(): void {
-  if (camera.zoom < DETAIL_LOAD_ZOOM) return;
+async function selectNearestToCenter(): Promise<void> {
+  const requestVersion = ++selectionRequestVersion;
   const center = { x: canvas.clientWidth / 2, y: canvas.clientHeight / 2 };
-  const nearest = currentDetailNodes()
-    .map((node) => ({ node, distance: distance(projectNode(node), center) }))
-    .sort((left, right) => left.distance - right.distance)[0]?.node;
-  if (nearest) selectNode(nearest);
+  const hit = findOverviewHit(center.x, center.y, Number.POSITIVE_INFINITY);
+  if (!hit) return;
+  const node = await resolveOverviewNode(hit);
+  if (requestVersion === selectionRequestVersion && node) selectNode(node);
+}
+
+function findOverviewHit(screenX: number, screenY: number, maximumDistance = 12): OverviewHit | undefined {
+  if (!graphPoints || overviewCoordinates.length === 0) return undefined;
+  const positions = graphPoints.geometry.getAttribute('position');
+  const rect = canvas.getBoundingClientRect();
+  let bestIndex = -1;
+  let bestDistanceSquared = Number.POSITIVE_INFINITY;
+  for (let index = 0; index < positions.count; index += 1) {
+    scratchVector.fromBufferAttribute(positions, index).project(webglCamera);
+    if (scratchVector.z < -1 || scratchVector.z > 1) continue;
+    const pointX = (scratchVector.x + 1) * rect.width / 2;
+    const pointY = (1 - scratchVector.y) * rect.height / 2;
+    const renderedRadius = projectedOverviewRadius(overviewPointDiameters[index] ?? 0);
+    const hitRadius = Math.max(maximumDistance, renderedRadius + 5);
+    const distanceSquared = (pointX - screenX) ** 2 + (pointY - screenY) ** 2;
+    if (distanceSquared > hitRadius ** 2 || distanceSquared >= bestDistanceSquared) continue;
+    bestIndex = index;
+    bestDistanceSquared = distanceSquared;
+  }
+  if (bestIndex < 0) return undefined;
+  return {
+    x: overviewCoordinates[bestIndex * 3]!,
+    y: overviewCoordinates[bestIndex * 3 + 1]!,
+    z: overviewCoordinates[bestIndex * 3 + 2]!,
+  };
+}
+
+async function resolveOverviewNode(hit: OverviewHit): Promise<GraphNode | undefined> {
+  if (!graphManifest) return undefined;
+  const epsilon = 2 / 65_535;
+  const keys = new Set([
+    graphTileKey(hit.x - epsilon, hit.y - epsilon, graphManifest.detail.gridSize),
+    graphTileKey(hit.x + epsilon, hit.y - epsilon, graphManifest.detail.gridSize),
+    graphTileKey(hit.x - epsilon, hit.y + epsilon, graphManifest.detail.gridSize),
+    graphTileKey(hit.x + epsilon, hit.y + epsilon, graphManifest.detail.gridSize),
+  ]);
+  const tiles = await Promise.all(
+    [...keys].filter((key) => availableTileKeys.has(key)).map((key) => loadDetailTile(key)),
+  );
+  let nearest: GraphNode | undefined;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+  for (const node of tiles.flatMap((tile) => tile.nodes)) {
+    const coordinateDistance = (node.x - hit.x) ** 2 + (node.y - hit.y) ** 2 + (node.z - hit.z) ** 2;
+    if (coordinateDistance >= nearestDistance) continue;
+    nearest = node;
+    nearestDistance = coordinateDistance;
+  }
+  return nearestDistance <= epsilon ** 2 * 3 ? nearest : undefined;
+}
+
+function projectedOverviewRadius(worldDiameter: number): number {
+  const rect = canvas.getBoundingClientRect();
+  const pixelsPerWorldUnit = rect.height * camera.zoom /
+    (2 * CAMERA_DISTANCE * Math.tan(CAMERA_FOV * Math.PI / 360));
+  return Math.min(22, Math.max(0.675, worldDiameter * pixelsPerWorldUnit / 2));
 }
 
 function selectNode(node: GraphNode): void {
@@ -704,6 +783,7 @@ function selectNode(node: GraphNode): void {
 }
 
 function clearSelection(restoreCanvasFocus = false): void {
+  selectionRequestVersion += 1;
   selectedNode = undefined;
   nodePanel.hidden = true;
   selectionRing.visible = false;
@@ -863,8 +943,9 @@ function restoreHistoryState(): boolean {
   clampCamera(targetCamera);
   weakControl.checked = value.weakEdges;
   if (weakLines) weakLines.visible = weakControl.checked;
-  pendingSelectionId = value.selectedId;
   updateCameraProjection();
+  if (value.selectedNode) selectNode(value.selectedNode);
+  else pendingSelectionId = value.selectedId;
   return true;
 }
 
@@ -877,6 +958,7 @@ function saveHistoryState(): void {
   const state: SavedGraphState = {
     buildId: buildManifest.buildId,
     camera: { ...targetCamera },
+    selectedNode,
     selectedId: selectedNode?.id,
     weakEdges: weakControl.checked,
   };
@@ -935,6 +1017,12 @@ function overlaps(
 
 function clampInteger(value: number, minimum: number, maximum: number): number {
   return Math.min(maximum, Math.max(minimum, value));
+}
+
+function graphTileKey(x: number, y: number, gridSize: number): string {
+  const column = clampInteger(Math.floor(x * gridSize), 0, gridSize - 1);
+  const row = clampInteger(Math.floor(y * gridSize), 0, gridSize - 1);
+  return `${column}-${row}`;
 }
 
 function readBuildManifest(): BuildManifest {
