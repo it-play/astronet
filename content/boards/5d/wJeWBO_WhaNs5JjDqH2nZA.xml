@@ -1,0 +1,33 @@
+<navigation-board id="wJeWBO_WhaNs5JjDqH2nZA" theme="default">
+  <header>
+    <title>21세기 북조선자유민주주의공화국 사건사고</title>
+    <subtitle>법적 전신인 조선민주주의인민공화국 후기부터 계승국의 개방까지</subtitle>
+  </header>
+  <section id="late-dprk" label="조선민주주의인민공화국 후기" group="twenty-first-late-dprk">
+    <document-links>
+      <document target="tf7L7fe9Yu9o5tUN_oWXow">새천년 혁신 계획</document>
+      <document target="dHcCQpwE8jd08w021Xw8WA">제2차 연평해전</document>
+      <document target="xzj2AHXIdq1TZTchkNil8w">북한 군제개혁</document>
+      <document target="LfYgrpmaTrwaqcpGZwsxFw">2008년 학생민주화운동</document>
+      <document target="VGS4qKD9F6WqREww4fZ9aQ">2010년 자유의노래사건</document>
+      <document target="rWRQ0gxvEasggSa1DQC5iA">2011년 개성민주화시위</document>
+      <document target="KrqPCcmjn_kKHYNk6XmyRg">2013년 평양시민신문 김씨일가 비판 사건</document>
+      <document target="3xleGBNSYWgWYFGeQwgG3w">12.25 혁명</document>
+    </document-links>
+  </section>
+  <section id="transition" label="2016년 체제전환" group="twenty-first-transition">
+    <document-links>
+      <document target="zgamzLEJ0OZFbhstUhwZSg">2016년 1월 1일 군부 반란</document>
+      <document target="JbO_XMY8419dI4nYYh5oAA">2016년 제헌총선</document>
+      <document target="rMPecRhONjgQ8PcHieuzoA">2016년 북조선 헌법</document>
+      <document target="0v920O9pMADXKPx5QVv8JQ">2016년 북조선 대통령 선거</document>
+    </document-links>
+  </section>
+  <section id="republic" label="계승국의 정치와 개방" group="twenty-first-republic">
+    <document-links>
+      <document target="d_AtmPGGFJpKoJJjH6ztVw">신기훈</document>
+      <document target="ZHXbk7WIqTMmqeiVq03P8g">북조선 국민의회</document>
+      <document target="GpCzL1eFqAHfS6tNFLZnAw">자유조선 2029 계획</document>
+    </document-links>
+  </section>
+</navigation-board>
