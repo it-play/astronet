@@ -1,7 +1,6 @@
 <navigation-board id="blnIOthj1D701V-4wQtZcw" theme="default">
   <header>
     <title>북조선자유민주주의공화국 대통령</title>
-    <subtitle>헌정 수립 이후의 역대 대통령</subtitle>
   </header>
   <section id="presidents" label="역대 대통령" group="republic-presidents">
     <document-links>

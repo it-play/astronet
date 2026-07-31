@@ -3,17 +3,21 @@
   <body>
     <include-board ref="wJeWBO_WhaNs5JjDqH2nZA"/>
     <section>
+      <title>개요</title>
+      <p>2008년 학생민주화운동은 2008년 학생들을 중심으로 일어난 민주화 운동이다. 정권은 이 운동을 무력으로 진압했다.</p>
+    </section>
+    <section>
       <title>배경</title>
-      <p><ref href="doc:arMPxSeVP5TFWqp2vIHqkw">국가계획 2000</ref>으로 교육 수준이 높아지고 <ref href="doc:tf7L7fe9Yu9o5tUN_oWXow">새천년 혁신 계획</ref>으로 인터넷과 외부 정보가 퍼지면서 민주화를 요구하는 목소리가 성장했다.</p>
+      <p><ref href="doc:arMPxSeVP5TFWqp2vIHqkw">국가계획 2000</ref>으로 교육 수준이 높아지고 <ref href="doc:tf7L7fe9Yu9o5tUN_oWXow">새천년 혁신 계획</ref>으로 인터넷과 외부 정보가 확산되면서 민주화를 요구하는 목소리가 커졌다.</p>
     </section>
     <section>
       <title>전개</title>
-      <p>2008년 학생들이 민주화를 요구하는 운동을 일으켰다. 정권은 이 운동을 무력으로 진압했다.</p>
+      <p>학생들은 민주화를 요구하며 집단행동에 나섰다. 그러나 정권은 이를 무력으로 진압했다.</p>
     </section>
     <section>
       <title>영향</title>
-      <p>학생민주화운동의 영향으로 북한 수뇌부는 형식적으로나마 다당제를 허용했다. 이후 중소정당들이 존재하게 되었지만 당시에는 실질적인 정치 참여를 할 수 없었다.</p>
-      <p>운동 이후에도 <ref href="doc:VGS4qKD9F6WqREww4fZ9aQ">자유의노래사건</ref>과 <ref href="doc:rWRQ0gxvEasggSa1DQC5iA">개성민주화시위</ref>로 민주화 요구가 이어졌다.</p>
+      <p>학생민주화운동의 영향으로 북한 수뇌부는 형식적으로나마 다당제를 허용했다. 이에 따라 중소정당들이 생겨났으나 당시에는 실질적인 정치 참여가 불가능했다.</p>
+      <p>무력 진압에도 민주화 요구는 사라지지 않았다. 이후 <ref href="doc:VGS4qKD9F6WqREww4fZ9aQ">자유의노래사건</ref>과 <ref href="doc:rWRQ0gxvEasggSa1DQC5iA">개성민주화시위</ref>가 이어졌다.</p>
     </section>
   </body>
 </document>
