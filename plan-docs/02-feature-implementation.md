@@ -214,19 +214,20 @@ Locally computed Korean embeddings remain an optional replacement for only the w
 - Generate stable hierarchical communities and spatial coordinates from the undirected graph.
 - Weight strong edges above weak edges and shared-board hubs below direct authored document connections.
 - Preserve previous positions as practical and version the clustering and layout algorithms.
-- Emit separate distant, medium, and near graph tile families; aggregate community edges rather than materializing all underlying edges at distant zoom.
-- Keep distant and medium clusters unnamed. Show actual titles only when real document nodes are visible.
+- Emit one compressed binary overview containing all document coordinates and a deterministic, bounded representative edge set.
+- Emit separate spatial detail tiles only for document titles, URLs, and selection metadata; these tiles never provide replacement render geometry.
 
 ### Runtime
 
 - Load graph code and tiles only on the dedicated graph route.
-- Open `/graph` at the distant whole-corpus view and `/graph?focus=ID` near the focused document.
-- Use a WebGL 3D scene with stable depth coordinates and load only visible tiles plus a bounded adjacent buffer.
+- Open `/graph` at the whole-corpus view and `/graph?focus=ID` centered and zoomed on the focused document.
+- Fetch the overview once and keep one WebGL 3D point-and-line model mounted for the route lifetime.
 - Support damped pointer pan and continuous wheel zoom plus touch pan and pinch zoom.
-- Crossfade adjacent semantic detail levels around their zoom boundaries so tile-family changes never snap the camera or blank the galaxy.
-- Retain the full corpus hierarchy on mobile while lowering node, label, particle, and tile-buffer budgets.
-- Use wheel, pinch, keyboard, or the explicit zoom controls to move between aggregate clusters and real documents; selecting a cluster never changes the camera.
-- Select document nodes to open a compact title-only popover anchored to the node with one separate `Open article` action.
+- Apply zoom only to the camera projection; never crossfade levels, replace nodes, or rebuild edge geometry at a zoom boundary.
+- Load visible detail tiles plus a bounded adjacent buffer only when titles and interaction targets are useful.
+- Retain the identical corpus-wide graph geometry on mobile while lowering label, pixel-ratio, and metadata-tile-buffer budgets.
+- Use wheel, pinch, keyboard, or the explicit zoom controls to scale and frame the same model.
+- Select document nodes to open a compact title-only popover anchored to the node with one separate `자세히 보기` action.
 - Navigate to articles in the same tab by default while preserving native new-tab behavior.
 - Save camera, zoom, selected node, and relevant controls in history state before article navigation; browser Back restores the exact graph view.
 - Do not add graph-specific document search.
@@ -280,7 +281,7 @@ Locally computed Korean embeddings remain an optional replacement for only the w
 
 ### Graph
 
-- Distant, medium, and near zoom levels load bounded tiles and never transfer or render the complete raw graph at once.
+- One bounded overview buffer stays mounted at every zoom; zoom changes only the camera while metadata tiles affect titles and hit targets, not visible graph geometry.
 - Strong and weak edges are visually distinguishable solid strokes, weak edges are visible by default and toggleable, and all stored document edges are undirected.
 - Global and document-focused entries open the correct view, node selection never navigates immediately, and browser Back restores the previous graph state.
 - Mobile retains full-corpus navigation with touch controls and adaptive density.
@@ -288,7 +289,7 @@ Locally computed Korean embeddings remain an optional replacement for only the w
 ### Accessibility and Design
 
 - Semantic headings, link labels, tables, figures, disclosures, dialogs, popovers, video controls, pagination, and status messages remain keyboard and screen-reader usable.
-- Visible focus does not depend on hover; reduced motion disables nonessential graph motion and particles.
+- Visible focus does not depend on hover; reduced motion disables nonessential graph interpolation.
 - Article, search, home, and graph surfaces follow `DESIGN.md` and the phase 1 design contract rather than a generic dashboard treatment.
 - Navigation-board theme freedom never overrides focus visibility, text alternatives, logical order, touch targets, or mobile usability.
 

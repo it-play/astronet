@@ -58,8 +58,8 @@ This directory is the planning source of truth and the approved baseline for pha
 - Allowlisted external video players load only after explicit interaction with a local poster; viewport proximity alone never creates the external request.
 - Article and navigation-board images must be repository-owned deployment assets; arbitrary remote-image hotlinks are not allowed.
 - Selecting an ordinary article figure opens its full-size image in an accessible modal; navigation-board media and figures explicitly linked to documents preserve their navigation action instead.
-- The graph uses a WebGL 3D galaxy with continuously damped semantic zoom: corpus clusters at distant zoom and real documents at close zoom crossfade without camera jumps.
-- Distant and medium graph clusters have no generated semantic names; actual titles appear only when real document nodes become visible.
+- The graph uses one WebGL 3D galaxy model at every zoom. All document nodes and the bounded overview edge set stay mounted while continuously damped camera zoom only scales and frames that same geometry.
+- Zoom never replaces nodes with clusters or crossfades between graph datasets. Nearby metadata tiles add titles and interaction targets without changing the rendered model.
 - The graph is always a dedicated page, never an embedded article widget; the global entry opens the whole-corpus view and an article entry opens the same page focused on that article.
 - The dedicated graph page has no graph-specific document search; targeted discovery remains in the site search and document-focused graph entry.
 - Mobile retains the complete corpus-wide galaxy graph with touch navigation while reducing visible density and decorative effects to fit device performance.

@@ -65,10 +65,10 @@ This target rules out shipping the complete graph to every browser, scanning the
 - A compact title-only popover anchored to the selected node with one article-navigation action
 - Clear solid strong edges and lower-contrast solid weak edges
 - A control for hiding or showing weak edges
-- Galaxy-like pan and semantic zoom across the complete corpus
+- Galaxy-like pan and continuous camera zoom across the complete corpus
 - Corpus-wide touch navigation on small screens with adaptive density and effects
 
-The global graph entry opens the dedicated page at the distant whole-corpus view. An article's graph action navigates to the same dedicated page with that document as the focus, then loads the nearby zoom level centered on it. The focus document identifier is represented in the graph URL; it does not cause graph code or graph tiles to load on the article route.
+The global graph entry opens the dedicated page at the whole-corpus view. An article's graph action navigates to the same dedicated page centered and zoomed on that document. The focus document identifier is represented in the graph URL; it does not cause graph code or graph metadata tiles to load on the article route.
 
 Targeted document discovery remains the responsibility of the dedicated site search. The graph page focuses on spatial exploration and document-focused entry rather than duplicating the search interface.
 
@@ -151,7 +151,7 @@ The root `DESIGN.md` is the visual reference. Astronet should adapt its editoria
 Astronet has two deliberately different but related surfaces:
 
 - **Editorial archive:** home, search, and article pages use the quiet white canvas, dark ink, hairline rules, and generous spacing from `DESIGN.md`.
-- **Galaxy observatory:** the dedicated graph page uses the same type and control language on `{colors.surface-dark}`, with depth created by density, scale, edges, and restrained particles rather than a decorative gradient.
+- **Galaxy observatory:** the dedicated graph page uses the same type and control language on `{colors.surface-dark}`, with depth created by stable 3D coordinates, density, scale, and edges rather than a decorative gradient.
 
 The transition between these surfaces is the product's signature. Article UI stays calm enough for long Korean reading; the graph spends the visual intensity in one place. Navigation-board themes may be expressive inside their scoped roots but do not redefine the surrounding archive.
 
@@ -185,7 +185,7 @@ Interaction contract:
 
 - Follow the `DESIGN.md` no-hover policy: functionality must never depend on hover and no separate hover styling is required.
 - Provide visible keyboard focus, pressed, selected, loading, disabled, and error states where those states exist.
-- Reserve motion for disclosure, modal or popover appearance, and semantic graph zoom. Respect reduced motion and remove decorative particles when it is requested.
+- Reserve motion for disclosure, modal or popover appearance, and continuous graph camera zoom. Respect reduced motion by applying camera changes without interpolation.
 - Keep all ordinary interactive targets at least 44px in both dimensions where layout permits.
 
 Page composition:
@@ -525,42 +525,41 @@ The article-level `Related Documents` list is a separate derived ranking rather 
 
 Locally generated embeddings remain an optional future replacement for the sparse content-similarity component only. They must demonstrate better Korean relationship quality on representative authored content before adoption and do not replace explicit authored evidence.
 
-## Multi-Resolution Galaxy Graph
+## Single-Model Galaxy Graph
 
-The graph combines a corpus-wide overview with local document exploration. It must never render or transfer every raw node and edge at once.
+The graph combines a corpus-wide overview with local document exploration. It renders every document node plus a compile-time-bounded representative edge set from one compressed overview buffer. Zoom must never replace, regroup, or crossfade the rendered geometry.
 
-### Semantic Zoom Levels
+### Continuous Zoom
 
-- Distant: show large unnamed algorithmic communities as galaxy-like clusters through density and aggregate connectivity, without generated semantic labels.
-- Medium: split visible communities into unnamed subclusters and show a limited set of structurally important real document nodes with their actual titles.
-- Near: show individual documents, strong edges, qualifying weak edges, labels, and selection details.
+- Keep the same document points and edge segments mounted for the full lifetime of the graph route.
+- Change only the camera framing and scale during wheel, pinch, keyboard, or explicit-control zoom.
+- Load nearby title and link metadata only after sufficient magnification, without adding, removing, or repositioning graph geometry.
+- Keep node click independent from camera motion; selection only opens the anchored title-and-action popover.
 
-Do not synthesize cluster names from categories, tags, keywords, or representative titles. Cluster appearance guides spatial exploration until actual document nodes and titles emerge.
+The graph renders as a WebGL 3D galaxy with stable depth coordinates and a populated spiral core rather than a flat Cartesian grid. Continuously damped zoom scales the one persistent model without a dataset boundary, geometry rebuild, or camera snap.
 
-The graph renders as a WebGL 3D galaxy with stable depth coordinates and a populated spiral core rather than a flat Cartesian grid. Continuously damped zoom crossfades aggregates into more detailed data without snapping the camera. Wheel, pinch, keyboard, and explicit zoom controls change the camera scale; selecting a cluster never changes it.
-
-Selecting a document first opens a compact popover anchored to that node rather than navigating immediately. The popover shows the title without an authored summary and provides one `Open article` action. It must work with pointer, touch, and keyboard selection without interfering with pan and zoom gestures.
+Selecting a document first opens a compact popover anchored to that node rather than navigating immediately. The popover shows the title without an authored summary and provides one `자세히 보기` action. It must work with pointer, touch, and keyboard selection without interfering with pan and zoom gestures.
 
 The article action is an ordinary internal link that navigates in the same tab by default and retains native new-tab behavior. Before navigation, save the graph camera, zoom level, selected node, and relevant UI controls in browser history state. Returning with browser Back restores that state instead of resetting to an entry view; immutable tile caching prevents avoidable reloads.
 
 ### Layout and Clustering
 
-- Generate hierarchical communities and stable spatial coordinates during content compilation.
-- Weight authored strong edges more heavily than generated weak edges during clustering and layout.
+- Generate stable spatial communities and coordinates during content compilation.
+- Weight authored strong edges more heavily than generated weak edges during community detection and layout.
 - Preserve existing positions as much as practical between content revisions to maintain the user's spatial memory.
-- Store the layout and clustering algorithm version with generated graph artifacts.
-- Aggregate edges between communities at distant zoom levels instead of drawing every underlying edge.
+- Store the layout and community-detection algorithm version with generated graph artifacts.
+- Select a deterministic bounded overview edge set at compile time, prioritizing strong edges and endpoint coverage.
 
 ### Delivery and Rendering
 
-- Partition graph data by zoom level and spatial tile or hierarchical cluster.
-- Load only visible tiles and a small adjacent buffer.
-- Cache immutable graph tiles and avoid redundant requests while panning back to a viewed area.
+- Emit one compact binary overview containing quantized 3D coordinates, display sizes, and a bounded fixed edge set.
+- Load the overview once and keep its point and line buffers mounted; no zoom event rebuilds or substitutes graph geometry.
+- Partition only document titles, links, and selection metadata into spatial tiles, loading visible tiles plus a small adjacent buffer.
+- Cache immutable metadata tiles and avoid redundant requests while panning back to a viewed area.
 - Render nodes and edges as one route-scoped WebGL 3D scene rather than one DOM or SVG element per node.
-- Preserve the complete graph hierarchy and semantic zoom on mobile rather than replacing it with a local-only graph.
-- Support touch pan and pinch zoom, and reduce visible node counts, labels, particles, and adjacent-tile buffering according to mobile performance budgets.
-- Hide individual weak edges at distant zoom levels; represent their influence only in aggregate density or community strength.
-- Load graph tiles and graph runtime code only on the dedicated graph page; article pages contain neither an inline graph canvas nor a graph-neighborhood payload.
+- Preserve the identical corpus-wide geometry on mobile while reducing label count, pixel ratio, and metadata-tile buffering according to performance budgets.
+- Keep the fixed weak-edge buffer visible by default and toggle it directly without changing the strong-edge or node buffers.
+- Load graph artifacts and graph runtime code only on the dedicated graph page; article pages contain neither an inline graph canvas nor a graph-neighborhood payload.
 
 ### Visual Treatment
 
@@ -570,7 +569,7 @@ The article action is an ordinary internal link that navigates in the same tab b
 - Draw strong edges with a clearer solid stroke and weak edges with a lower-opacity, thinner solid stroke.
 - Keep all visible graph nodes white and all graph edges gray. Distinguish communities through spatial grouping and density, and distinguish importance through node size, opacity, and edge weight.
 - Keep the global navigation visually consistent with the article experience while the graph canvas occupies the remaining workspace.
-- Create depth through node density, scale, and restrained particles rather than introducing an unrelated gradient palette.
+- Create depth through stable 3D coordinates, node density, and scale rather than introducing an unrelated gradient palette.
 - Provide clear keyboard focus, active, reduced-motion, and high-contrast behavior for graph controls.
 
 ## Self-Contained Data Architecture
