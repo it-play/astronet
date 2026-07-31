@@ -1,0 +1,15 @@
+<navigation-board id="fzguweEZpd8mthJutE5URw" theme="default">
+  <header><title>조선자유민주주의공화국 국군의 유도무기</title></header>
+  <section id="launch-systems" label="발사체계" group="guided-weapon-launchers">
+    <document-links>
+      <document target="n7X0hA41N_QRXJ6YPS8Hhg">NK-40 경사식 미사일 발사관</document>
+    </document-links>
+  </section>
+  <section id="naval-missiles" label="함정발사 미사일" group="guided-weapon-naval-missiles">
+    <document-links>
+      <document target="b86jD_2gw2eWVCwI3pABLQ">NK-41 대함유도탄</document>
+      <document target="kIA6834gPsK0S48nNZNdeA">NK-42 함대공유도탄</document>
+      <document target="tMqWIwYXfi-41DGD_R9JCg">NK-43 대잠유도탄</document>
+    </document-links>
+  </section>
+</navigation-board>

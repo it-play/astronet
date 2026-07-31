@@ -1,0 +1,9 @@
+<document id="b86jD_2gw2eWVCwI3pABLQ">
+  <title>NK-41 대함유도탄</title>
+  <aliases><alias>NK-41</alias></aliases>
+  <body>
+    <include-board ref="fzguweEZpd8mthJutE5URw"/>
+    <section><title>개요</title><p><strong>NK-41</strong>은 조선 해군의 함정발사 대함유도탄이다. 수상함과 해상표적을 공격하며 <ref href="doc:n7X0hA41N_QRXJ6YPS8Hhg">NK-40 경사식 미사일 발사관</ref>에서 운용할 수 있다.</p><p>백두급 고속정의 제한된 대함타격 수단이지만 탑재 수량은 임무에 따라 함대공·대잠유도탄과 나누어야 한다. 구체적인 사거리와 유도방식은 아직 공개 정사에서 확정되지 않았다.</p></section>
+    <section><title>운용</title><p>표적정보는 함정 자체 레이더뿐 아니라 다른 함정·항공기와 해안감시망의 데이터링크를 통해 받을 수 있다. 이는 백두급이 함포 중심 고속정에서 네트워크 중심 유도탄 고속정으로 바뀐 핵심 요소이다.</p></section>
+  </body>
+</document>

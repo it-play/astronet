@@ -1,0 +1,14 @@
+<navigation-board id="JxymGdHQob6lrJTQCpDKWA" theme="default">
+  <header><title>조선자유민주주의공화국 국군 해군의 운용함정</title></header>
+  <section id="active-patrol-craft" label="고속정·초계정 (PG/FAC) — 현역·도입 중" group="navy-pg-fac-active">
+    <document-links>
+      <document target="gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</document>
+      <document target="3ej7_vsMUsdSxC6TlEHCcw">압록급 고속정</document>
+    </document-links>
+  </section>
+  <section id="legacy-patrol-craft" label="고속정·초계정 (PG/FAC) — 퇴역·대체" group="navy-pg-fac-legacy">
+    <document-links>
+      <document target="jd_4sx8sYq_IEyza4TLXAg">두만강급 고속정</document>
+    </document-links>
+  </section>
+</navigation-board>

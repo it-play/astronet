@@ -1,25 +1,15 @@
 <navigation-board id="yYRQMOZ_fu2nHgAFWKpz7g" theme="default">
   <header>
     <title>20세기 조선민주주의인민공화국 사건사고</title>
-    <subtitle>1990년대 개혁과 군부 재편의 주요 사건</subtitle>
   </header>
-  <section id="reform" label="경제 개혁과 국가계획" group="twentieth-reform">
+  <section id="years-1990" label="1990년대" group="twentieth-1990s">
     <document-links>
       <document target="2687HVwpdWoFfyP1j6B6eA">1990년대 북한 개혁</document>
       <document target="_sNSQuD_xT65MQes5hicbw">1990년대 북한 화폐개혁</document>
       <document target="arMPxSeVP5TFWqp2vIHqkw">국가계획 2000</document>
-    </document-links>
-  </section>
-  <section id="military" label="군부와 군제개혁" group="twentieth-military">
-    <document-links>
       <document target="Rr9F4nczprCQMdLBvTOBhg">군부 친위 쿠데타 시도</document>
-      <document target="IHBtZzbATcwe8hykdFAuSA">제1차 연평해전</document>
-      <document target="xzj2AHXIdq1TZTchkNil8w">북한 군제개혁</document>
-    </document-links>
-  </section>
-  <section id="information" label="정보은폐계획" group="twentieth-information">
-    <document-links>
       <document target="8c0vpmjgqqbIfcd7ii8uDw">청성1호 명령</document>
+      <document target="IHBtZzbATcwe8hykdFAuSA">제1차 연평해전</document>
     </document-links>
   </section>
 </navigation-board>
