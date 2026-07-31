@@ -1,0 +1,29 @@
+<navigation-board id="MRQkLiEa_-k1mAZFhGzSCA" theme="default">
+  <header><title>대르미아 개입</title></header>
+  <section id="intervention-and-country" label="개입·당사국" group="remia-intervention-country">
+    <document-links>
+      <document target="6QjAOE8aswXCKJf7OSwIUQ">대르미아 개입</document>
+      <document target="rYEnDhZcogEAfduZMkzEyA">르미아 공화국</document>
+    </document-links>
+  </section>
+  <section id="task-forces" label="임무부대" group="remia-task-forces">
+    <document-links>
+      <document target="jsG5XgqQVX97psLNplQoOQ">제6임무부대</document>
+      <document target="5fEE7CmJpD3o4nvSFRrIxw">제7임무부대</document>
+    </document-links>
+  </section>
+  <section id="naval-operations-and-lessons" label="해상작전·전훈" group="remia-naval-operations-lessons">
+    <document-links>
+      <document target="gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</document>
+      <document target="A92f9IvAs-YvLN3pZLVRbw">NK-182 천패</document>
+      <document target="kIA6834gPsK0S48nNZNdeA">NK-42 함대공유도탄</document>
+    </document-links>
+  </section>
+  <section id="oversight-and-reconstruction" label="헌정 통제·재건" group="remia-oversight-reconstruction">
+    <document-links>
+      <document target="DULPtVw0JqsH5T00Xsv66g">조선자유민주주의공화국 국군</document>
+      <document target="H58qRKDupVyVF8eDlleOBA">북조선 국회</document>
+      <document target="ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</document>
+    </document-links>
+  </section>
+</navigation-board>
