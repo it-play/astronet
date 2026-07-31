@@ -1,0 +1,43 @@
+<document id="n_rlFvppN7LvfFZ3g0Rr5Q">
+  <title>신자유증권거래소</title>
+  <aliases>
+    <alias>MEDEX</alias>
+  </aliases>
+  <body>
+    <include-board ref="4K6oiGVODJwnDCQfYeYjjg"/>
+    <section>
+      <title>개요</title>
+      <p><strong>신자유증권거래소</strong>는 2026년 개업을 준비하고 있는 민간 주도 증권거래소이다. 영문 약칭은 MEDEX이다. 남북 합작으로 건설 중인 <ref href="doc:CNPmgxd8Ik3mS2hfMr2lpA">해랑특별자치시</ref>에 설치될 예정이다.</p>
+      <p>기업 단독상장보다 상장지수펀드(ETF)를 중심에 둔 상품시장, 다른 거래소 종목의 예탁증서, 승인된 가상자산 거래를 함께 운영하도록 설계되었다. 기존 거래소와 달리 현장 전표거래를 허용하지 않으며 모든 주문과 거래를 인터넷으로 처리한다.</p>
+      <table>
+        <thead><tr><th>항목</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>상태</td><td>2026년 개업 준비 중</td></tr>
+          <tr><td>설립 방식</td><td>민간 주도</td></tr>
+          <tr><td>예정 소재지</td><td>해랑특별자치시</td></tr>
+          <tr><td>영문 약칭</td><td>MEDEX</td></tr>
+          <tr><td>거래 방식</td><td>100% 인터넷 거래</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>입지</title>
+      <p>해랑특별자치시는 파주와 개성 사이의 기존 휴전선 일대에 남북 합작으로 건설되고 있다. 신자유증권거래소는 이 도시에 설치될 금융시설로 계획되었다.</p>
+    </section>
+    <section>
+      <title>상장상품</title>
+      <p>ETF가 시장의 중심이지만 단일기업의 주식 상장도 가능하다. 2배·3배형 ETF와 상장지수증권(ETN)도 상장할 수 있으나 레버리지 상품에는 별도의 구성 제한이 적용된다.</p>
+      <p><ref href="doc:gOSTpCPJrfQ4Na3W3gCTOw">평양증권거래소</ref>와 <ref href="doc:V9pYgYaRCB4wbHEmPhREsw">당산증권거래소</ref>에 상장된 종목은 MDR(MEDEX Depositary Receipt)을 발행하는 방식으로 중복 상장할 수 있다. 다만 MDR로 발행할 수 있는 주식 수는 강하게 제한된다.</p>
+      <p>가상자산은 거래소와 감독기관이 제한적으로 승인한 종목만 거래할 수 있다. 승인되지 않은 가상자산은 상장하거나 거래할 수 없다.</p>
+    </section>
+    <section>
+      <title>투자자 요건</title>
+      <p>남한 금융감독원과 북조선 국가금융국의 권고에 따라 모든 개인이 곧바로 투자할 수 있는 시장으로 설계되지 않았다. 투자계좌에 현금 3,000만 원 이상을 예치한 투자자만 거래할 수 있다.</p>
+      <p>2배 이상의 단일종목 레버리지 상품은 상장할 수 없다. 레버리지 상품은 의무적으로 10종 이상의 기초종목을 포함해야 한다.</p>
+    </section>
+    <section>
+      <title>거래 방식</title>
+      <p>현장 객장이나 전표를 이용한 주문은 받지 않는다. 계좌개설, 주문, 체결확인과 결제지시는 모두 승인된 인터넷 거래체계를 통해서만 처리한다.</p>
+    </section>
+  </body>
+</document>

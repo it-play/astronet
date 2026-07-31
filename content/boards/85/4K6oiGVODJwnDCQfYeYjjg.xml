@@ -1,0 +1,14 @@
+<navigation-board id="4K6oiGVODJwnDCQfYeYjjg" theme="default">
+  <header><title>북조선 증권시장</title></header>
+  <section id="operating-exchanges" label="운영 중인 증권거래소" group="operating-securities-exchanges">
+    <document-links>
+      <document target="gOSTpCPJrfQ4Na3W3gCTOw">평양증권거래소</document>
+      <document target="V9pYgYaRCB4wbHEmPhREsw">당산증권거래소</document>
+    </document-links>
+  </section>
+  <section id="planned-exchanges" label="개업 준비 중인 증권거래소" group="planned-securities-exchanges">
+    <document-links>
+      <document target="n_rlFvppN7LvfFZ3g0Rr5Q">신자유증권거래소</document>
+    </document-links>
+  </section>
+</navigation-board>
