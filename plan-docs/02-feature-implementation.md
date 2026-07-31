@@ -224,7 +224,7 @@ Locally computed Korean embeddings remain an optional replacement for only the w
 - Fetch the overview once and keep one WebGL 3D point-and-line model mounted for the route lifetime.
 - Support damped pointer pan and continuous wheel zoom plus touch pan and pinch zoom.
 - Apply zoom only to the camera projection; never crossfade levels, replace nodes, or rebuild edge geometry at a zoom boundary.
-- Load visible detail tiles plus a bounded adjacent buffer only when titles and interaction targets are useful.
+- Resolve click targets from overview coordinates at every zoom and fetch only the hit node's detail tile; load visible detail tiles plus a bounded adjacent buffer for nearby labels.
 - Retain the identical corpus-wide graph geometry on mobile while lowering label, pixel-ratio, and metadata-tile-buffer budgets.
 - Use wheel, pinch, keyboard, or the explicit zoom controls to scale and frame the same model.
 - Select document nodes to open a compact title-only popover anchored to the node with one separate `자세히 보기` action.

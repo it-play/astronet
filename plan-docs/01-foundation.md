@@ -533,7 +533,7 @@ The graph combines a corpus-wide overview with local document exploration. It re
 
 - Keep the same document points and edge segments mounted for the full lifetime of the graph route.
 - Change only the camera framing and scale during wheel, pinch, keyboard, or explicit-control zoom.
-- Load nearby title and link metadata only after sufficient magnification, without adding, removing, or repositioning graph geometry.
+- Resolve a clicked node at every magnification from the overview coordinates and load only its title-and-link metadata tile; bulk-load nearby titles after sufficient magnification without changing graph geometry.
 - Keep node click independent from camera motion; selection only opens the anchored title-and-action popover.
 
 The graph renders as a WebGL 3D galaxy with stable depth coordinates and a populated spiral core rather than a flat Cartesian grid. Continuously damped zoom scales the one persistent model without a dataset boundary, geometry rebuild, or camera snap.
