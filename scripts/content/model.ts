@@ -119,6 +119,7 @@ export interface BoardEntry extends Located {
   icon?: string;
   accent?: string;
   slot?: string;
+  retired: boolean;
 }
 
 export interface BoardRow extends Located {
@@ -676,7 +677,7 @@ function parseBoardRow(element: XmlElementNode, source: string): BoardRow {
 
 function parseBoardEntry(element: XmlElementNode, source: string, requireSlot: boolean): BoardEntry {
   if (element.name !== 'document') fail('Board layout may contain only <document> entries', location(element, source));
-  assertAttributes(element, source, ['target', 'asset', 'icon', 'accent', 'slot']);
+  assertAttributes(element, source, ['target', 'asset', 'icon', 'accent', 'slot', 'retired']);
   const label = inlinePlainOptional(element, source);
   const slot = optionalAttribute(element, 'slot');
   if (requireSlot && !slot) {
@@ -708,6 +709,7 @@ function parseBoardEntry(element: XmlElementNode, source: string, requireSlot: b
     icon: optionalAttribute(element, 'icon'),
     accent: optionalAttribute(element, 'accent'),
     slot,
+    retired: parseBoolean(optionalAttribute(element, 'retired') ?? 'false', element, source, 'retired'),
   };
 }
 

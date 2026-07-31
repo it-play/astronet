@@ -231,5 +231,6 @@
     <xs:attribute name="icon" type="boardToken"/>
     <xs:attribute name="accent" type="boardToken"/>
     <xs:attribute name="slot" type="boardToken"/>
+    <xs:attribute name="retired" type="xs:boolean"/>
   </xs:complexType>
 </xs:schema>

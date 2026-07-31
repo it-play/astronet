@@ -265,7 +265,8 @@ function renderBoardEntry(entry: BoardEntry, context: BoardRenderContext): strin
   if (!target) return '';
   const media = entry.assetId ? requireMedia(context.media, entry.assetId, 'image', entry.source) : undefined;
   const label = entry.label ?? target.title;
-  return `<a href="${escapeAttribute(articleUrl(target.id, target.title))}"${entry.accent ? ` data-accent="${escapeAttribute(entry.accent)}"` : ''}>${media ? `<img src="${escapeAttribute(media.publicPath)}" width="${media.width}" height="${media.height}" alt="" loading="lazy" />` : ''}${entry.icon ? `<span class="board-icon board-icon--${escapeAttribute(entry.icon)}" aria-hidden="true"></span>` : ''}<span>${escapeHtml(label)}</span></a>`;
+  const renderedLabel = entry.retired ? `<s>${escapeHtml(label)}</s>` : `<span>${escapeHtml(label)}</span>`;
+  return `<a href="${escapeAttribute(articleUrl(target.id, target.title))}"${entry.accent ? ` data-accent="${escapeAttribute(entry.accent)}"` : ''}${entry.retired ? ` aria-label="${escapeAttribute(`${label} (퇴역)`)}"` : ''}>${media ? `<img src="${escapeAttribute(media.publicPath)}" width="${media.width}" height="${media.height}" alt="" loading="lazy" />` : ''}${entry.icon ? `<span class="board-icon board-icon--${escapeAttribute(entry.icon)}" aria-hidden="true"></span>` : ''}${renderedLabel}</a>`;
 }
 
 function collectBlockText(blocks: BlockNode[], pieces: string[]): void {

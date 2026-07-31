@@ -38,6 +38,8 @@ See [`examples/document.xml`](./examples/document.xml) for the complete authorin
 
 See [`examples/navigation-board.xml`](./examples/navigation-board.xml). A board has a registered application theme and either one general `<body>` disclosure or one or more independently collapsible `<section>` elements. Every disclosure begins collapsed. Header, section, and entry images are optional repository assets. Themes and named layouts must already exist in `src/content/board-registry.ts`; XML cannot define CSS.
 
+Set `retired="true"` on a board `<document>` entry when an obsolete or retired item should remain in its original category with a struck-through label.
+
 Include a given board at most once in the same document. The compiler stores one shared board body per article pack and rejects duplicate inclusion that would create repeated control and anchor identifiers.
 
 ## Media
