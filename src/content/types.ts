@@ -86,7 +86,7 @@ export interface GraphNode {
   id: string;
   title: string;
   url: string;
-  kind: 'document' | 'cluster' | 'hub';
+  kind: 'document' | 'hub';
   x: number;
   y: number;
   z: number;
@@ -103,10 +103,9 @@ export interface GraphEdge {
 
 export interface GraphTile {
   buildId: string;
-  level: 'distant' | 'medium' | 'near';
+  level: 'detail';
   tile: string;
   nodes: GraphNode[];
-  edges: GraphEdge[];
 }
 
 export interface GraphFocusPack {

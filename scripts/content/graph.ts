@@ -4,25 +4,23 @@ import type { GraphEdge, GraphNode, GraphTile } from '../../src/content/types';
 import type { BoardHub } from './analysis';
 import type { SourceDocument } from './model';
 
-export const GRAPH_LAYOUT_VERSION = 'galaxy-3d-v1';
-const DISTANT_CLUSTER_GRID = 12;
-const MEDIUM_CLUSTER_GRID = 64;
-const MEDIUM_EDGE_NEIGHBOR_LIMIT = 16;
+export const GRAPH_LAYOUT_VERSION = 'galaxy-single-buffer-v1';
+const MAX_OVERVIEW_EDGES = 180_000;
+const OVERVIEW_EDGES_PER_NODE = 3;
 
 export interface GraphArtifacts {
-  levels: {
-    distant: GraphLevel;
-    medium: GraphLevel;
-    near: GraphLevel;
+  overview: {
+    nodes: GraphNode[];
+    edges: GraphEdge[];
   };
+  detail: GraphDetail;
   focus: Record<string, { x: number; y: number; z: number; tile: string }>;
 }
 
-export interface GraphLevel {
+export interface GraphDetail {
   gridSize: number;
   tiles: Map<string, GraphTile>;
   nodeCount: number;
-  edgeCount: number;
 }
 
 export function buildGraphArtifacts(
@@ -42,19 +40,17 @@ export function buildGraphArtifacts(
       return { source, target, strength: 'strong' as const, weight: 0.5 };
     }),
   );
-  const distant = buildDistantLevel(buildId, documentNodes, documentEdges);
-  const medium = buildMediumLevel(buildId, documentNodes, documentEdges);
-  const nearNodes = [...documentNodes, ...hubNodes];
-  const nearEdges = [...documentEdges, ...membershipEdges];
-  const nearGridSize = Math.min(64, Math.max(8, Math.ceil(Math.sqrt(Math.max(1, nearNodes.length) / 32))));
-  const near = createLevel(buildId, 'near', nearNodes, nearEdges, nearGridSize);
+  const overviewNodes = [...documentNodes, ...hubNodes].sort((left, right) => left.id.localeCompare(right.id));
+  const overviewEdges = selectOverviewEdges([...documentEdges, ...membershipEdges]);
+  const detailGridSize = Math.min(64, Math.max(8, Math.ceil(Math.sqrt(Math.max(1, documentNodes.length) / 32))));
+  const detail = createDetail(buildId, documentNodes, detailGridSize);
   const focus = Object.fromEntries(
     documentNodes.map((node) => [
       node.id,
-      { x: node.x, y: node.y, z: node.z, tile: tileKey(node.x, node.y, near.gridSize) },
+      { x: node.x, y: node.y, z: node.z, tile: tileKey(node.x, node.y, detail.gridSize) },
     ]),
   );
-  return { levels: { distant, medium, near }, focus };
+  return { overview: { nodes: overviewNodes, edges: overviewEdges }, detail, focus };
 }
 
 function positionHubs(hubs: BoardHub[], documentNodes: GraphNode[]): GraphNode[] {
@@ -206,104 +202,44 @@ function positionDocuments(
     });
 }
 
-function buildDistantLevel(buildId: string, nodes: GraphNode[], edges: GraphEdge[]): GraphLevel {
-  const { clusters, clusterByDocument } = clusterSpatially(nodes, DISTANT_CLUSTER_GRID, 'community');
-  const aggregateEdges = aggregateEdgesByGroup(edges, clusterByDocument);
-  return createLevel(buildId, 'distant', clusters, aggregateEdges, 1);
-}
-
-function buildMediumLevel(buildId: string, nodes: GraphNode[], edges: GraphEdge[]): GraphLevel {
-  const { clusters, clusterByDocument } = clusterSpatially(nodes, MEDIUM_CLUSTER_GRID, 'subcommunity');
-  const mediumEdges = aggregateEdgesByGroup(edges, clusterByDocument, MEDIUM_EDGE_NEIGHBOR_LIMIT);
-  return createLevel(buildId, 'medium', clusters, mediumEdges, 16);
-}
-
-function clusterSpatially(
-  nodes: GraphNode[],
-  gridSize: number,
-  prefix: string,
-): { clusters: GraphNode[]; clusterByDocument: Map<string, string> } {
-  const grouped = new Map<string, GraphNode[]>();
-  const clusterByDocument = new Map<string, string>();
-  for (const node of nodes) {
-    const cell = tileKey(node.x, node.y, gridSize);
-    const clusterId = `${prefix}-${cell}`;
-    const members = grouped.get(clusterId) ?? [];
-    members.push(node);
-    grouped.set(clusterId, members);
-    clusterByDocument.set(node.id, clusterId);
-  }
-  const clusters: GraphNode[] = [...grouped]
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(([id, members]) => ({
-      id,
-      title: '',
-      url: '',
-      kind: 'cluster',
-      x: average(members.map((node) => node.x)),
-      y: average(members.map((node) => node.y)),
-      z: average(members.map((node) => node.z)),
-      weight: members.reduce((sum, node) => sum + node.weight, 0),
-      community: members[0]!.community,
-    }));
-  return { clusters, clusterByDocument };
-}
-
-function createLevel(
+function createDetail(
   buildId: string,
-  level: 'distant' | 'medium' | 'near',
   nodes: GraphNode[],
-  edges: GraphEdge[],
   gridSize: number,
-): GraphLevel {
+): GraphDetail {
   const tiles = new Map<string, GraphTile>();
-  const nodeTiles = new Map<string, string>();
   for (const node of nodes) {
     const key = tileKey(node.x, node.y, gridSize);
-    nodeTiles.set(node.id, key);
-    const tile = tiles.get(key) ?? { buildId, level, tile: key, nodes: [], edges: [] };
+    const tile = tiles.get(key) ?? { buildId, level: 'detail' as const, tile: key, nodes: [] };
     tile.nodes.push(node);
     tiles.set(key, tile);
   }
-  for (const edge of edges) {
-    const keys = new Set([nodeTiles.get(edge.source), nodeTiles.get(edge.target)].filter((key): key is string => Boolean(key)));
-    for (const key of keys) {
-      const tile = tiles.get(key);
-      if (tile) tile.edges.push(edge);
-    }
-  }
   for (const tile of tiles.values()) {
     tile.nodes.sort((left, right) => left.id.localeCompare(right.id));
-    tile.edges.sort((left, right) => left.source.localeCompare(right.source) || left.target.localeCompare(right.target));
   }
-  return { gridSize, tiles, nodeCount: nodes.length, edgeCount: edges.length };
+  return { gridSize, tiles, nodeCount: nodes.length };
 }
 
-function aggregateEdgesByGroup(
-  edges: GraphEdge[],
-  groupByNode: Map<string, string>,
-  neighborLimit?: number,
-): GraphEdge[] {
-  const aggregate = new Map<string, GraphEdge>();
+function selectOverviewEdges(edges: GraphEdge[]): GraphEdge[] {
+  const unique = new Map<string, GraphEdge>();
   for (const edge of edges) {
-    const sourceGroup = groupByNode.get(edge.source);
-    const targetGroup = groupByNode.get(edge.target);
-    if (!sourceGroup || !targetGroup || sourceGroup === targetGroup) continue;
-    const [source, target] = canonicalPair(sourceGroup, targetGroup);
+    if (edge.source === edge.target) continue;
+    const [source, target] = canonicalPair(edge.source, edge.target);
     const key = `${source}\0${target}`;
-    const previous = aggregate.get(key);
-    aggregate.set(key, {
+    const previous = unique.get(key);
+    unique.set(key, {
       source,
       target,
       strength: previous?.strength === 'strong' || edge.strength === 'strong' ? 'strong' : 'weak',
       weight: Number(((previous?.weight ?? 0) + edge.weight).toFixed(6)),
     });
   }
-  const values = [...aggregate.values()];
-  if (!neighborLimit) return values;
+  const ranked = [...unique.values()].sort(compareEdges);
+  if (ranked.length <= MAX_OVERVIEW_EDGES) return ranked;
+
   const selected = new Set<string>();
   const byEndpoint = new Map<string, GraphEdge[]>();
-  for (const edge of values) {
+  for (const edge of ranked) {
     for (const endpoint of [edge.source, edge.target]) {
       const candidates = byEndpoint.get(endpoint) ?? [];
       candidates.push(edge);
@@ -312,16 +248,24 @@ function aggregateEdgesByGroup(
   }
   for (const candidates of byEndpoint.values()) {
     candidates
-      .sort((left, right) =>
-        Number(right.strength === 'strong') - Number(left.strength === 'strong') ||
-        right.weight - left.weight ||
-        left.source.localeCompare(right.source) ||
-        left.target.localeCompare(right.target),
-      )
-      .slice(0, neighborLimit)
+      .sort(compareEdges)
+      .slice(0, OVERVIEW_EDGES_PER_NODE)
       .forEach((edge) => selected.add(`${edge.source}\0${edge.target}`));
   }
-  return values.filter((edge) => selected.has(`${edge.source}\0${edge.target}`));
+  const covered = ranked.filter((edge) => selected.has(`${edge.source}\0${edge.target}`));
+  if (covered.length >= MAX_OVERVIEW_EDGES) return covered.slice(0, MAX_OVERVIEW_EDGES);
+  for (const edge of ranked) {
+    selected.add(`${edge.source}\0${edge.target}`);
+    if (selected.size >= MAX_OVERVIEW_EDGES) break;
+  }
+  return ranked.filter((edge) => selected.has(`${edge.source}\0${edge.target}`));
+}
+
+function compareEdges(left: GraphEdge, right: GraphEdge): number {
+  return Number(right.strength === 'strong') - Number(left.strength === 'strong') ||
+    right.weight - left.weight ||
+    left.source.localeCompare(right.source) ||
+    left.target.localeCompare(right.target);
 }
 
 function connect(

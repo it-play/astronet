@@ -8,7 +8,9 @@ import type {
   BuildManifest,
   CompiledArticle,
   CompiledBoard,
+  GraphEdge,
   GraphFocusPack,
+  GraphNode,
   RandomDocument,
   RelatedDocument,
 } from '../../src/content/types';
@@ -26,7 +28,7 @@ import {
 import { buildSearchArtifacts } from './search-index';
 import { parseXml } from './xml';
 
-export const COMPILER_VERSION = '1.4.0';
+export const COMPILER_VERSION = '1.5.0';
 const SCHEMA_VERSION = 3;
 const RANDOM_PACK_SIZE = 256;
 const ARTICLE_PACK_BYTE_LIMIT = 4 * 1024 * 1024;
@@ -34,7 +36,11 @@ const ARTICLE_BYTE_LIMIT = 1024 * 1024;
 const BOARD_INLINE_BYTE_LIMIT = 256 * 1024;
 const BOARD_PACK_BYTE_LIMIT = 4 * 1024 * 1024;
 const GRAPH_TILE_BYTE_LIMIT = 2 * 1024 * 1024;
+const GRAPH_OVERVIEW_BYTE_LIMIT = 4 * 1024 * 1024;
 const GRAPH_FOCUS_BUCKET_COUNT = 1024;
+const GRAPH_OVERVIEW_HEADER_SIZE = 20;
+const GRAPH_OVERVIEW_NODE_STRIDE = 10;
+const GRAPH_OVERVIEW_EDGE_STRIDE = 9;
 
 export interface CompileResult {
   manifest: BuildManifest;
@@ -276,28 +282,31 @@ async function writeGraphArtifacts(
   buildId: string,
   artifacts: ReturnType<typeof buildGraphArtifacts>,
 ): Promise<BuildManifest['graph']> {
-  const levels: Record<string, { gridSize: number; nodeCount: number; edgeCount: number; tiles: string[] }> = {};
-  for (const [levelName, level] of Object.entries(artifacts.levels)) {
-    const tileKeys: string[] = [];
-    for (const [tileKey, tile] of [...level.tiles].sort(([left], [right]) => left.localeCompare(right))) {
-      const relative = `graph/${levelName}/${tileKey}.json`;
-      const serialized = JSON.stringify(tile);
-      if (Buffer.byteLength(serialized) > GRAPH_TILE_BYTE_LIMIT) {
-        fail(`Graph tile exceeds the ${GRAPH_TILE_BYTE_LIMIT} byte limit`, {
-          source: `generated:${relative}`,
-          target: `${levelName}:${tileKey}`,
-        });
-      }
-      await writeSerialized(path.join(outputDirectory, relative), serialized);
-      tileKeys.push(tileKey);
-    }
-    levels[levelName] = {
-      gridSize: level.gridSize,
-      nodeCount: level.nodeCount,
-      edgeCount: level.edgeCount,
-      tiles: tileKeys,
-    };
+  const overviewRelative = 'graph/overview.bin';
+  const overview = serializeGraphOverview(artifacts.overview.nodes, artifacts.overview.edges);
+  if (overview.byteLength > GRAPH_OVERVIEW_BYTE_LIMIT) {
+    fail(`Graph overview exceeds the ${GRAPH_OVERVIEW_BYTE_LIMIT} byte limit`, {
+      source: `generated:${overviewRelative}`,
+      target: `${artifacts.overview.nodes.length} nodes, ${artifacts.overview.edges.length} edges`,
+    });
   }
+  await mkdir(path.dirname(path.join(outputDirectory, overviewRelative)), { recursive: true });
+  await writeFile(path.join(outputDirectory, overviewRelative), overview);
+
+  const tileKeys: string[] = [];
+  for (const [tileKey, tile] of [...artifacts.detail.tiles].sort(([left], [right]) => left.localeCompare(right))) {
+    const relative = `graph/detail/${tileKey}.json`;
+    const serialized = JSON.stringify(tile);
+    if (Buffer.byteLength(serialized) > GRAPH_TILE_BYTE_LIMIT) {
+      fail(`Graph tile exceeds the ${GRAPH_TILE_BYTE_LIMIT} byte limit`, {
+        source: `generated:${relative}`,
+        target: `detail:${tileKey}`,
+      });
+    }
+    await writeSerialized(path.join(outputDirectory, relative), serialized);
+    tileKeys.push(tileKey);
+  }
+
   const focusByBucket = new Map<string, GraphFocusPack>();
   for (const [id, focus] of Object.entries(artifacts.focus)) {
     const bucket = articleBucket(id, GRAPH_FOCUS_BUCKET_COUNT);
@@ -313,9 +322,58 @@ async function writeGraphArtifacts(
   await writeJson(path.join(outputDirectory, relative), {
     buildId,
     layoutVersion: GRAPH_LAYOUT_VERSION,
-    levels,
+    overview: {
+      path: `/generated/${buildId}/${overviewRelative}`,
+      nodeCount: artifacts.overview.nodes.length,
+      edgeCount: artifacts.overview.edges.length,
+    },
+    detail: {
+      gridSize: artifacts.detail.gridSize,
+      nodeCount: artifacts.detail.nodeCount,
+      tiles: tileKeys,
+    },
   });
   return { manifest: `/generated/${buildId}/${relative}` };
+}
+
+function serializeGraphOverview(nodes: GraphNode[], edges: GraphEdge[]): Buffer {
+  const nodeById = new Map(nodes.map((node, index) => [node.id, index]));
+  const encodedEdges = edges.filter((edge) => nodeById.has(edge.source) && nodeById.has(edge.target));
+  const byteLength = GRAPH_OVERVIEW_HEADER_SIZE +
+    nodes.length * GRAPH_OVERVIEW_NODE_STRIDE +
+    encodedEdges.length * GRAPH_OVERVIEW_EDGE_STRIDE;
+  const buffer = Buffer.alloc(byteLength);
+  buffer.write('AG3D', 0, 'ascii');
+  buffer.writeUInt16LE(1, 4);
+  buffer.writeUInt16LE(GRAPH_OVERVIEW_NODE_STRIDE, 6);
+  buffer.writeUInt32LE(nodes.length, 8);
+  buffer.writeUInt32LE(encodedEdges.length, 12);
+  buffer.writeUInt16LE(GRAPH_OVERVIEW_EDGE_STRIDE, 16);
+
+  let offset = GRAPH_OVERVIEW_HEADER_SIZE;
+  for (const node of nodes) {
+    buffer.writeUInt16LE(quantizeUnit(node.x), offset);
+    buffer.writeUInt16LE(quantizeUnit(node.y), offset + 2);
+    buffer.writeUInt16LE(quantizeUnit(node.z), offset + 4);
+    const encodedSize = node.kind === 'document'
+      ? Math.min(65_535, Math.round(Math.log1p(Math.max(1, node.weight)) * 8192))
+      : 0;
+    buffer.writeUInt16LE(encodedSize, offset + 6);
+    buffer.writeUInt8(node.kind === 'document' ? 1 : 0, offset + 8);
+    offset += GRAPH_OVERVIEW_NODE_STRIDE;
+  }
+
+  for (const edge of encodedEdges) {
+    buffer.writeUInt32LE(nodeById.get(edge.source)!, offset);
+    buffer.writeUInt32LE(nodeById.get(edge.target)!, offset + 4);
+    buffer.writeUInt8(edge.strength === 'strong' ? 1 : 0, offset + 8);
+    offset += GRAPH_OVERVIEW_EDGE_STRIDE;
+  }
+  return buffer;
+}
+
+function quantizeUnit(value: number): number {
+  return Math.min(65_535, Math.max(0, Math.round(value * 65_535)));
 }
 
 function buildRelatedDocuments(

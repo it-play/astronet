@@ -2,39 +2,34 @@ import {
   BufferGeometry,
   Euler,
   Float32BufferAttribute,
-  FogExp2,
-  Group,
-  InstancedMesh,
   LineBasicMaterial,
   LineSegments,
-  Matrix4,
   Mesh,
   MeshBasicMaterial,
   PerspectiveCamera,
   Points,
-  PointsMaterial,
   RingGeometry,
   Scene,
-  SphereGeometry,
+  ShaderMaterial,
   Vector3,
   WebGLRenderer,
 } from 'three';
 import { articleBucket } from '../content/shared';
-import type { BuildManifest, GraphEdge, GraphFocusPack, GraphNode, GraphTile } from '../content/types';
-
-type GraphLevelName = 'distant' | 'medium' | 'near';
-
-interface GraphLevelManifest {
-  gridSize: number;
-  nodeCount: number;
-  edgeCount: number;
-  tiles: string[];
-}
+import type { BuildManifest, GraphFocusPack, GraphNode, GraphTile } from '../content/types';
 
 interface GraphManifest {
   buildId: string;
   layoutVersion: string;
-  levels: Record<GraphLevelName, GraphLevelManifest>;
+  overview: {
+    path: string;
+    nodeCount: number;
+    edgeCount: number;
+  };
+  detail: {
+    gridSize: number;
+    nodeCount: number;
+    tiles: string[];
+  };
 }
 
 interface CameraState {
@@ -50,23 +45,11 @@ interface SavedGraphState {
   weakEdges: boolean;
 }
 
-interface RenderedLevel {
-  group: Group;
-  nodes: GraphNode[];
-  nodeMesh?: InstancedMesh;
-  nodeMaterial?: MeshBasicMaterial;
-  strongLines?: LineSegments;
-  strongMaterial?: LineBasicMaterial;
-  weakLines?: LineSegments;
-  weakMaterial?: LineBasicMaterial;
-}
-
 interface LabelEntry {
   node: GraphNode;
   element: HTMLSpanElement;
 }
 
-const LEVELS: GraphLevelName[] = ['distant', 'medium', 'near'];
 const BACKGROUND_COLOR = 0x181d26;
 const WORLD_SIZE = 18;
 const WORLD_DEPTH = 5.5;
@@ -74,6 +57,10 @@ const CAMERA_DISTANCE = 24;
 const CAMERA_FOV = 42;
 const MIN_ZOOM = 0.82;
 const MAX_ZOOM = 28;
+const DETAIL_LOAD_ZOOM = 4.5;
+const LABEL_ZOOM = 6;
+const OVERVIEW_HEADER_SIZE = 20;
+const OVERVIEW_VERSION = 1;
 const GALAXY_TILT = new Euler(-0.17, 0.08, 0.025, 'XYZ');
 
 const buildManifest = readBuildManifest();
@@ -92,23 +79,14 @@ const mobile = window.matchMedia('(max-width: 700px)').matches;
 const tileCacheLimit = mobile ? 72 : 192;
 
 const scene = new Scene();
-scene.background = null;
-scene.fog = new FogExp2(BACKGROUND_COLOR, 0.018);
 const webglCamera = new PerspectiveCamera(CAMERA_FOV, 1, 0.1, 80);
 const renderer = createRenderer();
-const renderedLevels = new Map<GraphLevelName, RenderedLevel>(
-  LEVELS.map((levelName) => {
-    const group = new Group();
-    scene.add(group);
-    return [levelName, { group, nodes: [] }];
-  }),
-);
 const selectionRing = new Mesh(
   new RingGeometry(1.32, 1.64, 32),
   new MeshBasicMaterial({
     color: 0xffffff,
     transparent: true,
-    opacity: 0,
+    opacity: 0.92,
     depthTest: false,
     depthWrite: false,
   }),
@@ -116,21 +94,19 @@ const selectionRing = new Mesh(
 selectionRing.visible = false;
 selectionRing.renderOrder = 20;
 scene.add(selectionRing);
-if (!reduceMotion) scene.add(createStarField());
 
 const tileCache = new Map<string, Promise<GraphTile>>();
-const loadedTileOrder = new Map<string, { level: GraphLevelName; key: string; path: string }>();
-const loadedTiles = new Map<GraphLevelName, Map<string, GraphTile>>(
-  LEVELS.map((levelName) => [levelName, new Map()]),
-);
-const visibleTileKeys = new Map<GraphLevelName, Set<string>>(
-  LEVELS.map((levelName) => [levelName, new Set()]),
-);
+const loadedTileOrder = new Map<string, string>();
+const loadedTiles = new Map<string, GraphTile>();
+const visibleTileKeys = new Set<string>();
+const availableTileKeys = new Set<string>();
 const pointers = new Map<number, { x: number; y: number }>();
-const scratchMatrix = new Matrix4();
 const scratchVector = new Vector3();
 
 let graphManifest: GraphManifest | undefined;
+let graphPoints: Points<BufferGeometry, ShaderMaterial> | undefined;
+let strongLines: LineSegments | undefined;
+let weakLines: LineSegments | undefined;
 let camera: CameraState = { x: 0.5, y: 0.5, zoom: MIN_ZOOM };
 let targetCamera: CameraState = { ...camera };
 let selectedNode: GraphNode | undefined;
@@ -147,7 +123,7 @@ let animationRunning = false;
 void initialize();
 
 weakControl.addEventListener('change', () => {
-  updateLevelAppearance(levelWeights(camera.zoom));
+  if (weakLines) weakLines.visible = weakControl.checked;
   startAnimation();
   scheduleStateSave();
 });
@@ -256,7 +232,7 @@ window.addEventListener('keydown', (event) => {
 new ResizeObserver(() => {
   resizeRenderer();
   startAnimation();
-  scheduleTileUpdate(0);
+  scheduleDetailUpdate(0);
 }).observe(canvasWrap);
 
 window.addEventListener('pagehide', saveHistoryState);
@@ -265,7 +241,7 @@ window.addEventListener('pageshow', (event) => {
   restoreHistoryState();
   resizeRenderer();
   startAnimation();
-  scheduleTileUpdate(0);
+  scheduleDetailUpdate(0);
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
@@ -285,20 +261,34 @@ async function initialize(): Promise<void> {
   updateCameraProjection();
   startAnimation();
   try {
-    const response = await fetch(buildManifest.graph.manifest, { cache: 'force-cache' });
-    if (!response.ok) throw new Error('Graph manifest request failed');
-    graphManifest = (await response.json()) as GraphManifest;
+    const manifestResponse = await fetch(buildManifest.graph.manifest, { cache: 'force-cache' });
+    if (!manifestResponse.ok) throw new Error('Graph manifest request failed');
+    graphManifest = (await manifestResponse.json()) as GraphManifest;
     if (graphManifest.buildId !== buildManifest.buildId) throw new Error('Graph manifest build mismatch');
+    availableTileKeys.clear();
+    graphManifest.detail.tiles.forEach((key) => availableTileKeys.add(key));
 
-    if (graphManifest.levels.distant.nodeCount === 0) {
-      showStatus('표시할 연결이 없습니다.');
+    const overviewResponse = await fetch(graphManifest.overview.path, { cache: 'force-cache' });
+    if (!overviewResponse.ok) throw new Error('Graph overview request failed');
+    const overview = decodeOverview(await overviewResponse.arrayBuffer());
+    if (
+      overview.nodeCount !== graphManifest.overview.nodeCount ||
+      overview.edgeCount !== graphManifest.overview.edgeCount
+    ) {
+      throw new Error('Graph overview count mismatch');
+    }
+    mountOverview(overview);
+
+    if (graphManifest.detail.nodeCount === 0) {
+      showStatus('표시할 문서가 없습니다.');
       weakControl.disabled = true;
       return;
     }
 
     const restored = restoreHistoryState();
     if (!restored) await applyFocusFromUrl();
-    await loadVisibleTiles();
+    await loadVisibleDetailTiles();
+    if (!persistentStatus) status.hidden = true;
   } catch {
     showStatus('3D 그래프를 불러오지 못했습니다.', true);
     weakControl.disabled = true;
@@ -311,8 +301,8 @@ async function applyFocusFromUrl(): Promise<void> {
   const focusId = new URL(window.location.href).searchParams.get('focus');
   if (!focusId) return;
   const bucket = articleBucket(focusId, 1024);
-  const path = `${buildManifest.basePath}/graph/focus/${bucket}.json`;
-  const response = await fetch(path, { cache: 'force-cache' });
+  const focusPath = `${buildManifest.basePath}/graph/focus/${bucket}.json`;
+  const response = await fetch(focusPath, { cache: 'force-cache' });
   if (response.status === 404) {
     showStatus('해당 문서를 그래프에서 찾을 수 없습니다.', true);
     return;
@@ -333,232 +323,235 @@ async function applyFocusFromUrl(): Promise<void> {
   updateCameraProjection();
 }
 
-async function loadVisibleTiles(): Promise<void> {
-  if (!graphManifest) return;
-  const requestVersion = ++tileRequestVersion;
-  const activeLevels = new Set(levelsForZoom(targetCamera.zoom));
-  const rebuildLevels = new Set<GraphLevelName>();
-  const requests: Promise<void>[] = [];
+interface DecodedOverview {
+  nodeCount: number;
+  edgeCount: number;
+  pointPositions: number[];
+  pointDiameters: number[];
+  strongPositions: number[];
+  weakPositions: number[];
+}
 
-  for (const levelName of LEVELS) {
-    if (!activeLevels.has(levelName)) {
-      visibleTileKeys.set(levelName, new Set());
-      continue;
+function decodeOverview(buffer: ArrayBuffer): DecodedOverview {
+  if (buffer.byteLength < OVERVIEW_HEADER_SIZE) throw new Error('Graph overview header is missing');
+  const bytes = new Uint8Array(buffer);
+  if (String.fromCharCode(...bytes.subarray(0, 4)) !== 'AG3D') throw new Error('Graph overview magic mismatch');
+  const view = new DataView(buffer);
+  const version = view.getUint16(4, true);
+  const nodeStride = view.getUint16(6, true);
+  const nodeCount = view.getUint32(8, true);
+  const edgeCount = view.getUint32(12, true);
+  const edgeStride = view.getUint16(16, true);
+  if (version !== OVERVIEW_VERSION || nodeStride < 10 || edgeStride < 9) {
+    throw new Error('Graph overview version mismatch');
+  }
+  const expectedLength = OVERVIEW_HEADER_SIZE + nodeCount * nodeStride + edgeCount * edgeStride;
+  if (buffer.byteLength !== expectedLength) throw new Error('Graph overview length mismatch');
+
+  const allPositions = new Float32Array(nodeCount * 3);
+  const pointPositions: number[] = [];
+  const pointDiameters: number[] = [];
+  let offset = OVERVIEW_HEADER_SIZE;
+  for (let index = 0; index < nodeCount; index += 1) {
+    const x = view.getUint16(offset, true) / 65_535;
+    const y = view.getUint16(offset + 2, true) / 65_535;
+    const z = view.getUint16(offset + 4, true) / 65_535;
+    const encodedSize = view.getUint16(offset + 6, true);
+    const flags = view.getUint8(offset + 8);
+    setGraphWorldPosition(scratchVector, x, y, z);
+    allPositions[index * 3] = scratchVector.x;
+    allPositions[index * 3 + 1] = scratchVector.y;
+    allPositions[index * 3 + 2] = scratchVector.z;
+    if ((flags & 1) !== 0) {
+      pointPositions.push(scratchVector.x, scratchVector.y, scratchVector.z);
+      pointDiameters.push(decodeNodeDiameter(encodedSize));
     }
-    const keys = calculateVisibleTileKeys(graphManifest.levels[levelName]);
-    if (!setsEqual(keys, visibleTileKeys.get(levelName)!)) rebuildLevels.add(levelName);
-    visibleTileKeys.set(levelName, keys);
-    const levelTiles = loadedTiles.get(levelName)!;
-    for (const key of keys) {
-      if (levelTiles.has(key)) continue;
-      const path = `${buildManifest.basePath}/graph/${levelName}/${key}.json`;
-      requests.push(
-        fetchTile(path).then((tile) => {
-          if (tile.level !== levelName) throw new Error('Graph tile level mismatch');
-          levelTiles.set(key, tile);
-          rememberLoadedTile(levelName, key, path);
-          rebuildLevels.add(levelName);
-        }),
-      );
-    }
+    offset += nodeStride;
   }
 
-  if (requests.length > 0 && !persistentStatus) showStatus('은하를 불러오는 중입니다.');
+  const strongPositions: number[] = [];
+  const weakPositions: number[] = [];
+  for (let index = 0; index < edgeCount; index += 1) {
+    const source = view.getUint32(offset, true);
+    const target = view.getUint32(offset + 4, true);
+    const isStrong = view.getUint8(offset + 8) === 1;
+    if (source >= nodeCount || target >= nodeCount) throw new Error('Graph overview edge is invalid');
+    const positions = isStrong ? strongPositions : weakPositions;
+    positions.push(
+      allPositions[source * 3]!,
+      allPositions[source * 3 + 1]!,
+      allPositions[source * 3 + 2]!,
+      allPositions[target * 3]!,
+      allPositions[target * 3 + 1]!,
+      allPositions[target * 3 + 2]!,
+    );
+    offset += edgeStride;
+  }
+  return { nodeCount, edgeCount, pointPositions, pointDiameters, strongPositions, weakPositions };
+}
+
+function mountOverview(overview: DecodedOverview): void {
+  const pointGeometry = new BufferGeometry();
+  pointGeometry.setAttribute('position', new Float32BufferAttribute(overview.pointPositions, 3));
+  pointGeometry.setAttribute('pointDiameter', new Float32BufferAttribute(overview.pointDiameters, 1));
+  const pointMaterial = new ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    uniforms: {
+      viewportHeight: { value: Math.max(1, canvas.clientHeight * renderer.getPixelRatio()) },
+    },
+    vertexShader: `
+      attribute float pointDiameter;
+      uniform float viewportHeight;
+
+      void main() {
+        vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_Position = projectionMatrix * viewPosition;
+        gl_PointSize = clamp(
+          pointDiameter * viewportHeight * projectionMatrix[1][1] / max(0.1, -viewPosition.z),
+          1.35,
+          44.0
+        );
+      }
+    `,
+    fragmentShader: `
+      void main() {
+        vec2 point = gl_PointCoord - vec2(0.5);
+        float radius = dot(point, point);
+        if (radius > 0.25) discard;
+        float alpha = 1.0 - smoothstep(0.205, 0.25, radius);
+        gl_FragColor = vec4(1.0, 1.0, 1.0, alpha * 0.94);
+      }
+    `,
+  });
+  graphPoints = new Points(pointGeometry, pointMaterial);
+  graphPoints.frustumCulled = false;
+  graphPoints.renderOrder = 4;
+  scene.add(graphPoints);
+
+  strongLines = createEdgeLines(overview.strongPositions, 0xd5d9df, 0.3, 2);
+  weakLines = createEdgeLines(overview.weakPositions, 0xbfc4cc, 0.11, 1);
+  if (strongLines) scene.add(strongLines);
+  if (weakLines) {
+    weakLines.visible = weakControl.checked;
+    scene.add(weakLines);
+  } else {
+    weakControl.disabled = true;
+  }
+  startAnimation();
+}
+
+function createEdgeLines(
+  positions: number[],
+  color: number,
+  opacity: number,
+  renderOrder: number,
+): LineSegments | undefined {
+  if (positions.length === 0) return undefined;
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+  const material = new LineBasicMaterial({
+    color,
+    transparent: true,
+    opacity,
+    depthWrite: false,
+  });
+  const lines = new LineSegments(geometry, material);
+  lines.frustumCulled = false;
+  lines.renderOrder = renderOrder;
+  return lines;
+}
+
+async function loadVisibleDetailTiles(): Promise<void> {
+  if (!graphManifest) return;
+  const requestVersion = ++tileRequestVersion;
+  if (targetCamera.zoom < DETAIL_LOAD_ZOOM) {
+    if (visibleTileKeys.size > 0) {
+      visibleTileKeys.clear();
+      rebuildLabels([]);
+    }
+    return;
+  }
+
+  const nextKeys = calculateVisibleTileKeys(graphManifest.detail);
+  const changed = !setsEqual(nextKeys, visibleTileKeys);
+  visibleTileKeys.clear();
+  nextKeys.forEach((key) => visibleTileKeys.add(key));
+  const requests: Promise<void>[] = [];
+  for (const key of visibleTileKeys) {
+    if (loadedTiles.has(key)) {
+      rememberLoadedTile(key, `${buildManifest.basePath}/graph/detail/${key}.json`);
+      continue;
+    }
+    const tilePath = `${buildManifest.basePath}/graph/detail/${key}.json`;
+    requests.push(
+      fetchTile(tilePath).then((tile) => {
+        if (tile.level !== 'detail') throw new Error('Graph detail tile mismatch');
+        loadedTiles.set(key, tile);
+        rememberLoadedTile(key, tilePath);
+      }),
+    );
+  }
   await Promise.all(requests);
   if (requestVersion !== tileRequestVersion) return;
+  if (changed || requests.length > 0) rebuildLabels(currentDetailNodes());
 
-  for (const levelName of rebuildLevels) rebuildLevelScene(levelName);
   if (pendingSelectionId) {
-    const focused = currentNodes('near').find((node) => node.id === pendingSelectionId);
+    const focused = currentDetailNodes().find((node) => node.id === pendingSelectionId);
     if (focused) {
       selectNode(focused);
       pendingSelectionId = undefined;
     }
   }
-
-  const hasNodes = [...activeLevels].some((levelName) => currentNodes(levelName).length > 0);
-  if (!persistentStatus) {
-    if (hasNodes) status.hidden = true;
-    else showStatus('이 위치에 표시할 문서가 없습니다.');
-  }
 }
 
-function rebuildLevelScene(levelName: GraphLevelName): void {
-  const rendered = renderedLevels.get(levelName)!;
-  disposeRenderedLevel(rendered);
-  const nodes = currentNodes(levelName);
-  const nodesById = new Map(nodes.map((node) => [node.id, node]));
-  const worldPositions = new Map(nodes.map((node) => [node.id, nodeWorldPosition(node)]));
-  const visibleNodes = nodes.filter((node) => node.kind !== 'hub');
-  rendered.nodes = visibleNodes;
-
-  if (visibleNodes.length > 0) {
-    const geometry = new SphereGeometry(1, mobile ? 6 : 8, mobile ? 4 : 6);
-    const material = new MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0,
-      depthWrite: false,
-    });
-    const mesh = new InstancedMesh(geometry, material, visibleNodes.length);
-    visibleNodes.forEach((node, index) => {
-      const position = worldPositions.get(node.id)!;
-      const radius = nodeWorldRadius(node);
-      scratchMatrix.makeScale(radius, radius, radius);
-      scratchMatrix.setPosition(position);
-      mesh.setMatrixAt(index, scratchMatrix);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-    mesh.frustumCulled = false;
-    mesh.renderOrder = 4;
-    rendered.group.add(mesh);
-    rendered.nodeMesh = mesh;
-    rendered.nodeMaterial = material;
-  }
-
-  const edges = currentEdges(levelName);
-  const strong = createEdgeLines(edges, nodesById, worldPositions, 'strong');
-  if (strong) {
-    rendered.group.add(strong.lines);
-    rendered.strongLines = strong.lines;
-    rendered.strongMaterial = strong.material;
-  }
-  const weak = createEdgeLines(edges, nodesById, worldPositions, 'weak');
-  if (weak) {
-    rendered.group.add(weak.lines);
-    rendered.weakLines = weak.lines;
-    rendered.weakMaterial = weak.material;
-  }
-
-  if (levelName === 'near') rebuildLabels(visibleNodes);
-  updateLevelAppearance(levelWeights(camera.zoom));
-  startAnimation();
-}
-
-function createEdgeLines(
-  edges: GraphEdge[],
-  nodesById: Map<string, GraphNode>,
-  worldPositions: Map<string, Vector3>,
-  strength: 'strong' | 'weak',
-): { lines: LineSegments; material: LineBasicMaterial } | undefined {
-  const positions: number[] = [];
-  for (const edge of edges) {
-    if (edge.strength !== strength) continue;
-    const source = nodesById.get(edge.source);
-    const target = nodesById.get(edge.target);
-    if (!source || !target) continue;
-    const from = worldPositions.get(source.id)!;
-    const to = worldPositions.get(target.id)!;
-    positions.push(from.x, from.y, from.z, to.x, to.y, to.z);
-  }
-  if (positions.length === 0) return undefined;
-  const geometry = new BufferGeometry();
-  geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-  const material = new LineBasicMaterial({
-    color: strength === 'strong' ? 0xd5d9df : 0xbfc4cc,
-    transparent: true,
-    opacity: 0,
-    depthWrite: false,
-  });
-  const lines = new LineSegments(geometry, material);
-  lines.frustumCulled = false;
-  lines.renderOrder = strength === 'strong' ? 2 : 1;
-  return { lines, material };
-}
-
-function disposeRenderedLevel(rendered: RenderedLevel): void {
-  rendered.group.clear();
-  rendered.nodeMesh?.geometry.dispose();
-  rendered.nodeMaterial?.dispose();
-  rendered.strongLines?.geometry.dispose();
-  rendered.strongMaterial?.dispose();
-  rendered.weakLines?.geometry.dispose();
-  rendered.weakMaterial?.dispose();
-  rendered.nodeMesh = undefined;
-  rendered.nodeMaterial = undefined;
-  rendered.strongLines = undefined;
-  rendered.strongMaterial = undefined;
-  rendered.weakLines = undefined;
-  rendered.weakMaterial = undefined;
-  rendered.nodes = [];
-}
-
-function createStarField(): Points {
-  const positions: number[] = [];
-  const count = mobile ? 180 : 520;
-  for (let index = 0; index < count; index += 1) {
-    positions.push(
-      (hashUnit(index, 17) - 0.5) * WORLD_SIZE * 2.4,
-      (hashUnit(index, 53) - 0.5) * WORLD_SIZE * 2,
-      (hashUnit(index, 97) - 0.5) * WORLD_DEPTH * 3.6,
-    );
-  }
-  const geometry = new BufferGeometry();
-  geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-  const material = new PointsMaterial({
-    color: 0xffffff,
-    size: mobile ? 0.025 : 0.032,
-    transparent: true,
-    opacity: 0.22,
-    depthWrite: false,
-    sizeAttenuation: true,
-  });
-  const points = new Points(geometry, material);
-  points.renderOrder = 0;
-  return points;
-}
-
-function rememberLoadedTile(levelName: GraphLevelName, key: string, path: string): void {
-  const orderKey = `${levelName}:${key}`;
-  loadedTileOrder.delete(orderKey);
-  loadedTileOrder.set(orderKey, { level: levelName, key, path });
+function rememberLoadedTile(key: string, tilePath: string): void {
+  loadedTileOrder.delete(key);
+  loadedTileOrder.set(key, tilePath);
   while (loadedTileOrder.size > tileCacheLimit) {
-    const candidate = [...loadedTileOrder].find(
-      ([, value]) => !visibleTileKeys.get(value.level)?.has(value.key),
-    );
+    const candidate = [...loadedTileOrder].find(([candidateKey]) => !visibleTileKeys.has(candidateKey));
     if (!candidate) return;
-    const [candidateKey, value] = candidate;
+    const [candidateKey, candidatePath] = candidate;
     loadedTileOrder.delete(candidateKey);
-    loadedTiles.get(value.level)?.delete(value.key);
-    tileCache.delete(value.path);
+    loadedTiles.delete(candidateKey);
+    tileCache.delete(candidatePath);
   }
 }
 
-async function fetchTile(path: string): Promise<GraphTile> {
-  const cached = tileCache.get(path);
+async function fetchTile(tilePath: string): Promise<GraphTile> {
+  const cached = tileCache.get(tilePath);
   if (cached) return cached;
-  const request = fetch(path, { cache: 'force-cache' }).then(async (response) => {
-    if (!response.ok) throw new Error('Graph tile request failed');
+  const request = fetch(tilePath, { cache: 'force-cache' }).then(async (response) => {
+    if (!response.ok) throw new Error('Graph detail tile request failed');
     const tile = (await response.json()) as GraphTile;
-    if (tile.buildId !== buildManifest.buildId) throw new Error('Graph tile build mismatch');
+    if (tile.buildId !== buildManifest.buildId) throw new Error('Graph detail build mismatch');
     return tile;
   });
-  tileCache.set(path, request);
+  tileCache.set(tilePath, request);
   try {
     return await request;
   } catch (cause) {
-    tileCache.delete(path);
+    tileCache.delete(tilePath);
     throw cause;
   }
 }
 
-function calculateVisibleTileKeys(levelManifest: GraphLevelManifest): Set<string> {
+function calculateVisibleTileKeys(detail: GraphManifest['detail']): Set<string> {
   const rect = canvas.getBoundingClientRect();
   const normalizedHeight = normalizedViewHeight(targetCamera.zoom);
   const halfWidth = normalizedHeight * Math.max(1, rect.width / Math.max(1, rect.height)) / 2;
   const halfHeight = normalizedHeight / 2;
   const buffer = mobile ? 0 : 1;
-  const grid = levelManifest.gridSize;
+  const grid = detail.gridSize;
   const minColumn = clampInteger(Math.floor((targetCamera.x - halfWidth) * grid) - buffer, 0, grid - 1);
   const maxColumn = clampInteger(Math.floor((targetCamera.x + halfWidth) * grid) + buffer, 0, grid - 1);
   const minRow = clampInteger(Math.floor((targetCamera.y - halfHeight) * grid) - buffer, 0, grid - 1);
   const maxRow = clampInteger(Math.floor((targetCamera.y + halfHeight) * grid) + buffer, 0, grid - 1);
-  const available = new Set(levelManifest.tiles);
   const keys = new Set<string>();
   for (let column = minColumn; column <= maxColumn; column += 1) {
     for (let row = minRow; row <= maxRow; row += 1) {
       const key = `${column}-${row}`;
-      if (available.has(key)) keys.add(key);
+      if (availableTileKeys.has(key)) keys.add(key);
     }
   }
   return keys;
@@ -576,12 +569,10 @@ function renderFrame(time: number): void {
   if (Math.abs(targetCamera.zoom - camera.zoom) < 0.00001) camera.zoom = targetCamera.zoom;
 
   updateCameraProjection();
-  const weights = levelWeights(camera.zoom);
-  updateLevelAppearance(weights);
-  updateSelectionMarker(weights.near);
+  updateSelectionMarker();
   renderer.render(scene, webglCamera);
-  updateLabels(weights.near);
-  positionNodePanel(weights.near);
+  updateLabels();
+  positionNodePanel();
   if (
     camera.x === targetCamera.x &&
     camera.y === targetCamera.y &&
@@ -601,23 +592,8 @@ function updateCameraProjection(): void {
   webglCamera.updateMatrixWorld();
 }
 
-function updateLevelAppearance(weights: Record<GraphLevelName, number>): void {
-  for (const levelName of LEVELS) {
-    const rendered = renderedLevels.get(levelName)!;
-    const weight = weights[levelName];
-    rendered.group.visible = weight > 0.002;
-    if (rendered.nodeMaterial) {
-      const baseOpacity = levelName === 'near' ? 0.94 : levelName === 'medium' ? 0.78 : 0.68;
-      rendered.nodeMaterial.opacity = baseOpacity * weight;
-    }
-    if (rendered.strongMaterial) rendered.strongMaterial.opacity = 0.34 * weight;
-    if (rendered.weakMaterial) rendered.weakMaterial.opacity = 0.12 * weight;
-    if (rendered.weakLines) rendered.weakLines.visible = weakControl.checked && weight > 0.002;
-  }
-}
-
-function updateSelectionMarker(nearWeight: number): void {
-  if (!selectedNode || nearWeight < 0.08) {
+function updateSelectionMarker(): void {
+  if (!selectedNode) {
     selectionRing.visible = false;
     return;
   }
@@ -626,7 +602,6 @@ function updateSelectionMarker(nearWeight: number): void {
   selectionRing.position.copy(scratchVector);
   selectionRing.quaternion.copy(webglCamera.quaternion);
   selectionRing.scale.setScalar(nodeWorldRadius(selectedNode));
-  (selectionRing.material as MeshBasicMaterial).opacity = Math.min(1, nearWeight);
 }
 
 function cameraTargetChanged(): void {
@@ -634,16 +609,16 @@ function cameraTargetChanged(): void {
     persistentStatus = false;
     status.hidden = true;
   }
-  if (targetCamera.zoom < 7.2 && selectedNode) clearSelection();
+  if (targetCamera.zoom < DETAIL_LOAD_ZOOM && selectedNode) clearSelection();
   startAnimation();
-  scheduleTileUpdate();
+  scheduleDetailUpdate();
   scheduleStateSave();
 }
 
-function scheduleTileUpdate(delay = 80): void {
+function scheduleDetailUpdate(delay = 80): void {
   window.clearTimeout(tileTimer);
   tileTimer = window.setTimeout(() => {
-    void loadVisibleTiles().catch(() => showStatus('3D 그래프를 불러오지 못했습니다.', true));
+    void loadVisibleDetailTiles().catch(() => showStatus('문서 정보를 불러오지 못했습니다.', true));
   }, delay);
 }
 
@@ -688,21 +663,19 @@ function finishPointer(event: PointerEvent): void {
 }
 
 function selectAt(clientX: number, clientY: number): void {
-  const nearWeight = levelWeights(camera.zoom).near;
-  if (nearWeight < 0.12) {
+  if (camera.zoom < DETAIL_LOAD_ZOOM) {
     clearSelection();
     return;
   }
   const rect = canvas.getBoundingClientRect();
   const x = clientX - rect.left;
   const y = clientY - rect.top;
-  const hit = currentNodes('near')
-    .filter((node) => node.kind === 'document')
+  const hit = currentDetailNodes()
     .map((node) => {
       const point = projectNode(node);
       return { node, distance: Math.hypot(point.x - x, point.y - y) };
     })
-    .filter(({ node, distance }) => distance <= Math.max(12, projectedNodeRadius(node) + 5))
+    .filter(({ node, distance: nodeDistance }) => nodeDistance <= Math.max(12, projectedNodeRadius(node) + 5))
     .sort((left, right) => left.distance - right.distance)[0]?.node;
   if (!hit) {
     clearSelection();
@@ -712,10 +685,9 @@ function selectAt(clientX: number, clientY: number): void {
 }
 
 function selectNearestToCenter(): void {
-  if (levelWeights(camera.zoom).near < 0.12) return;
+  if (camera.zoom < DETAIL_LOAD_ZOOM) return;
   const center = { x: canvas.clientWidth / 2, y: canvas.clientHeight / 2 };
-  const nearest = currentNodes('near')
-    .filter((node) => node.kind === 'document')
+  const nearest = currentDetailNodes()
     .map((node) => ({ node, distance: distance(projectNode(node), center) }))
     .sort((left, right) => left.distance - right.distance)[0]?.node;
   if (nearest) selectNode(nearest);
@@ -726,7 +698,7 @@ function selectNode(node: GraphNode): void {
   nodeTitle.textContent = node.title;
   nodeOpen.href = node.url;
   nodePanel.hidden = false;
-  positionNodePanel(levelWeights(camera.zoom).near);
+  positionNodePanel();
   startAnimation();
   scheduleStateSave();
 }
@@ -740,26 +712,17 @@ function clearSelection(restoreCanvasFocus = false): void {
   if (restoreCanvasFocus) canvas.focus();
 }
 
-function currentNodes(levelName: GraphLevelName): GraphNode[] {
-  const tiles = loadedTiles.get(levelName)!;
-  return [...visibleTileKeys.get(levelName)!]
-    .flatMap((key) => tiles.get(key)?.nodes ?? [])
-    .filter((node, index, values) => values.findIndex((candidate) => candidate.id === node.id) === index);
-}
-
-function currentEdges(levelName: GraphLevelName): GraphEdge[] {
-  const tiles = loadedTiles.get(levelName)!;
-  const edges = new Map<string, GraphEdge>();
-  for (const key of visibleTileKeys.get(levelName)!) {
-    for (const edge of tiles.get(key)?.edges ?? []) edges.set(`${edge.source}\0${edge.target}`, edge);
+function currentDetailNodes(): GraphNode[] {
+  const nodes = new Map<string, GraphNode>();
+  for (const key of visibleTileKeys) {
+    for (const node of loadedTiles.get(key)?.nodes ?? []) nodes.set(node.id, node);
   }
-  return [...edges.values()];
+  return [...nodes.values()];
 }
 
 function rebuildLabels(nodes: GraphNode[]): void {
   const limit = mobile ? 36 : 140;
   const candidates = nodes
-    .filter((node) => node.kind === 'document' && node.title)
     .sort((left, right) => right.weight - left.weight || left.id.localeCompare(right.id))
     .slice(0, limit);
   const fragment = document.createDocumentFragment();
@@ -773,8 +736,8 @@ function rebuildLabels(nodes: GraphNode[]): void {
   labelLayer.replaceChildren(fragment);
 }
 
-function updateLabels(nearWeight: number): void {
-  if (nearWeight < 0.35) {
+function updateLabels(): void {
+  if (camera.zoom < LABEL_ZOOM) {
     labelLayer.hidden = true;
     return;
   }
@@ -801,13 +764,13 @@ function updateLabels(nearWeight: number): void {
     element.hidden = !visible;
     if (!visible) continue;
     element.style.transform = `translate3d(${box.left}px, ${point.y}px, 0) translateY(-50%)`;
-    element.style.opacity = String(Math.min(0.78, nearWeight));
+    element.style.opacity = '0.78';
     boxes.push(box);
   }
 }
 
-function positionNodePanel(nearWeight: number): void {
-  if (!selectedNode || nearWeight < 0.08) {
+function positionNodePanel(): void {
+  if (!selectedNode) {
     nodePanel.hidden = true;
     return;
   }
@@ -850,10 +813,6 @@ function projectedNodeRadius(node: GraphNode): number {
   return nodeWorldRadius(node) * pixelsPerWorldUnit;
 }
 
-function nodeWorldPosition(node: Pick<GraphNode, 'x' | 'y' | 'z'>): Vector3 {
-  return setGraphWorldPosition(new Vector3(), node.x, node.y, node.z);
-}
-
 function graphWorldPosition(x: number, y: number, z: number): Vector3 {
   return setGraphWorldPosition(new Vector3(), x, y, z);
 }
@@ -867,25 +826,12 @@ function setGraphWorldPosition(target: Vector3, x: number, y: number, z: number)
 }
 
 function nodeWorldRadius(node: GraphNode): number {
-  if (node.kind === 'cluster') {
-    return Math.min(0.18, 0.075 + Math.sqrt(Math.max(1, node.weight)) * 0.012);
-  }
   return Math.min(0.026, 0.013 + Math.log1p(Math.max(1, node.weight)) * 0.0032);
 }
 
-function levelWeights(zoom: number): Record<GraphLevelName, number> {
-  const distantToMedium = smoothstep(1.65, 3.3, zoom);
-  const mediumToNear = smoothstep(7.2, 10.8, zoom);
-  return {
-    distant: 1 - distantToMedium,
-    medium: distantToMedium * (1 - mediumToNear),
-    near: mediumToNear,
-  };
-}
-
-function levelsForZoom(zoom: number): GraphLevelName[] {
-  const weights = levelWeights(zoom);
-  return LEVELS.filter((levelName) => weights[levelName] > 0.015);
+function decodeNodeDiameter(encodedSize: number): number {
+  const logarithmicWeight = encodedSize / 8192;
+  return Math.min(0.052, 0.026 + logarithmicWeight * 0.0064);
 }
 
 function resizeRenderer(): void {
@@ -896,6 +842,9 @@ function resizeRenderer(): void {
   renderer.setSize(width, height, false);
   webglCamera.aspect = width / height;
   webglCamera.updateProjectionMatrix();
+  if (graphPoints) {
+    graphPoints.material.uniforms.viewportHeight!.value = height * renderer.getPixelRatio();
+  }
 }
 
 function startAnimation(): void {
@@ -913,6 +862,7 @@ function restoreHistoryState(): boolean {
   clampCamera(camera);
   clampCamera(targetCamera);
   weakControl.checked = value.weakEdges;
+  if (weakLines) weakLines.visible = weakControl.checked;
   pendingSelectionId = value.selectedId;
   updateCameraProjection();
   return true;
@@ -964,11 +914,6 @@ function clampCamera(value: CameraState): void {
   value.zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, value.zoom));
 }
 
-function smoothstep(minimum: number, maximum: number, value: number): number {
-  const normalized = Math.min(1, Math.max(0, (value - minimum) / (maximum - minimum)));
-  return normalized * normalized * (3 - 2 * normalized);
-}
-
 function setsEqual(left: Set<string>, right: Set<string>): boolean {
   return left.size === right.size && [...left].every((value) => right.has(value));
 }
@@ -986,14 +931,6 @@ function overlaps(
   right: { left: number; right: number; top: number; bottom: number },
 ): boolean {
   return left.left < right.right && left.right > right.left && left.top < right.bottom && left.bottom > right.top;
-}
-
-function hashUnit(value: number, salt: number): number {
-  let hash = (value + 1) * 0x9e3779b1 ^ salt * 0x85ebca6b;
-  hash ^= hash >>> 16;
-  hash = Math.imul(hash, 0x7feb352d);
-  hash ^= hash >>> 15;
-  return (hash >>> 0) / 0xffffffff;
 }
 
 function clampInteger(value: number, minimum: number, maximum: number): number {
