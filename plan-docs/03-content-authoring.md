@@ -65,6 +65,77 @@ Only `id`, `title`, and valid body structure are universally required. Aliases, 
 9. Review the rendered article, table of contents, popovers, boards, media, related documents, search result, and focused graph entry as applicable.
 10. Commit the codebase content change.
 
+## Agent-Assisted Authoring Workflow
+
+Agent-assisted authoring is a development-time workflow, not an Astronet runtime feature. It may inspect and edit repository sources, but it must not add an editor, write API, CMS, database, automatic XML rewrite, or deployed draft state.
+
+The primary agent remains the curator and sole writer for an integrated change. Specialized subagents are read-only and return evidence-backed handoffs:
+
+- `knowledge-mapper` maps candidate documents, entities, atomic claims, references, connections, board memberships, and backreferences.
+- `canon-gap-analyst` separates existing facts, user-confirmed facts, proposals, and unknowns, then ranks the questions that affect later decisions.
+- `knowledge-integrator` decides whether to keep, create, rename, merge, or delete an identity and plans every immutable-ID reference impact.
+- `consistency-auditor` compares the proposed delta with existing canon and reports structural, identity, chronology, terminology, scope, and relationship conflicts.
+
+Use the repository skill at `.agents/skills/author-astronet-knowledge/` to orchestrate these roles. Run independent read-heavy work in parallel only when each agent has a bounded scope. Do not let multiple agents edit the same XML or divide a cross-document canon decision among writers.
+
+Only XML under `content/documents/**` and `content/boards/**` is canonical knowledge. Files under `content/examples/**` demonstrate syntax and must not be treated as existing worldbuilding facts.
+
+### Working Claim States
+
+Keep an ephemeral claim ledger during authoring:
+
+- `existing`: directly supported by current source XML.
+- `confirmed`: explicitly supplied or approved by the user for the current change.
+- `proposed`: suggested by an agent or external source and awaiting approval.
+- `unknown`: required information that is absent.
+- `conflicted`: canon candidates cannot yet be reconciled.
+- `rejected`: explicitly declined or disproven for the current change.
+
+Only `existing` and `confirmed` claims may be written as assertive canonical prose. The ledger, confidence labels, agent votes, and unresolved proposals must not be persisted in article XML, tags, aliases, or generated artifacts.
+
+### Questions and Approval
+
+- Derive questions after inspecting the relevant canonical neighborhood; do not ask for facts already present in the repository.
+- Ask the highest-impact branching question first. Up to three independent low-coupling questions may be grouped.
+- Auto-fill only non-canonical mechanics such as XML nesting, NFC normalization, visible reference labels, section ordering, and required hash-sharded paths.
+- Treat creative gap filling as a proposed canon delta and obtain approval before writing it.
+- Never resolve an ambiguous title or alias match to an immutable ID without evidence or user confirmation.
+- External research is context, not worldbuilding canon, until the user explicitly adopts it.
+
+### Compatibility and Contradiction Policy
+
+Compare atomic claims only after resolving their canonical subject and considering time, place, scope, measurement, and viewpoint. Different wording is not itself a contradiction.
+
+- Fix deterministic schema, path, identifier, NFC, and broken-reference errors directly.
+- Qualify statements that describe different eras, locations, factions, measurements, or narrators and can coexist.
+- Preserve intentional ambiguity, unreliable narration, and historical supersession instead of flattening them into one claim.
+- Present both source locations and resolution choices before changing unresolved canon or merging ambiguous identities.
+- Never use agent majority, model confidence, weak graph edges, lexical similarity, shared tags, or related-document rank as a truth rule.
+- After a material edit, audit the actual diff again because the proposed resolution may create a new downstream conflict.
+
+### Agent Workflow Acceptance Criteria
+
+- The operation is classified as create, update, rename, merge, or delete before editing.
+- Relevant existing claims and identity candidates have source-path and document-ID evidence.
+- Canonical questions are resolved or left explicitly unknown; no proposal is silently promoted to fact.
+- Every added internal relationship uses an immutable ID and the appropriate body reference, manual connection, or board group.
+- Every reported contradiction includes both sides, relevant qualifiers, affected sources, and a disposition of accept, reject, unresolved, or needs-user.
+- One writer applies the approved integrated change without rewriting unrelated XML.
+- No workflow-only state, external database, runtime write surface, dependency, or permanent test harness is added.
+- Rename, merge, and delete operations update every affected reference, connection, board entry, stable-section target, and media relationship.
+- `npm run build` succeeds, and applicable article, search, related-document, and graph behavior is reviewed.
+
+### Workflow Precedents
+
+The workflow adapts patterns rather than adopting a new runtime platform:
+
+- [STORM and Co-STORM](https://github.com/stanford-oval/storm) motivate perspective-guided questions, follow-up discussion, and human-steered knowledge curation.
+- [Microsoft GraphRAG](https://microsoft.github.io/graphrag/index/overview/) motivates separating source text, entities, relationships, and atomic claims with traceable evidence.
+- [LightRAG](https://github.com/HKUDS/LightRAG) provides a useful precedent for incremental entity merge and relationship redirection.
+- [Graphiti](https://github.com/getzep/graphiti) motivates retaining provenance and qualifying facts by validity period instead of deleting history when knowledge changes.
+- [W3C PROV-O](https://www.w3.org/TR/prov-o/) and [Wikidata constraints](https://www.wikidata.org/wiki/Help:Property_constraints_portal) motivate evidence lineage and deterministic validation before semantic judgment.
+- Multi-agent debate can improve some tasks, but published results do not show that debate reliably dominates independent reasoning. Astronet therefore uses independent evidence checks and curator adjudication rather than open-ended agent voting ([Du et al.](https://proceedings.mlr.press/v235/du24e.html), [Smit et al.](https://proceedings.mlr.press/v235/smit24a.html)).
+
 ## Identity and Rename Rules
 
 - Never change a document ID after publication.

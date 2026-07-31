@@ -22,7 +22,7 @@ The compiler discovers sources recursively. It rejects a file when its directory
 
 ## Document shape
 
-See [`examples/document.xml`](./examples/document.xml) for the complete authoring shape and [`astronet.xsd`](./astronet.xsd) for the structural schema. The application compiler is authoritative for cross-file references, file paths, media safety, size limits, Unicode NFC, and application registries.
+See [`examples/document.xml`](./examples/document.xml) for the complete authoring shape and [`astronet.xsd`](./astronet.xsd) for the structural schema. Files under `examples/` demonstrate syntax and are not canonical knowledge or compiler inputs. The application compiler is authoritative for cross-file references, file paths, media safety, size limits, Unicode NFC, and application registries.
 
 - `<title>` is required and contains Korean text.
 - `<aliases>` and `<tags>` are optional build metadata. They are never rendered.
@@ -31,7 +31,7 @@ See [`examples/document.xml`](./examples/document.xml) for the complete authorin
 - Internal references use `<ref href="doc:ID">표시 문구</ref>` or `doc:ID#stable-section`.
 - External links use `<external href="https://…">표시 문구</external>`.
 - Section numbers and fallback anchors are generated. Authors may add a stable lowercase section `id` for cross-document links.
-- `<footnote>` is inline and cannot contain another footnote or block content.
+- `<footnote>` is inline, may contain safe emphasis and internal or external links, and cannot contain another footnote or block content.
 - `<include-board ref="ID"/>` is the only reusable-content inclusion. General transclusion does not exist.
 
 ## Navigation boards
@@ -44,6 +44,8 @@ Include a given board at most once in the same document. The compiler stores one
 
 Media IDs use lowercase letters, digits, `_`, and `-`. Supported repository formats are PNG, JPEG, WebP, GIF, AVIF, sanitized SVG, MP4, WebM, and WebVTT.
 
+Media IDs contain 2–64 characters, may begin with a lowercase letter or digit, and otherwise contain only lowercase letters, digits, `_`, and `-`.
+
 - Non-decorative figures require Korean alternative text.
 - Arbitrary remote images are rejected.
 - SVG scripts, event handlers, `foreignObject`, embedded styles, and external resources are rejected.
@@ -53,3 +55,9 @@ Media IDs use lowercase letters, digits, `_`, and `-`. Supported repository form
 ## Validation
 
 `npm run build` runs structural parsing, semantic cross-reference validation, safe HTML compilation, relationship analysis, and artifact generation before Astro builds the site. A failure reports the source path and relevant element, attribute, or target. Validation never modifies authored XML or media.
+
+## Agent-assisted authoring
+
+Use `$author-astronet-knowledge` for factual creation, expansion, rename, merge, deletion, relationship integration, or contradiction repair. Its analysis subagents remain read-only; the primary curator asks for material canon decisions and applies the approved XML change as the single writer. Working claim states and agent reports are temporary and must not be added to canonical XML.
+
+See [`../plan-docs/03-content-authoring.md`](../plan-docs/03-content-authoring.md) for the complete approval, compatibility, contradiction, and review workflow.

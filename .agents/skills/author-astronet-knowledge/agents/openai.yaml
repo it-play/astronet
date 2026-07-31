@@ -1,0 +1,4 @@
+interface:
+  display_name: "Astronet Knowledge Authoring"
+  short_description: "Create and reconcile canonical Astronet knowledge"
+  default_prompt: "Use $author-astronet-knowledge to add or reconcile Astronet knowledge safely."

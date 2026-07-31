@@ -12,6 +12,18 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="resourceId">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-z0-9][a-z0-9_-]{1,63}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="boardToken">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-z][a-z0-9-]{0,63}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:complexType name="inlineContent" mixed="true">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="em" type="inlineContent"/>
@@ -27,7 +39,7 @@
           <xs:complexContent mixed="true"><xs:extension base="inlineNoLinks"><xs:attribute name="href" type="xs:anyURI" use="required"/></xs:extension></xs:complexContent>
         </xs:complexType>
       </xs:element>
-      <xs:element name="footnote" type="inlineNoLinks"/>
+      <xs:element name="footnote" type="footnoteContent"/>
     </xs:choice>
   </xs:complexType>
 
@@ -36,6 +48,24 @@
       <xs:element name="em" type="inlineNoLinks"/>
       <xs:element name="strong" type="inlineNoLinks"/>
       <xs:element name="code" type="xs:string"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="footnoteContent" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="em" type="footnoteContent"/>
+      <xs:element name="strong" type="footnoteContent"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="ref">
+        <xs:complexType>
+          <xs:complexContent mixed="true"><xs:extension base="inlineNoLinks"><xs:attribute name="href" type="xs:string" use="required"/></xs:extension></xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="external">
+        <xs:complexType>
+          <xs:complexContent mixed="true"><xs:extension base="inlineNoLinks"><xs:attribute name="href" type="xs:anyURI" use="required"/></xs:extension></xs:complexContent>
+        </xs:complexType>
+      </xs:element>
     </xs:choice>
   </xs:complexType>
 
@@ -103,7 +133,7 @@
 
   <xs:complexType name="figureType">
     <xs:sequence><xs:element name="caption" type="inlineContent" minOccurs="0"/></xs:sequence>
-    <xs:attribute name="asset" type="stableName" use="required"/>
+    <xs:attribute name="asset" type="resourceId" use="required"/>
     <xs:attribute name="alt" type="xs:string"/>
     <xs:attribute name="decorative" type="xs:boolean"/>
     <xs:attribute name="target" type="immutableId"/>
@@ -112,12 +142,12 @@
   <xs:complexType name="videoType">
     <xs:sequence><xs:element name="caption" type="inlineContent" minOccurs="0"/></xs:sequence>
     <xs:attribute name="label" type="xs:string" use="required"/>
-    <xs:attribute name="asset" type="stableName"/>
+    <xs:attribute name="asset" type="resourceId"/>
     <xs:attribute name="provider" type="xs:string"/>
     <xs:attribute name="video-id" type="xs:string"/>
     <xs:attribute name="direct-url" type="xs:anyURI"/>
-    <xs:attribute name="poster" type="stableName"/>
-    <xs:attribute name="track" type="stableName"/>
+    <xs:attribute name="poster" type="resourceId"/>
+    <xs:attribute name="track" type="resourceId"/>
   </xs:complexType>
 
   <xs:element name="document">
@@ -145,7 +175,7 @@
         <xs:element name="header">
           <xs:complexType>
             <xs:sequence><xs:element name="title" type="xs:string"/><xs:element name="subtitle" type="xs:string" minOccurs="0"/></xs:sequence>
-            <xs:attribute name="asset" type="stableName"/>
+            <xs:attribute name="asset" type="resourceId"/>
           </xs:complexType>
         </xs:element>
         <xs:choice>
@@ -154,7 +184,7 @@
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="id" type="immutableId" use="required"/>
-      <xs:attribute name="theme" type="stableName"/>
+      <xs:attribute name="theme" type="boardToken"/>
     </xs:complexType>
   </xs:element>
 
@@ -168,7 +198,7 @@
     <xs:attribute name="id" type="stableName" use="required"/>
     <xs:attribute name="label" type="xs:string" use="required"/>
     <xs:attribute name="group" type="stableName"/>
-    <xs:attribute name="asset" type="stableName"/>
+    <xs:attribute name="asset" type="resourceId"/>
   </xs:complexType>
 
   <xs:complexType name="boardBodyType">
@@ -180,7 +210,7 @@
     </xs:choice>
     <xs:attribute name="label" type="xs:string"/>
     <xs:attribute name="group" type="stableName"/>
-    <xs:attribute name="asset" type="stableName"/>
+    <xs:attribute name="asset" type="resourceId"/>
   </xs:complexType>
 
   <xs:complexType name="boardEntriesType">
@@ -188,7 +218,7 @@
   </xs:complexType>
 
   <xs:complexType name="boardLayoutEntriesType">
-    <xs:complexContent><xs:extension base="boardEntriesType"><xs:attribute name="layout" type="stableName" use="required"/></xs:extension></xs:complexContent>
+    <xs:complexContent><xs:extension base="boardEntriesType"><xs:attribute name="layout" type="boardToken" use="required"/></xs:extension></xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="boardTableType">
@@ -197,9 +227,9 @@
 
   <xs:complexType name="boardDocumentType" mixed="true">
     <xs:attribute name="target" type="immutableId" use="required"/>
-    <xs:attribute name="asset" type="stableName"/>
-    <xs:attribute name="icon" type="stableName"/>
-    <xs:attribute name="accent" type="stableName"/>
-    <xs:attribute name="slot" type="stableName"/>
+    <xs:attribute name="asset" type="resourceId"/>
+    <xs:attribute name="icon" type="boardToken"/>
+    <xs:attribute name="accent" type="boardToken"/>
+    <xs:attribute name="slot" type="boardToken"/>
   </xs:complexType>
 </xs:schema>
