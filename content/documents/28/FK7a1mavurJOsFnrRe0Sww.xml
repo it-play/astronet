@@ -2,6 +2,7 @@
   <title>NKR-22 위상배열레이더</title>
   <aliases><alias>NKR-22</alias></aliases>
   <body>
+    <include-board ref="7iNiYv352T7f5XcNsOVsHQ"/>
     <section><title>개요</title><p><strong>NKR-22</strong>는 조선 해군이 개발한 함정용 위상배열 탐색레이더이다. 해상·공중표적을 탐지하고 전술데이터링크에 표적정보를 제공하는 <ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>의 주 감시센서이다.</p><p>기계식 단일표적 탐색에 의존하던 구형 고속정과 달리 여러 표적을 동시에 추적해 편대·상급함과 공유할 수 있도록 설계되었다.</p></section>
     <section><title>체계 관계</title><p>NKR-22가 광역탐지와 전술상황 구성을 맡고 <ref href="doc:tQKPkkGLbWy--8gTafeCuA">NKR-30</ref>이 함포와 근접방어체계의 정밀 사격통제를 보조한다. 두 레이더의 결합은 백두급이 조선 해군 최초의 네트워크 중심전 함급으로 평가받는 근거 중 하나이다.</p></section>
   </body>

@@ -1,0 +1,9 @@
+<navigation-board id="7iNiYv352T7f5XcNsOVsHQ" theme="default">
+  <header><title>조선자유민주주의공화국 국군의 레이더·전자장비체계</title></header>
+  <section id="naval-radars" label="함정용 레이더" group="naval-radar-systems">
+    <document-links>
+      <document target="FK7a1mavurJOsFnrRe0Sww">NKR-22 위상배열레이더</document>
+      <document target="tQKPkkGLbWy--8gTafeCuA">NKR-30 사격통제레이더</document>
+    </document-links>
+  </section>
+</navigation-board>

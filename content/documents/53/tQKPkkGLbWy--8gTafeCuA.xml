@@ -2,6 +2,7 @@
   <title>NKR-30 사격통제레이더</title>
   <aliases><alias>NKR-30</alias></aliases>
   <body>
+    <include-board ref="7iNiYv352T7f5XcNsOVsHQ"/>
     <section><title>개요</title><p><strong>NKR-30</strong>은 조선 해군의 함정용 사격통제레이더이다. 탐색레이더가 넘긴 표적을 정밀 추적하고 76mm 함포와 <ref href="doc:A92f9IvAs-YvLN3pZLVRbw">NK-182 천패</ref>의 교전해를 계산한다.</p><p><ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>에서 <ref href="doc:FK7a1mavurJOsFnrRe0Sww">NKR-22 위상배열레이더</ref>와 함께 운용된다.</p></section>
     <section><title>의의와 한계</title><p>센서와 무장을 하나의 전투체계에 연결해 사람의 육안조준과 개별 포대 판단에 의존하던 구형 체계를 대체했다. 다만 하나의 소형함이 동시에 처리할 수 있는 교전 수와 근접방어체계의 탄약량에는 물리적인 한계가 있었다.</p></section>
   </body>

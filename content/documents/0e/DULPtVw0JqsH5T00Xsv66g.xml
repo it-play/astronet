@@ -6,6 +6,8 @@
   <body>
     <include-board ref="JxymGdHQob6lrJTQCpDKWA"/>
     <include-board ref="fzguweEZpd8mthJutE5URw"/>
+    <include-board ref="7iNiYv352T7f5XcNsOVsHQ"/>
+    <include-board ref="0D0exxijgE3nlDTe-TUoQg"/>
     <section>
       <title>개요</title>
       <p>조선자유민주주의공화국 국군은 북조선자유민주주의공화국의 정규군이다. <ref href="doc:dHcCQpwE8jd08w021Xw8WA">제2차 연평해전</ref> 이후인 2003년 2월 8일 조선국방군이라는 명칭으로 창설되었으며, 2016년 9월 30일 <ref href="doc:rMPecRhONjgQ8PcHieuzoA">새 헌법</ref>이 정식으로 발효되면서 현재의 정식 명칭을 채택했다.</p>
@@ -99,7 +101,7 @@
         </tbody>
       </table>
       <p>네 군종은 조선인민군사위원회와 별개의 인사·작전 체계에 속한다. 각 군은 독립적인 교육·훈련 체계를 갖지만 합동작전에서는 합동참모본부의 지휘를 받는다.</p>
-      <p>해군의 함급은 <ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>과 같이 별도 문서에서 다루며, 위의 ‘해군의 운용함정’ 보드에서 PG/FAC 등 유사한 함종부호끼리 묶는다. 발사체계와 개별 미사일은 ‘국군의 유도무기’ 보드에서 서로 다른 패널로 구분한다.</p>
+      <p>해군의 함급은 <ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>과 같이 별도 문서에서 다루며, 위의 ‘해군의 운용함정’ 보드에서 PG/FAC 등 유사한 함종부호끼리 묶는다. 발사체계와 개별 미사일은 ‘국군의 유도무기’ 보드에서 서로 다른 패널로 구분한다. 레이더와 전자장비는 ‘국군의 레이더·전자장비체계’ 보드에서, 함포와 포 기반 근접방어체계는 ‘해군의 함포’ 보드에서 다룬다.</p>
     </section>
     <section>
       <title>조선인민군사위원회와의 구분</title>
