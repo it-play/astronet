@@ -58,12 +58,12 @@ This directory is the planning source of truth and the approved baseline for pha
 - Allowlisted external video players load only after explicit interaction with a local poster; viewport proximity alone never creates the external request.
 - Article and navigation-board images must be repository-owned deployment assets; arbitrary remote-image hotlinks are not allowed.
 - Selecting an ordinary article figure opens its full-size image in an accessible modal; navigation-board media and figures explicitly linked to documents preserve their navigation action instead.
-- The graph uses galaxy-like semantic zoom: corpus clusters at distant zoom and real documents at close zoom.
+- The graph uses a WebGL 3D galaxy with continuously damped semantic zoom: corpus clusters at distant zoom and real documents at close zoom crossfade without camera jumps.
 - Distant and medium graph clusters have no generated semantic names; actual titles appear only when real document nodes become visible.
 - The graph is always a dedicated page, never an embedded article widget; the global entry opens the whole-corpus view and an article entry opens the same page focused on that article.
 - The dedicated graph page has no graph-specific document search; targeted discovery remains in the site search and document-focused graph entry.
 - Mobile retains the complete corpus-wide galaxy graph with touch navigation while reducing visible density and decorative effects to fit device performance.
-- Selecting a document node opens a compact title-only detail panel with separate actions to open the article or recenter the graph; it does not navigate immediately.
+- Selecting a document node opens a compact title-only popover anchored to that node with one action to open the article; it never moves the graph camera or navigates immediately.
 - Opening an article from the graph uses ordinary same-tab navigation, and browser Back restores the previous graph camera, zoom, and selection state.
 - Article pages use the light editorial canvas; the graph uses a dedicated dark galaxy canvas.
 - A random-article action is included.

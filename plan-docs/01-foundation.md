@@ -62,7 +62,7 @@ This target rules out shipping the complete graph to every browser, scanning the
 - No graph-specific document search input
 - Knowledge nodes and relationship edges
 - A way to inspect or identify a node
-- A compact title-only node-detail panel with separate article-navigation and recenter actions
+- A compact title-only popover anchored to the selected node with one article-navigation action
 - Clear solid strong edges and lower-contrast solid weak edges
 - A control for hiding or showing weak edges
 - Galaxy-like pan and semantic zoom across the complete corpus
@@ -193,7 +193,7 @@ Page composition:
 - **Home:** search is the page thesis, followed by a single dark graph entry surface, the direct random action, and the five-title random list. Do not add a marketing hero, metrics, recent content, or promotional cards.
 - **Article:** title, any included collapsed navigation boards, mobile table of contents when applicable, numbered body sections, generated notes, related documents, and the link to the dedicated graph page.
 - **Search:** one prominent query field followed by a flat paginated result list with highlighted excerpts and explicit empty or loading states.
-- **Graph:** a full dark workspace with minimal controls, unnamed aggregate galaxies, actual titles only on visible document nodes, and the compact node-detail panel.
+- **Graph:** a full dark workspace with minimal controls, unnamed aggregate galaxies, actual titles only on visible document nodes, and the node-anchored detail popover.
 
 Before implementation, critique each component against this contract. Remove any treatment that could be reused unchanged in a generic SaaS dashboard, especially floating glass panels, gratuitous pills, gradients, generic statistic cards, or accent-heavy metadata chips.
 
@@ -537,9 +537,9 @@ The graph combines a corpus-wide overview with local document exploration. It mu
 
 Do not synthesize cluster names from categories, tags, keywords, or representative titles. Cluster appearance guides spatial exploration until actual document nodes and titles emerge.
 
-Zoom transitions replace aggregates with more detailed data. Selecting a cluster moves toward it; selecting a document can open its article or recenter the graph around that document.
+The graph renders as a WebGL 3D galaxy with stable depth coordinates and a populated spiral core rather than a flat Cartesian grid. Continuously damped zoom crossfades aggregates into more detailed data without snapping the camera. Wheel, pinch, keyboard, and explicit zoom controls change the camera scale; selecting a cluster never changes it.
 
-Selecting a document first opens a compact panel rather than navigating immediately. The panel shows the title without an authored summary and provides distinct `Open article` and `Center graph` actions. It must work with pointer, touch, and keyboard selection without interfering with pan and zoom gestures.
+Selecting a document first opens a compact popover anchored to that node rather than navigating immediately. The popover shows the title without an authored summary and provides one `Open article` action. It must work with pointer, touch, and keyboard selection without interfering with pan and zoom gestures.
 
 The article action is an ordinary internal link that navigates in the same tab by default and retains native new-tab behavior. Before navigation, save the graph camera, zoom level, selected node, and relevant UI controls in browser history state. Returning with browser Back restores that state instead of resetting to an entry view; immutable tile caching prevents avoidable reloads.
 
@@ -556,7 +556,7 @@ The article action is an ordinary internal link that navigates in the same tab b
 - Partition graph data by zoom level and spatial tile or hierarchical cluster.
 - Load only visible tiles and a small adjacent buffer.
 - Cache immutable graph tiles and avoid redundant requests while panning back to a viewed area.
-- Prefer Canvas or WebGL rendering over one DOM or SVG element per node at large visible counts.
+- Render nodes and edges as one route-scoped WebGL 3D scene rather than one DOM or SVG element per node.
 - Preserve the complete graph hierarchy and semantic zoom on mobile rather than replacing it with a local-only graph.
 - Support touch pan and pinch zoom, and reduce visible node counts, labels, particles, and adjacent-tile buffering according to mobile performance budgets.
 - Hide individual weak edges at distant zoom levels; represent their influence only in aggregate density or community strength.

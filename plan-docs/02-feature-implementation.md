@@ -221,10 +221,12 @@ Locally computed Korean embeddings remain an optional replacement for only the w
 
 - Load graph code and tiles only on the dedicated graph route.
 - Open `/graph` at the distant whole-corpus view and `/graph?focus=ID` near the focused document.
-- Use Canvas or WebGL and load only visible tiles plus a bounded adjacent buffer.
-- Support pointer pan and wheel zoom plus touch pan and pinch zoom.
+- Use a WebGL 3D scene with stable depth coordinates and load only visible tiles plus a bounded adjacent buffer.
+- Support damped pointer pan and continuous wheel zoom plus touch pan and pinch zoom.
+- Crossfade adjacent semantic detail levels around their zoom boundaries so tile-family changes never snap the camera or blank the galaxy.
 - Retain the full corpus hierarchy on mobile while lowering node, label, particle, and tile-buffer budgets.
-- Select clusters to zoom toward them. Select document nodes to open a compact title-only panel with separate `Open article` and `Center graph` actions.
+- Use wheel, pinch, keyboard, or the explicit zoom controls to move between aggregate clusters and real documents; selecting a cluster never changes the camera.
+- Select document nodes to open a compact title-only popover anchored to the node with one separate `Open article` action.
 - Navigate to articles in the same tab by default while preserving native new-tab behavior.
 - Save camera, zoom, selected node, and relevant controls in history state before article navigation; browser Back restores the exact graph view.
 - Do not add graph-specific document search.
