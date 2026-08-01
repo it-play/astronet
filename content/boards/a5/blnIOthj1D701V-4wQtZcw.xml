@@ -2,9 +2,21 @@
   <header>
     <title>북조선자유민주주의공화국 대통령</title>
   </header>
-  <section id="presidents" label="역대 대통령" group="republic-presidents">
+  <section id="presidents" label="대통령·당선인" group="republic-presidents">
     <document-links>
       <document target="d_AtmPGGFJpKoJJjH6ztVw">신기훈</document>
+      <document target="hdqzX6opz-ZqtyO7PUOzMQ">김태은</document>
+    </document-links>
+  </section>
+  <section id="elections" label="대통령 선거" group="republic-presidential-elections">
+    <document-links>
+      <document target="0v920O9pMADXKPx5QVv8JQ">2016년 북조선 대통령 선거</document>
+      <document target="yAm6yCAgsWpIAl7bID-hyA">2026년 북조선 대통령 선거</document>
+    </document-links>
+  </section>
+  <section id="platforms" label="공약" group="republic-presidential-platforms">
+    <document-links>
+      <document target="5-6wuYPuIpl7gug3-bGj4w">김태은의 8대 대선 공약</document>
     </document-links>
   </section>
 </navigation-board>

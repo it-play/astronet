@@ -1,0 +1,37 @@
+<navigation-board id="QOV6J5sQ-VzOtSVYrXQ3Ng" theme="default">
+  <header><title>김태은</title></header>
+  <section id="people" label="인물" group="kim-taeeun-people">
+    <document-links>
+      <document target="hdqzX6opz-ZqtyO7PUOzMQ">김태은</document>
+      <document target="9b6cIsqzHQy77eYbxQ1r0w">김가석</document>
+      <document target="otCF6Hhx1ZNGYt9ahw7q0Q">박민솔</document>
+    </document-links>
+  </section>
+  <section id="childhood" label="2009~2013년" group="kim-taeeun-childhood">
+    <document-links>
+      <document target="1XZjwchi8rsTKaOB1K44hA">남북어린이문화교류체험단</document>
+      <document target="-shvHNXoPCohKxW_OXMWmw">경복궁 폭탄테러 사건</document>
+      <document target="wxqrwPbc-57Qi-1lUEQruQ">남한 어린이 납치 사건</document>
+      <document target="YHtLIoAK1Ei51c8gs99sBA">인민의소리</document>
+      <document target="ZV5oNWwJDrVNh8XxpfVVOw">백령도 포격전</document>
+      <document target="AT8KRlLi3YRiCaWCVxN1kQ">인민의소리 아지트 사건</document>
+    </document-links>
+  </section>
+  <section id="business" label="기업·기술·미디어" group="kim-taeeun-business">
+    <document-links>
+      <document target="ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</document>
+      <document target="uR9B2FAwSFLn9v64MAHFQg">평양증권거래소 가두시위</document>
+      <document target="scTI1TD0igpeGlHt1f00HA">2019년 PEDEX 대폭락</document>
+      <document target="kGAtaTzU92klhZPu2dAjmA">GAME SOFT</document>
+      <document target="LKM2Tl14MRfrQ9U02G0pow">플레이스</document>
+    </document-links>
+  </section>
+  <section id="politics" label="정치" group="kim-taeeun-politics">
+    <document-links>
+      <document target="yAm6yCAgsWpIAl7bID-hyA">2026년 대통령 선거</document>
+      <document target="5-6wuYPuIpl7gug3-bGj4w">8대 대선 공약</document>
+      <document target="3DyQ2NsVaYFZ2vb8glVE3Q">자유조선당</document>
+      <document target="nMj_4DViGJnBUBxOvrKX_g">청년시민당</document>
+    </document-links>
+  </section>
+</navigation-board>

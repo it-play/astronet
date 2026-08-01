@@ -5,6 +5,12 @@
       <document target="ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</document>
     </document-links>
   </section>
+  <section id="leadership" label="경영진" group="tml-leadership">
+    <document-links>
+      <document target="9b6cIsqzHQy77eYbxQ1r0w">김가석(전 회장)</document>
+      <document target="hdqzX6opz-ZqtyO7PUOzMQ">김태은(회장)</document>
+    </document-links>
+  </section>
   <section id="transport-and-industry" label="운송·제조·건설" group="tml-transport-industry">
     <document-links>
       <document target="GK5zox1O3DvpxS1n8nz--g">TML 해운</document>
@@ -42,6 +48,9 @@
   </section>
   <section id="related-events" label="관련 사건" group="tml-related-events">
     <document-links>
+      <document target="4ZcpP2rVPf3MSTCe4NDb2g">2017년 PEDEX 지수 폭락 사건</document>
+      <document target="uR9B2FAwSFLn9v64MAHFQg">2018년 평양증권거래소 가두시위</document>
+      <document target="scTI1TD0igpeGlHt1f00HA">2019년 PEDEX 대폭락</document>
       <document target="cdrm-Ch_9Ro9tQri3l_zCg">북한발 반도체 성능쇼크</document>
     </document-links>
   </section>

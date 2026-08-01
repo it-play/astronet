@@ -7,6 +7,7 @@
   </aliases>
   <body>
     <include-board ref="NMt_svl0AVCBFR3ZkL6Y3g"/>
+    <include-board ref="QOV6J5sQ-VzOtSVYrXQ3Ng"/>
     <section>
       <title>개요</title>
       <p><strong>GAME SOFT</strong>는 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>의 게임 개발회사이다. 그룹 내부에서 출범한 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>와 달리 외부 게임업체를 인수해 편입한 회사로, 2019년 9월 12일 최종 인수가 완료되었다.</p>
@@ -16,6 +17,12 @@
       <title>개발사업</title>
       <p>GE 시리즈는 회사 내부 타이틀뿐 아니라 외부 개발사도 사용할 수 있는 게임엔진 계열이다. 엔진, 제작도구와 배포체계를 한 회사가 공급하면서 국내 게임산업의 기술기반을 빠르게 넓혔다.</p>
       <p>다수의 자체 타이틀을 통해 축적한 제작기술을 엔진 개발에 다시 반영하는 구조를 갖추고 있다. TML SD의 운영체제·개발도구와 연동하지만 일반 소프트웨어 사업과 게임제작 조직은 분리되어 있다.</p>
+    </section>
+    <section>
+      <title>GE 4</title>
+      <p><strong>GE 4</strong>는 GE 시리즈의 4세대 게임엔진이다. 대규모 장면의 병렬 작업분배, 서로 다른 운영체제와 그래픽 장치 사이의 플랫폼 추상화, 실시간 제작도구를 강화했다.</p>
+      <p><ref href="doc:hdqzX6opz-ZqtyO7PUOzMQ">김태은</ref>은 당산대학교 컴퓨터공학과 재학과 그룹 경영을 병행하던 시기에 개발에 참여했다. 엔진 작업분배와 플랫폼 추상화 계층의 설계·검토에 기여해 소프트웨어 엔지니어로서의 능력을 보여준 대표 사례로 언급된다.</p>
+      <p>그룹 회장이 개발팀에 직접 참여한 것이 프로젝트의 의사결정을 빠르게 했다는 평가와 최고경영자의 관심이 기술 우선순위를 과도하게 좌우했다는 평가가 함께 나온다.</p>
     </section>
     <section>
       <title>Junior Game Dev Program</title>
