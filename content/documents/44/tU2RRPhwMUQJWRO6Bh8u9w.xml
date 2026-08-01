@@ -1,0 +1,21 @@
+<document id="tU2RRPhwMUQJWRO6Bh8u9w">
+  <title>TML 전자</title>
+  <aliases><alias>TML Electronics</alias></aliases>
+  <body>
+    <include-board ref="NMt_svl0AVCBFR3ZkL6Y3g"/>
+    <section>
+      <title>개요</title>
+      <p><strong>TML 전자</strong>는 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>의 완제품 전자기기 제조업체이다. 가전제품, 스마트폰과 노트북을 주력으로 하며 북조선 국내시장에서 85%의 점유율을 차지한다.</p>
+      <p><ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref>의 프로세서, <ref href="doc:SZi9IUErjDfuVjjaNsxTLw">TML 메모리</ref>의 반도체와 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>의 운영체제를 결합해 핵심부품과 소프트웨어를 그룹 안에서 조달한다.</p>
+    </section>
+    <section>
+      <title>국내시장</title>
+      <p>스마트폰·노트북과 생활가전을 하나의 소프트웨어 생태계로 연결하면서 국내 점유율 85%를 달성했다. 성능과 완성도가 높은 제품을 안정적으로 공급했지만 유통·수리망과 운영체제까지 장악해 경쟁사의 시장진입을 어렵게 한다는 비판이 있다.</p>
+    </section>
+    <section>
+      <title>해외사업의 한계</title>
+      <p>국외 판매실적은 다른 기술계열사보다 부진하다. Orion·Origin 계열 운영체제와 기기의 완성도는 높지만 해외 소비자가 기존 응용프로그램, 계정과 주변기기 생태계를 포기하면서까지 전혀 다른 제품을 선택할 유인이 약하기 때문이다.</p>
+      <p>이 때문에 뛰어난 하드웨어 성능이 곧바로 판매량으로 이어지지 않는다. 회사는 호환성 확대와 해외 소프트웨어 공급을 추진하고 있으나 계열사 평균과 비교하면 성장률이 낮은 편이다.</p>
+    </section>
+  </body>
+</document>

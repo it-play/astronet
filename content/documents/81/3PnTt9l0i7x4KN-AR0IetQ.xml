@@ -1,0 +1,29 @@
+<document id="3PnTt9l0i7x4KN-AR0IetQ">
+  <title>TML SD(소프트웨어 개발)</title>
+  <aliases><alias>TML SD</alias><alias>TML Software Development</alias></aliases>
+  <body>
+    <include-board ref="NMt_svl0AVCBFR3ZkL6Y3g"/>
+    <section>
+      <title>개요</title>
+      <p><strong>TML SD</strong>는 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>의 소프트웨어 개발회사이다. 운영체제, 오피스 프로그램, 개발도구와 영상편집기를 비롯한 폭넓은 소프트웨어를 개발·공급한다.</p>
+      <p>공공전산과 산업시스템을 통합하는 TML 시스템과는 별도 회사이다. TML SD는 범용 소프트웨어 제품과 개발생태계에 중점을 두고 그룹의 전자기기·게임 계열에 공통 소프트웨어 기반을 제공한다.</p>
+    </section>
+    <section>
+      <title>제품</title>
+      <table>
+        <thead><tr><th>분야</th><th>제품·사업</th></tr></thead>
+        <tbody>
+          <tr><td>운영체제</td><td>Orion, Origin</td></tr>
+          <tr><td>업무용 소프트웨어</td><td>Ararat Office</td></tr>
+          <tr><td>개발</td><td>프로그래밍·디버깅·배포 도구</td></tr>
+          <tr><td>콘텐츠 제작</td><td>영상편집기와 각종 제작도구</td></tr>
+        </tbody>
+      </table>
+      <p>Orion과 Origin은 <ref href="doc:tU2RRPhwMUQJWRO6Bh8u9w">TML 전자</ref>의 스마트폰과 노트북에도 탑재된다. 하드웨어와 운영체제의 완성도는 높지만 해외 이용자가 기존 응용프로그램과 사용습관을 바꿔야 한다는 점은 그룹 전자제품의 수출을 제약한다.</p>
+    </section>
+    <section>
+      <title>GAME SOFT와의 관계</title>
+      <p><ref href="doc:kGAtaTzU92klhZPu2dAjmA">GAME SOFT</ref>는 TML SD의 게임부문이 분사한 회사가 아니라 2019년 외부에서 인수한 별도 계열사이다. 두 회사는 운영체제와 개발도구를 공유하지만 GAME SOFT는 게임과 게임엔진 개발에 집중한다.</p>
+    </section>
+  </body>
+</document>

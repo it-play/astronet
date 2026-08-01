@@ -1,0 +1,17 @@
+<document id="SZi9IUErjDfuVjjaNsxTLw">
+  <title>TML 메모리</title>
+  <aliases><alias>TML Memory</alias></aliases>
+  <body>
+    <include-board ref="NMt_svl0AVCBFR3ZkL6Y3g"/>
+    <section>
+      <title>개요</title>
+      <p><strong>TML 메모리</strong>는 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>의 파운드리·메모리 반도체 기업이다. 외부 설계회사의 칩을 위탁생산하는 동시에 NAND 플래시, HBM과 DDR 메모리를 자체 생산한다.</p>
+      <p>파운드리에서는 TSMC와 어깨를 나란히 하는 세계적 업체로 평가된다. TML 계열사 가운데 가장 급격한 성장률을 기록해 그룹이 전자·소프트웨어 기업집단에서 세계 반도체 공급망의 핵심으로 변화하는 데 결정적인 역할을 했다.</p>
+    </section>
+    <section>
+      <title>사업</title>
+      <p>파운드리와 메모리 생산을 함께 운영해 공정개발, 첨단 패키징과 고대역폭 메모리를 하나의 공급체계로 제공한다. <ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref>의 CPU·GPU·NPU가 대표적인 그룹 내부 고객이며 해외 팹리스의 주문도 받는다.</p>
+      <p><ref href="doc:sUTEEDeLP3s2L5g0scpN4w">Stella</ref>의 반도체 장비와 그룹 연구조직을 활용하는 수직계열화가 빠른 기술발전을 뒷받침했다. 동시에 장비·설계·생산의 내부거래가 실제 경쟁력을 과장한다는 비판과 국제 공급망이 한 그룹에 의존한다는 우려도 제기된다.</p>
+    </section>
+  </body>
+</document>

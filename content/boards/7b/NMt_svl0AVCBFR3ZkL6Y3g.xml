@@ -1,0 +1,43 @@
+<navigation-board id="NMt_svl0AVCBFR3ZkL6Y3g" theme="default">
+  <header><title>TML 그룹</title></header>
+  <section id="group" label="그룹" group="tml-group">
+    <document-links>
+      <document target="ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</document>
+    </document-links>
+  </section>
+  <section id="transport-and-industry" label="운송·제조·건설" group="tml-transport-industry">
+    <document-links>
+      <document target="GK5zox1O3DvpxS1n8nz--g">TML 해운</document>
+      <document target="sEWP2CEhRWrH9_qvq7NXTw">TML 에어로</document>
+      <document target="zznr9wfLb8ciTcV2wXJyYQ">TML 항공</document>
+      <document target="HqfscHBg6xgQ1DpmUxCTHQ">TML 트랜스퍼</document>
+      <document target="D5wX5N7f2L6a4dofFhVsCQ">TML 자동차</document>
+      <document target="sUTEEDeLP3s2L5g0scpN4w">Stella(스텔라)</document>
+      <document target="-LgtncG3a8HjSoX031UjmA">TML 건설</document>
+    </document-links>
+  </section>
+  <section id="software-and-electronics" label="소프트웨어·전자" group="tml-software-electronics">
+    <document-links>
+      <document target="3PnTt9l0i7x4KN-AR0IetQ">TML SD(소프트웨어 개발)</document>
+      <document target="kGAtaTzU92klhZPu2dAjmA">GAME SOFT(게임 소프트)</document>
+      <document target="PhlJ2Cfki6jsOzvSojEZ-g">TML 종합기술연구소</document>
+      <document target="cas6-en_tBOltIjgyWGU7g">H.O.S(에이치오에스)</document>
+      <document target="tU2RRPhwMUQJWRO6Bh8u9w">TML 전자</document>
+      <document target="SZi9IUErjDfuVjjaNsxTLw">TML 메모리</document>
+    </document-links>
+  </section>
+  <section id="finance" label="금융" group="tml-finance">
+    <document-links>
+      <document target="0bE2Z53vChPODklrhG4aZA">TML 금융</document>
+      <document target="aiKMY5qITzQTNB7vVk-OmA">TML 은행</document>
+      <document target="45yUImohJug86acy8TAUrA">TML 자산운용</document>
+      <document target="6VQNQNzZ1518f7pBXGpzlw">TML 종합보험</document>
+    </document-links>
+  </section>
+  <section id="other" label="미디어·민간군사" group="tml-other">
+    <document-links>
+      <document target="1N-h8nIltpJhwF7wFfRRSg">TML 방송연합</document>
+      <document target="dkTASNlJVR8JOVljGGBuRg">A Team(에이 팀)</document>
+    </document-links>
+  </section>
+</navigation-board>

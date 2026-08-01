@@ -1,0 +1,21 @@
+<document id="cas6-en_tBOltIjgyWGU7g">
+  <title>H.O.S(에이치오에스)</title>
+  <aliases><alias>H.O.S</alias><alias>HOS</alias></aliases>
+  <body>
+    <include-board ref="NMt_svl0AVCBFR3ZkL6Y3g"/>
+    <section>
+      <title>개요</title>
+      <p><strong>H.O.S</strong>는 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>의 프로세서 설계·공급업체이다. <ref href="doc:tf7L7fe9Yu9o5tUN_oWXow">새천년 혁신 계획</ref>의 핵심 기업으로 CPU와 GPU를 생산해 왔으며 최근에는 NPU까지 제품군을 확대했다.</p>
+      <p>장기간 외부에 알려지지 않았던 북조선 반도체산업을 상징하는 회사이다. 개혁개방과 함께 제품이 세계시장에 공개되자 예상 밖의 성능으로 국제 반도체업계에 큰 충격을 주었다.</p>
+    </section>
+    <section>
+      <title>제품과 성능</title>
+      <p>해외에 처음 공개된 제품들은 당시 시판 중이던 인텔·AMD의 CPU와 엔비디아의 GPU보다 최소 2배, 제품에 따라 10배가 넘는 성능을 보였다. 단순한 연구용 시제품이 아니라 상용 시스템에 탑재할 수 있는 칩이었다는 점에서 파장이 컸다.</p>
+      <p>경쟁사의 추격과 제품 세대교체가 이어진 2026년에도 주력제품은 동급 해외제품보다 약 1.5배 높은 성능을 유지하고 있다. 성능비교의 기준과 실사용 환경에 따라 차이는 있지만 선두권의 기술격차가 완전히 사라지지는 않았다.</p>
+    </section>
+    <section>
+      <title>생산 생태계</title>
+      <p>칩 설계, 컴퓨팅 구조와 완제품의 사양·판매는 H.O.S가 담당하고 실제 웨이퍼 생산공정과 고대역폭 메모리 공급은 <ref href="doc:SZi9IUErjDfuVjjaNsxTLw">TML 메모리</ref>가 맡는다. 따라서 H.O.S가 프로세서를 생산한다는 표현은 제품의 설계·출시 주체라는 뜻이며 반도체 제조공정까지 직접 보유한다는 의미는 아니다. <ref href="doc:tU2RRPhwMUQJWRO6Bh8u9w">TML 전자</ref>의 노트북·스마트폰과 TML 데이터센터가 초기 대량수요를 제공했다.</p>
+    </section>
+  </body>
+</document>
