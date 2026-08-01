@@ -1,0 +1,35 @@
+<document id="Fv-NgwrMYAguS9z-r8vZbQ">
+  <title>53-39 중어뢰</title>
+  <aliases>
+    <alias>53-39</alias>
+    <alias>53-39 계열 어뢰</alias>
+  </aliases>
+  <body>
+    <section>
+      <title>개요</title>
+      <p><strong>53-39</strong>는 제2차 세계대전기에 소련이 개발한 533mm 증기·가스 추진식 중어뢰이다. 53-38 계열의 속도와 탄두를 강화한 직진식 대함어뢰로, 자체 유도장치 없이 발사 시 계산한 침로와 심도를 따라 항주한다.</p>
+      <table>
+        <thead><tr><th>항목</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>구경</td><td>533mm</td></tr>
+          <tr><td>용도</td><td>수상함 공격</td></tr>
+          <tr><td>추진</td><td>증기·가스식</td></tr>
+          <tr><td>유도</td><td>무유도 직진식</td></tr>
+          <tr><td>항주 모드</td><td>고속·중속·장거리의 3단 설정</td></tr>
+          <tr><td>최대 항주거리</td><td>장거리 설정에서 약 10km</td></tr>
+        </tbody>
+      </table>
+      <p>고속 설정에서는 약 4km, 중속 설정에서는 약 8km, 장거리 설정에서는 약 10km를 항주할 수 있었다. 다만 소련에서도 전후 빠르게 구식화했으며, 동구권과 우호국에서는 비축탄과 단순한 발사체계 때문에 더 오래 남았다.</p>
+    </section>
+    <section>
+      <title>두만강급에서의 운용</title>
+      <p><ref href="doc:jd_4sx8sYq_IEyza4TLXAg">두만강급 고속정</ref>은 53-39 계열 어뢰를 함 측면의 매립형 발사관에 탑재했다. 대형 수상함에 근접해 기습하는 상황을 상정했지만 유도능력이 없고 발사 기회가 제한적이어서 실제 연안초계 임무와 잘 맞지 않았다.</p>
+      <p>53-39는 대함어뢰이므로 두만강급이 맡은 대잠임무에는 직접 적합하지 않았다. 잠수함 공격은 별도의 폭뢰에 의존했으며, 어뢰와 폭뢰를 한 선체에 함께 싣는 과정에서 함 내부 공간과 무게중심 문제가 커졌다.</p>
+    </section>
+    <section>
+      <title>퇴역과 대체</title>
+      <p>선측 매립형 발사관은 침수방어와 정비가 어렵고 무거운 어뢰가 선체 양쪽의 중량배분을 제약했다. <ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>에서는 53-39 발사관과 폭뢰를 모두 제거하고 <ref href="doc:n7X0hA41N_QRXJ6YPS8Hhg">NK-40 경사식 미사일 발사관</ref>을 채택했다.</p>
+      <p>후속 체계인 <ref href="doc:tMqWIwYXfi-41DGD_R9JCg">NK-43 대잠유도탄</ref>은 구형 어뢰의 역할을 그대로 계승한 무기가 아니다. 53-39가 담당하던 근거리 대수상 타격은 다른 대함유도탄으로 넘어갔고, NK-43은 폭뢰를 포함한 구형 대잠무장을 원거리 대잠교전체계로 바꾸었다.</p>
+    </section>
+  </body>
+</document>

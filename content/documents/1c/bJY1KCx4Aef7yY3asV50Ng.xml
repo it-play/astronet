@@ -1,0 +1,33 @@
+<document id="bJY1KCx4Aef7yY3asV50Ng">
+  <title>AK-100 함포</title>
+  <aliases>
+    <alias>100mm AK-100</alias>
+    <alias>ZiF-91</alias>
+  </aliases>
+  <body>
+    <include-board ref="0D0exxijgE3nlDTe-TUoQg"/>
+    <section>
+      <title>개요</title>
+      <p><strong>AK-100</strong>은 소련이 1970년대에 완성한 100mm 단장 자동함포이다. 공중·해상·해안 표적을 상대하는 범용 함포로 개발되어 1978년 소련 해군에 정식 채택되었다.</p>
+      <table>
+        <thead><tr><th>항목</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>구경</td><td>100mm</td></tr>
+          <tr><td>포신</td><td>단장</td></tr>
+          <tr><td>최대 발사속도</td><td>분당 60발</td></tr>
+          <tr><td>최대 사거리</td><td>약 21km</td></tr>
+          <tr><td>포탑 중량</td><td>약 35.7톤</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>두만강급 탑재</title>
+      <p><ref href="doc:jd_4sx8sYq_IEyza4TLXAg">두만강급 고속정</ref>은 AK-100 3기를 탑재했다. 포탑만 합계 약 107톤에 달해 280톤급 선체에 설치하기에는 지나치게 무거웠지만, 당시 해군은 대형함의 부족을 소형함의 압도적인 함포화력으로 보완하려 했다.</p>
+      <p>세 포탑은 강한 순간화력을 제공했으나 반동, 탄약고, 급탄장치와 전력설비가 선체 대부분을 차지했다. 상부중량 증가로 복원성이 나빠지고 악천후에서 사격과 항해를 동시에 수행하기 어려웠으며, 실전에서는 세 포탑을 모두 안정적으로 운용할 수 있는 상황이 드물었다.</p>
+    </section>
+    <section>
+      <title>대체</title>
+      <p>조선 해군은 두만강급의 경험을 통해 함포 수량보다 탐지·사격통제와 유도무장의 결합이 중요하다고 판단했다. 후속 <ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>은 주포를 <ref href="doc:RCicuilYuMsoURnhjs4Arw">AK-176M</ref> 1문으로 줄이고 미사일과 근접방어체계에 중량과 공간을 배분했다.</p>
+    </section>
+  </body>
+</document>

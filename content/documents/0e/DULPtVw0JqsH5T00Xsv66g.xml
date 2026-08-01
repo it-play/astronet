@@ -4,10 +4,6 @@
     <alias>조선국방군</alias>
   </aliases>
   <body>
-    <include-board ref="JxymGdHQob6lrJTQCpDKWA"/>
-    <include-board ref="fzguweEZpd8mthJutE5URw"/>
-    <include-board ref="7iNiYv352T7f5XcNsOVsHQ"/>
-    <include-board ref="0D0exxijgE3nlDTe-TUoQg"/>
     <section>
       <title>개요</title>
       <p>조선자유민주주의공화국 국군은 북조선자유민주주의공화국의 정규군이다. <ref href="doc:dHcCQpwE8jd08w021Xw8WA">제2차 연평해전</ref> 이후인 2003년 2월 8일 조선국방군이라는 명칭으로 창설되었으며, 2016년 9월 30일 <ref href="doc:rMPecRhONjgQ8PcHieuzoA">새 헌법</ref>이 정식으로 발효되면서 현재의 정식 명칭을 채택했다.</p>
@@ -94,14 +90,14 @@
           <tr><th>군종</th><th>주요 역할</th><th>확인된 활동</th></tr>
         </thead>
         <tbody>
-          <tr><td>육군</td><td>지상 방위와 지역 작전</td><td>정보전사령부와 지역·특수 목적 부대를 운용</td></tr>
-          <tr><td>해군</td><td>영해 방위와 해상 수송</td><td><ref href="doc:6QjAOE8aswXCKJf7OSwIUQ">대르미아 개입</ref>을 위한 해상 전력 파견</td></tr>
-          <tr><td>공군</td><td>영공 방위와 항공 지원</td><td>민군협동 항공관제 체계를 운용</td></tr>
-          <tr><td>해병대</td><td>상륙·연안 방위와 신속 대응</td><td>해병대정찰작전사령부를 운용</td></tr>
+          <tr><td><ref href="doc:wxS_SxnGaXVQW87X3miR_w">육군</ref></td><td>지상 방위와 지역 작전</td><td>정보전사령부와 지역·특수 목적 부대를 운용</td></tr>
+          <tr><td><ref href="doc:LMaRo7TNlnlaR4dh-_MJ8Q">해군</ref></td><td>영해 방위와 해상 수송</td><td><ref href="doc:6QjAOE8aswXCKJf7OSwIUQ">대르미아 개입</ref>을 위한 해상 전력 파견</td></tr>
+          <tr><td><ref href="doc:uaht9HkAhOy34rkI_o7HPw">공군</ref></td><td>영공 방위와 항공 지원</td><td>민군협동 항공관제 체계를 운용</td></tr>
+          <tr><td><ref href="doc:Xi-L353Vu-lWiE6BAhAyAg">해병대</ref></td><td>상륙·연안 방위와 신속 대응</td><td>해병대정찰작전사령부를 운용</td></tr>
         </tbody>
       </table>
       <p>네 군종은 조선인민군사위원회와 별개의 인사·작전 체계에 속한다. 각 군은 독립적인 교육·훈련 체계를 갖지만 합동작전에서는 합동참모본부의 지휘를 받는다.</p>
-      <p>해군의 함급은 <ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>과 같이 별도 문서에서 다루며, 위의 ‘해군의 운용함정’ 보드에서 PG/FAC 등 유사한 함종부호끼리 묶는다. 발사체계와 개별 미사일은 ‘국군의 유도무기’ 보드에서 서로 다른 패널로 구분한다. 레이더와 전자장비는 ‘국군의 레이더·전자장비체계’ 보드에서, 함포와 포 기반 근접방어체계는 ‘해군의 함포’ 보드에서 다룬다.</p>
+      <p>각 군종의 편제·활동과 장비는 육군·해군·공군·해병대 문서에서 분리해 다룬다. 국군 총괄 문서는 통수체계와 군제의 공통 역사만 설명하며, 함급·유도무기·레이더·함포 보드는 총괄 문서에 싣지 않는다.</p>
     </section>
     <section>
       <title>조선인민군사위원회와의 구분</title>

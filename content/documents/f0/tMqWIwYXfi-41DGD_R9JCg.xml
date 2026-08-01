@@ -3,7 +3,7 @@
   <aliases><alias>NK-43</alias></aliases>
   <body>
     <include-board ref="fzguweEZpd8mthJutE5URw"/>
-    <section><title>개요</title><p><strong>NK-43</strong>은 조선 해군의 함정발사 대잠유도탄이다. 함정에서 분리된 대잠탄두를 잠수함 추정 위치까지 신속히 운반하며 <ref href="doc:n7X0hA41N_QRXJ6YPS8Hhg">NK-40 경사식 미사일 발사관</ref>에서 운용된다.</p><p><ref href="doc:jd_4sx8sYq_IEyza4TLXAg">두만강급 고속정</ref>이 사용하던 선측 매립형 53-39 계열 중어뢰와 폭뢰를 대체해 함정의 무게중심 문제를 줄이고 원거리 대잠교전 가능성을 확보했다.</p></section>
+    <section><title>개요</title><p><strong>NK-43</strong>은 조선 해군의 함정발사 대잠유도탄이다. 함정에서 분리된 대잠탄두를 잠수함 추정 위치까지 신속히 운반하며 <ref href="doc:n7X0hA41N_QRXJ6YPS8Hhg">NK-40 경사식 미사일 발사관</ref>에서 운용된다.</p><p><ref href="doc:jd_4sx8sYq_IEyza4TLXAg">두만강급 고속정</ref>의 선측 매립형 <ref href="doc:Fv-NgwrMYAguS9z-r8vZbQ">53-39 계열 중어뢰</ref> 발사관과 폭뢰를 제거한 자리에 도입되어 함정의 무게중심 문제를 줄이고 원거리 대잠교전 가능성을 확보했다. 53-39 자체는 대함어뢰였으므로 NK-43이 그 임무를 직접 계승한 것은 아니다.</p></section>
     <section><title>운용</title><p>소형함 자체의 탐지정보뿐 아니라 다른 함정·항공기의 표적자료를 받아 발사하는 것을 전제로 한다. <ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>의 발사관이 6기에 불과해 대함·대공탄과 함께 편성할 때 탑재량이 제한된다.</p></section>
   </body>
 </document>

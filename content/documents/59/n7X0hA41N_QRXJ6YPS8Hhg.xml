@@ -3,7 +3,7 @@
   <aliases><alias>NK-40</alias><alias>NK-40 경사식 유도탄 발사관</alias></aliases>
   <body>
     <include-board ref="fzguweEZpd8mthJutE5URw"/>
-    <section><title>개요</title><p><strong>NK-40 경사식 미사일 발사관</strong>은 조선 해군의 함정용 모듈식 유도무기 발사체계이다. <ref href="doc:b86jD_2gw2eWVCwI3pABLQ">NK-41 대함유도탄</ref>·<ref href="doc:kIA6834gPsK0S48nNZNdeA">NK-42 함대공유도탄</ref>·<ref href="doc:tMqWIwYXfi-41DGD_R9JCg">NK-43 대잠유도탄</ref>을 발사관 규격 안에서 선택해 탑재하도록 개발되었다.</p><p><ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>에는 6기가 장착되어 <ref href="doc:jd_4sx8sYq_IEyza4TLXAg">두만강급 고속정</ref>의 중어뢰 발사관과 폭뢰를 대체했다.</p></section>
+    <section><title>개요</title><p><strong>NK-40 경사식 미사일 발사관</strong>은 조선 해군의 함정용 모듈식 유도무기 발사체계이다. <ref href="doc:b86jD_2gw2eWVCwI3pABLQ">NK-41 대함유도탄</ref>·<ref href="doc:kIA6834gPsK0S48nNZNdeA">NK-42 함대공유도탄</ref>·<ref href="doc:tMqWIwYXfi-41DGD_R9JCg">NK-43 대잠유도탄</ref>을 발사관 규격 안에서 선택해 탑재하도록 개발되었다.</p><p><ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>에는 6기가 장착되어 <ref href="doc:jd_4sx8sYq_IEyza4TLXAg">두만강급 고속정</ref>의 <ref href="doc:Fv-NgwrMYAguS9z-r8vZbQ">53-39 중어뢰</ref> 발사관과 폭뢰를 대체했다.</p></section>
     <section><title>특징</title><p>수직발사체계보다 구조가 단순하고 소형함에 설치하기 쉬우며 갑판 아래 공간을 적게 차지한다. 대신 항해 중 재장전이 어렵고 발사방향·탄종 배치의 제약이 크다.</p><p>백두급에서는 6기뿐이어서 대함·대공·대잠탄을 동시에 충분히 싣기 어렵다는 비판을 받았다. 발사체계와 그 안에 탑재하는 개별 미사일은 별개의 장비로 분류한다.</p></section>
   </body>
 </document>

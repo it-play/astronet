@@ -1,0 +1,24 @@
+<document id="RCicuilYuMsoURnhjs4Arw">
+  <title>AK-176M 함포</title>
+  <aliases>
+    <alias>76.2mm AK-176M</alias>
+    <alias>AK-176M</alias>
+  </aliases>
+  <body>
+    <include-board ref="0D0exxijgE3nlDTe-TUoQg"/>
+    <section>
+      <title>개요</title>
+      <p><strong>AK-176M</strong>은 소련의 AK-176을 개량한 76.2mm 단장 자동함포이다. 비교적 작은 함정에서도 운용할 수 있도록 포탑과 급탄체계를 소형화했으며, 해상·해안 표적뿐 아니라 항공표적에도 대응하는 범용 함포로 사용되었다.</p>
+      <p>조선 해군은 1990년대에 구소련권을 통해 AK-176M을 도입했다. 초기에는 수입 완제품과 부품을 운용했으며 이후 정비·탄약 생산과 사격통제체계 연동 능력을 확보해 2000년대 신형 함정의 표준 중구경 함포 가운데 하나로 사용했다.</p>
+    </section>
+    <section>
+      <title>백두급 탑재</title>
+      <p><ref href="doc:gUy5xiJjhhYa_3QrK_Hmcw">백두급 고속정</ref>은 함수에 AK-176M 1문을 장착했다. 구형 두만강급이 <ref href="doc:bJY1KCx4Aef7yY3asV50Ng">AK-100</ref> 3기를 탑재한 것과 달리 주포를 한 문으로 줄여 유도무기·레이더·근접방어체계를 위한 중량과 공간을 확보했다.</p>
+      <p><ref href="doc:FK7a1mavurJOsFnrRe0Sww">NKR-22 위상배열레이더</ref>가 표적을 탐지하면 <ref href="doc:tQKPkkGLbWy--8gTafeCuA">NKR-30 사격통제레이더</ref>가 정밀추적과 사격제원을 제공한다. 이 결합으로 AK-176M은 독립적인 포탑이 아니라 함정 전투체계에 연결된 주포로 운용된다.</p>
+    </section>
+    <section>
+      <title>운용과 한계</title>
+      <p>AK-176M은 경고사격, 소형선박 제압, 해안 화력지원과 제한적인 대공사격을 맡는다. 다만 한 문의 중구경 함포만으로 다수의 공중표적과 여러 방향의 소형정을 동시에 상대하기는 어려워 대공방어에는 함대공유도탄과 <ref href="doc:A92f9IvAs-YvLN3pZLVRbw">NK-182 천패</ref>가 함께 사용된다.</p>
+    </section>
+  </body>
+</document>

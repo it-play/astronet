@@ -1,5 +1,16 @@
 <navigation-board id="0D0exxijgE3nlDTe-TUoQg" theme="default">
   <header><title>조선자유민주주의공화국 국군 해군의 함포</title></header>
+  <section id="naval-guns" label="중구경 함포" group="navy-medium-caliber-guns">
+    <document-links>
+      <document target="bJY1KCx4Aef7yY3asV50Ng">AK-100 함포</document>
+      <document target="RCicuilYuMsoURnhjs4Arw">AK-176M 함포</document>
+    </document-links>
+  </section>
+  <section id="heavy-machine-guns" label="함정용 중기관총" group="navy-heavy-machine-guns">
+    <document-links>
+      <document target="Ea64q3J9_n7HIjU23FzbSA">KPV 중기관총</document>
+    </document-links>
+  </section>
   <section id="close-in-weapon-systems" label="근접방어체계 (CIWS)" group="navy-ciws">
     <document-links>
       <document target="A92f9IvAs-YvLN3pZLVRbw">NK-182 천패</document>
