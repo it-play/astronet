@@ -25,7 +25,7 @@
     <section id="overview">
       <title>개요</title>
       <p><strong>GE</strong>는 <ref href="doc:kGAtaTzU92klhZPu2dAjmA">GAME SOFT</ref>가 개발·배포하는 게임엔진 계열이다. 2012년 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>의 전신 개발조직이 만든 장치접근 패키지에서 출발했으며, 2014년 GE 2부터 편집기와 실행환경을 갖춘 본격적인 게임엔진이 되었다.</p>
-      <p>자체 게임 제작에 사용하는 내부 기술인 동시에 외부 개발사에도 엔진, 제작도구와 배포도구를 공급한다. 범용 계열인 GE와 카툰 렌더링에 특화된 GE-CO 계열로 나뉘며, 2026년 기준 최신판은 <strong>GE 4.5</strong>이다.</p>
+      <p>자체 게임 제작에 사용하는 내부 기술인 동시에 외부 개발사에도 엔진, 제작도구와 배포도구를 공급한다. 범용 GE와 카툰 렌더링에 특화된 GE-CO 계열로 나뉘어 개발되었으나, 2026년 <strong>GE 4.5</strong>에서 GE-CO 계열이 GE로 통합되었다.</p>
     </section>
     <section id="lineage">
       <title>계보</title>
@@ -38,7 +38,7 @@
           <tr><td>GE-CO 1</td><td>GE 3 공개 이후</td><td>GAME SOFT</td><td>GE 3 기반 카툰 렌더링 특화판</td></tr>
           <tr><td>GE 4</td><td>2024년</td><td>GAME SOFT</td><td>작업 그래프·플랫폼 추상화 중심의 4세대 엔진</td></tr>
           <tr><td>GE-CO 2</td><td>2025년</td><td>GAME SOFT</td><td>GE 4 기반 카툰 렌더링 특화판</td></tr>
-          <tr><td>GE 4.5</td><td>2026년</td><td>GAME SOFT</td><td>4세대 호환성과 외부 API 연동을 정비한 판</td></tr>
+          <tr><td>GE 4.5</td><td>2026년</td><td>GAME SOFT</td><td>4세대 호환성·외부 API 연동 정비 및 GE-CO 계열 통합</td></tr>
         </tbody>
       </table>
       <p>개발 주체의 변화와 기업 인수는 별개의 사건이다. 2014년 GE 2 개발권은 계약에 따라 당시 독립 회사였던 GAME SOFT로 넘어갔으며, GAME SOFT가 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>에 편입된 것은 2019년 9월 12일이다. 따라서 GE 2가 처음부터 TML 계열사에서 개발되었다고 보는 것은 잘못이다.</p>
@@ -78,8 +78,8 @@
       <p>모듈 교체와 실시간 재적재는 소규모 개발사가 자체 기술을 유지하면서 GE의 편집기와 배포체계를 사용할 수 있게 했다. 반면 비슷한 기능의 모듈이 난립하고 의존성 판이 맞지 않아 프로젝트가 열리지 않는 문제도 늘었다. GAME SOFT는 검증된 조합을 잠금파일로 저장하고 배포 모듈의 서명을 확인하는 도구를 후속 업데이트에 추가했다.</p>
     </section>
     <section id="derivatives">
-      <title>GE-CO 계열</title>
-      <p><strong>GE-CO</strong>는 카툰 렌더링 기반 게임을 위한 전용 계열이다. 단순히 외곽선 셰이더를 추가한 플러그인이 아니라 재질, 조명, 합성, 애니메이션과 자산검사 규칙을 함께 바꾼 별도 판으로 배포된다.</p>
+      <title>GE-CO 계열(통합 이전)</title>
+      <p><strong>GE-CO</strong>는 카툰 렌더링 기반 게임을 위해 GE 4.5 이전까지 개발된 전용 계열이다. 단순히 외곽선 셰이더를 추가한 플러그인이 아니라 재질, 조명, 합성, 애니메이션과 자산검사 규칙을 함께 바꾼 별도 판으로 배포되었으며, 2026년 GE 4.5에서 GE로 통합되었다.</p>
       <table>
         <thead><tr><th>판</th><th>기반</th><th>주요 특징</th></tr></thead>
         <tbody>
@@ -100,7 +100,7 @@
     </section>
     <section id="ge45">
       <title>GE 4.5</title>
-      <p><strong>GE 4.5</strong>는 2026년에 공개된 4세대의 안정화·호환성 판이다. 새 세대 엔진이 아니라 GE 4 프로젝트와 모듈 규격을 유지하면서 외국계 그래픽·연산 소프트웨어와의 통합을 실사용 가능한 수준으로 정비한 제품이다.</p>
+      <p><strong>GE 4.5</strong>는 2026년에 공개된 4세대의 안정화·호환성 판이다. 새 세대 엔진이 아니라 GE 4 프로젝트와 모듈 규격을 유지하면서 외국계 그래픽·연산 소프트웨어와의 통합을 실사용 가능한 수준으로 정비하고, 별도로 전개되던 GE-CO 계열을 GE로 통합한 제품이다.</p>
       <p>어댑터는 시작 단계에서 필요한 API, 장치기능, 드라이버와 외부 라이브러리 판을 검사해 호환성 등급을 만든다. HLSL을 비롯한 셰이더와 파이프라인 자료는 대상 백엔드별 변환캐시에 저장하고, 지원되지 않는 기능은 개발자가 지정한 네이티브 구현이나 CPU 대체경로로 보낸다. 같은 기능이 장치마다 조용히 다른 결과를 내는 일을 막기 위해 선택된 경로와 정밀도 차이도 빌드 기록에 남긴다.</p>
       <p>DirectX 연동은 GE의 렌더링 자원과 동기화 규칙을 Direct3D 계열 백엔드에 맞추고, CUDA 연동은 호환되는 실행환경에서 외부 연산 모듈을 GE 작업 그래프에 연결하는 방식이다. CUDA를 제공하지 않는 장치가 CUDA 바이너리를 그대로 실행한다는 뜻은 아니며, 해당 프로젝트는 별도의 연산 백엔드나 대체 구현을 포함해야 한다.</p>
       <p><ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref>과의 역할도 구분된다. GE 어댑터는 게임 프로젝트 내부의 렌더링·연산 자원과 작업순서를 연결하고, Continuum은 Orion에서 외부 운영체제 API와 응용프로그램 구성요소를 격리·중개한다. <ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref> 장비에서 외부 기계어까지 변환해야 할 때에는 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>가 추가로 관여한다. 따라서 GE 4.5가 두 호환체계를 대체하는 것은 아니다.</p>
