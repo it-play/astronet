@@ -1,0 +1,40 @@
+<document id="dO53MxvWZcGcvEkdtE9xOA">
+  <title>Code B 프로그래밍 언어</title>
+  <aliases><alias>Code B</alias><alias>코드 B</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Code B</strong>는 TML SD가 응용프로그램·사용자 인터페이스·네트워크 서비스에 사용하기 위해 개발한 정적 형식 언어이다. <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>가 커널과 저수준 제어를 담당한다면 Code B는 이식성, 비동기 작업과 <ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref> UI 작성을 중시한다.</p>
+      <p><ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>에서 시스템 서비스와 기본 응용프로그램의 C++ 코드를 재작성하며 도입되었고 이후 Orion·Origin의 공통 앱 생태계를 떠받치는 언어가 되었다.</p>
+    </section>
+    <section>
+      <title>실행모델</title>
+      <p>소스는 BIR이라는 이식형 중간표현으로 변환된다. 앱장터는 검증된 BIR과 자원을 배포하고 장치는 설치 때 ARM64·x86-64·ORO 네이티브 코드로 미리 컴파일한다. 필요한 경우 작은 함수만 실행 중 재최적화할 수 있다.</p>
+      <p>이 방식은 하나의 앱 패키지를 서로 다른 Origin 장치와 Orion PC에 배포하면서도 일반적인 바이트코드 가상기계보다 시작시간과 전력손실을 줄이기 위한 것이다.</p>
+    </section>
+    <section>
+      <title>언어 구조</title>
+      <table>
+        <thead><tr><th>기능</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>Actor Task</td><td>공유메모리 대신 형식화된 메시지로 비동기 작업을 연결한다.</td></tr>
+          <tr><td>State Flow</td><td>자료변화와 UI 상태의 의존성을 선언해 필요한 부분만 다시 계산한다.</td></tr>
+          <tr><td>Realm Permission</td><td>카메라·위치·파일과 네트워크 권한을 모듈 선언에 포함한다.</td></tr>
+          <tr><td>Deterministic Resource</td><td>글꼴·색·번역·화면자원을 빌드 때 고정된 식별자로 묶는다.</td></tr>
+          <tr><td>Native Gate</td><td>검증된 Code A 모듈을 권한과 수명규칙이 명시된 경계로 호출한다.</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>XWise와의 관계</title>
+      <p>Code B의 State Flow는 XWise 장면그래프와 직접 연결된다. 개발자는 픽셀을 매 프레임 직접 그리는 대신 상태·배치·전환을 선언하고 XWise가 GPU 합성, 접근성 트리와 애니메이션 시간을 관리한다.</p>
+      <p>Orion 4의 데스크톱 UI와 Origin의 터치 UI는 같은 언어를 사용하지만 화면구성과 앱 수명주기는 다르다. 한쪽의 앱을 다른 쪽에 그대로 복사하는 것이 아니라 공통 업무논리와 자원을 재사용하고 UI 계층을 대상기기에 맞게 구성한다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>Code B는 TML SD가 독자 운영체제의 프로그램 부족을 해결하는 데 결정적인 역할을 했다. ARM과 ORO 사이의 이식성, 앱 권한검증과 XWise 도구의 통합은 Origin을 외부 제조사에 포팅하기 쉽게 만들었다.</p>
+      <p>반면 BIR과 전용 도구사슬에 대한 의존은 TML SD 생태계 밖에서 장기보존과 독립 구현을 어렵게 한다. OpenOrigin은 BIR 규격과 기본 컴파일러를 공개했지만 상용 최적화기와 일부 디버깅 서비스는 별도 제품으로 남아 있다.</p>
+    </section>
+  </body>
+</document>

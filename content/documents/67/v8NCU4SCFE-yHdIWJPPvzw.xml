@@ -1,0 +1,66 @@
+<document id="v8NCU4SCFE-yHdIWJPPvzw">
+  <title>Origin 운영체제</title>
+  <aliases><alias>Origin</alias><alias>Origin OS</alias><alias>오리진 운영체제</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Origin</strong>은 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>가 스마트폰·태블릿·스마트워치·차내 정보체계와 각종 임베디드 장치에 공급하는 운영체제이다. 2014년 Origin 1에서 시작해 2025년 출시된 Origin 12가 2026년 현재 최신 정식판이다.</p>
+      <p><ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref> 개발 중 이동기기 분기로 출발해 개발언어와 그래픽 기술의 뿌리를 공유한다. 그러나 이동기기의 짧은 응답시간과 전력효율을 위해 모듈형 일체형 커널을 사용하므로 마이크로커널인 Orion 4와 내부 동작구조는 상당히 다르다.</p>
+    </section>
+    <section>
+      <title>구조</title>
+      <p>Origin 커널은 스케줄러, 메모리, 무선통신, 전력관리와 주요 장치 드라이버를 같은 커널영역에서 실행한다. 드라이버 호출과 절전상태 전환이 잦은 모바일 장치에서 IPC 왕복을 줄이기 위한 선택이다.</p>
+      <p>응용프로그램은 별도 사용자·권한공간에서 실행되고 각 앱의 파일, 센서, 카메라·마이크와 백그라운드 실행권한을 중개기가 통제한다. 커널이 일체형이라는 사실이 앱까지 같은 권한으로 실행된다는 뜻은 아니다.</p>
+      <table>
+        <thead><tr><th>계층</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><td>Origin Kernel</td><td>장치·전력·무선통신과 실시간 스케줄링</td></tr>
+          <tr><td>Device Realm</td><td>제조사별 서비스와 펌웨어를 서명된 격리영역에서 실행</td></tr>
+          <tr><td>App Realm</td><td>응용프로그램별 권한·저장소·백그라운드 수명주기 관리</td></tr>
+          <tr><td>XWise Mobile</td><td>터치·펜·차량입력과 저전력 화면합성</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>하드웨어</title>
+      <p>Origin은 ARM32·ARM64와 H.O.S의 ORO 명령체계를 정식 지원한다. <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref> 앱은 이식 가능한 중간표현으로 배포되어 설치 때 각 프로세서용으로 변환되고, 성능이 중요한 <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref> 구성요소는 ARM64와 ORO 실행파일을 함께 담을 수 있다.</p>
+      <p>H.O.S 칩을 요구하는 운영체제는 아니기 때문에 외부 제조사는 ARM 기반 장치에도 Origin을 탑재할 수 있다. 반대로 TML 전자 장치는 H.O.S 프로세서와 Origin의 공동 전력·가속기 스케줄링을 사용해 더 긴 배터리 수명과 빠른 카메라·AI 처리를 제공한다.</p>
+    </section>
+    <section>
+      <title>응용프로그램 호환성</title>
+      <p>네이티브 앱은 Origin Application Package 형식으로 배포된다. Android APK는 Droid Cell이 Dalvik·ART API와 주요 Android 프레임워크 호출을 Origin 서비스로 바꾸어 실행하며 앱별 가상장치와 권한중개를 사용한다.</p>
+      <p>APK 호환은 앱스토어·지도·결제와 같은 Google 전용서비스를 자동으로 제공하지 않는다. 커널 드라이버, 제조사 보안영역이나 비공개 서비스에 의존하는 앱은 별도 수정이 필요하다. 포팅도구는 Android 프로젝트의 UI·권한·백그라운드 작업을 Code B와 XWise Mobile 구조로 변환하는 보고서와 초안을 생성한다.</p>
+    </section>
+    <section>
+      <title>버전 역사</title>
+      <table>
+        <thead><tr><th>버전</th><th>출시</th><th>주요 변화</th></tr></thead>
+        <tbody>
+          <tr><td>Origin 1</td><td>2014년</td><td>스마트폰·태블릿 기본판, 앱 샌드박스와 XWise Touch 도입</td></tr>
+          <tr><td>Origin 2</td><td>2015년</td><td>권한 대화상자, 암호화 저장소와 서명 업데이트 정비</td></tr>
+          <tr><td>Origin 3</td><td>2016년</td><td>스마트워치 프로필, 64비트 준비와 장치별 절전정책 도입</td></tr>
+          <tr><td>Origin 4</td><td>2017년</td><td>Droid Cell을 통한 APK 실행과 제조사 포팅 도구 공개</td></tr>
+          <tr><td>Origin 5</td><td>2018년</td><td>A/B 무중단 업데이트, 차내 정보체계 프로필 추가</td></tr>
+          <tr><td>Origin 6</td><td>2019년</td><td>ARM64 정식지원, ORO 개발판과 통합 앱 묶음 도입</td></tr>
+          <tr><td>Origin 7</td><td>2020년</td><td>H.O.S ORO 정식지원, 센서·카메라 권한기록과 공개 보안감사 강화</td></tr>
+          <tr><td>Origin 8</td><td>2021년</td><td>기기간 작업이동, 웨어러블 연속성 및 저전력 합성 개선</td></tr>
+          <tr><td>Origin 9</td><td>2022년</td><td>다국어·해외 통신규격 확대, OpenOrigin 선행개발 절차 정착</td></tr>
+          <tr><td>Origin 10</td><td>2023년</td><td>폴더블·대화면 창모드, 데스크톱형 멀티태스킹 도입</td></tr>
+          <tr><td>Origin 11</td><td>2024년</td><td>차량 안전영역과 인포테인먼트 분리, 장기지원판 신설</td></tr>
+          <tr><td>Origin 12</td><td>2025년</td><td>NPU 공통 API, ARM·ORO 기능동등성과 앱 상태이동 개선</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>OpenOrigin과의 관계</title>
+      <p><ref href="doc:vHEF5m4KdpbzS1avcLxXYQ">OpenOrigin</ref>은 다음 Origin 메이저판의 기능과 API를 먼저 공개하는 상위 오픈소스 프로젝트이다. 실험기능은 공개 빌드와 장치시험을 거친 뒤 안정성·전력·보안 기준을 통과한 경우에만 정식 Origin에 들어간다.</p>
+      <p>2026년 OpenOrigin의 최신판은 13.0.41.2로 Origin 12보다 메이저 버전이 하나 앞선다. 숫자가 앞선다는 이유만으로 제조사와 일반 사용자가 OpenOrigin을 정식판 대신 설치하도록 권장되는 것은 아니다.</p>
+    </section>
+    <section>
+      <title>시장</title>
+      <p>TML 전자의 국내 스마트폰·태블릿·웨어러블에 기본 탑재되면서 가장 큰 사용자층을 확보했다. ARM 지원과 공개 포팅 도구가 갖춰진 뒤에는 중국·르미아·동남아시아의 중소 제조사, 차량용 정보체계와 산업단말에도 공급이 확대되었다.</p>
+      <p>APK 호환성은 초기 앱 부족을 완화했지만 Android와 완전히 같은 환경은 아니다. 높은 완성도와 기기간 연속성이 장점으로 꼽히는 한편 TML 계정·앱장터·클라우드에 대한 의존이 새로운 종속을 만든다는 비판도 있다.</p>
+    </section>
+  </body>
+</document>

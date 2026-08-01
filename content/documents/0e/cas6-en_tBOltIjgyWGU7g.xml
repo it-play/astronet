@@ -33,7 +33,7 @@
     <section>
       <title>실행체계</title>
       <p>범용 CPU는 <ref href="doc:B-dT-FarcUpPgzcwMSQFaQ">K-Flow 실행 아키텍처</ref>와 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO 명령어 집합</ref>을 사용한다. 이는 전통적인 순차 명령흐름보다 자료의 의존성과 이동경로를 명시하는 구조이며 CPU·GPU·NPU의 공동작업은 <ref href="doc:80ql5gKPFFh336LN41xlsg">HCC·LANS</ref>가 담당한다.</p>
-      <p>기존 x86-64·AArch64 프로그램은 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>로 변환한다. 계산구간은 높은 성능을 낼 수 있지만 드라이버·자기수정코드·저수준 가상화에는 제약이 있어 해외시장 확대의 가장 큰 장벽으로 남아 있다.</p>
+      <p>기존 x86-64·AArch64 기계어는 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>로 변환하고 Windows·Linux·macOS 응용프로그램의 API는 TML SD의 <ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref>이 중개한다. 계산구간은 높은 성능을 낼 수 있지만 드라이버·자기수정코드·저수준 가상화에는 제약이 있어 해외시장 확대의 장벽으로 남아 있다.</p>
       <p>GPU는 <ref href="doc:tp6rGHqKQfht8yyRyXm1pg">Function·EOX·Pie·Sigma·MEGA·EOX-2와 AGC</ref> 계통을 사용한다. CPU와 같은 HCC 주소공간을 공유하지만 내부 실행단위와 예외모델은 그래픽·행렬연산에 맞게 단순화되어 있다.</p>
     </section>
     <section>

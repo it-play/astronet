@@ -1,0 +1,45 @@
+<document id="lcHTVdI-tPfXosGGnO2nmw">
+  <title>Orion 3(운영체제)</title>
+  <aliases><alias>Orion 3.x</alias><alias>Orion 3 Enterprise</alias><alias>오리온 3</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Orion 3</strong>는 2013년에 출시된 <ref href="doc:SpBugADlRQyj1V9SIfMJ5Q">Orion</ref>의 세 번째 세대이다. 응용프로그램 부족과 불안정한 개발규격으로 고전한 <ref href="doc:_ThcU4BisIIO6TmbFAVA5g">Orion 2</ref>를 대체하기 위해 커널·시스템 서비스·GUI를 사실상 새로 작성했다.</p>
+      <p>기존 C·C++·어셈블리 코드는 메모리 안전성을 중시하는 <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>와 이식성 높은 <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>로 재작성되었다. <ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref>가 처음 정식 지원되면서 TML SD 운영체제의 현대적인 UI 계보도 이 세대에서 시작되었다.</p>
+    </section>
+    <section>
+      <title>개발</title>
+      <p>Orion 2의 독자 커널 자체는 안정적이었지만 커널과 응용프로그램의 경계, 그래픽 도구와 패키지 규격이 따로 발전해 개발비가 높았다. TML SD는 2010년 말부터 공통 형식체계와 도구사슬을 먼저 정하고 그 위에서 운영체제를 다시 만드는 계획을 시작했다.</p>
+      <p>재작성은 한 번에 이루어지지 않았다. 초기 3.0은 네트워크·저장장치의 일부 구형 드라이버를 격리된 C 호환영역에 남겼고, 3.2에서 핵심 서비스, 3.5에서 그래픽·입력 계층의 대부분이 Code A·Code B로 교체되었다.</p>
+    </section>
+    <section>
+      <title>구조</title>
+      <table>
+        <thead><tr><th>계층</th><th>구현</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>커널</td><td>Code A 중심의 모듈형 일체형 커널</td><td>드라이버를 커널에 두되 실패영역과 권한을 세분화했다.</td></tr>
+          <tr><td>시스템 서비스</td><td>Code A·Code B</td><td>인증·네트워크·저장소 서비스를 메시지 인터페이스로 분리했다.</td></tr>
+          <tr><td>그래픽</td><td>XWise 1~3</td><td>GPU 합성, 벡터 UI와 시간축 애니메이션을 지원했다.</td></tr>
+          <tr><td>응용프로그램</td><td>Code B 패키지와 제한적 네이티브 Code A</td><td>서로 다른 프로세서에서 같은 소스와 자원을 재사용했다.</td></tr>
+        </tbody>
+      </table>
+      <p>Orion 3는 서비스 분리를 늘렸지만 드라이버와 핵심 파일·네트워크 기능은 여전히 커널 주소공간에서 실행했다. 따라서 후대의 Orion 4와 같은 마이크로커널 운영체제로 분류되지는 않는다.</p>
+    </section>
+    <section>
+      <title>Origin의 분리</title>
+      <p>개발 초기에는 스마트폰·태블릿판도 Orion 3의 한 프로필로 만들 계획이었다. 그러나 이동기기는 절전상태 전환, 무선통신, 터치 입력, 응용프로그램 중단·복원과 제조사별 장치구성이 데스크톱과 크게 달랐다.</p>
+      <p>2012년 이동기기 조직과 커널 분기가 별도 사업으로 독립했고 2014년 <ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin 1</ref>이 출시되었다. 두 계열은 Code A·Code B와 XWise의 기초를 공유했지만 이후 커널과 응용프로그램 수명주기는 따로 발전했다.</p>
+    </section>
+    <section>
+      <title>판본과 지원</title>
+      <p>Consumer, Professional과 Enterprise가 공급되었다. Consumer는 개인용, Professional은 개발·제작도구, Enterprise는 중앙관리·가상화·장기지원에 중점을 두었다.</p>
+      <p>소비자용 Orion 3의 마지막 보안지원은 2024년 4월 30일 종료되었다. Orion 3 Enterprise는 장비 인증과 장기계약을 고려해 2029년 11월 30일까지 보안·호환성 지원이 예정되어 있으며 신규 기능은 추가되지 않는다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>Orion 3는 독자 운영체제에 프로그램이 없다는 Orion 2의 문제를 개발언어·GUI·패키지 도구의 통합으로 해결했다. 국내에서는 장기간 주류 운영체제로 사용되었고 Orion 4와 Origin이 공유하는 소프트웨어 생태계의 출발점이 되었다.</p>
+      <p>반면 초기판의 구형 드라이버 호환영역은 보안취약점의 원인이 되었고 XWise 초창기 응용프로그램은 화면효과를 지나치게 사용한다는 비판을 받았다. Orion 4는 이 문제를 드라이버 격리와 애니메이션 예산제어로 보완했다.</p>
+    </section>
+  </body>
+</document>

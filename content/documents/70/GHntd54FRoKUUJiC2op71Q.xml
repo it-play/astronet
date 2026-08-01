@@ -1,0 +1,53 @@
+<document id="GHntd54FRoKUUJiC2op71Q">
+  <title>XWise 그래픽 사용자 인터페이스 엔진</title>
+  <aliases><alias>XWise</alias><alias>엑스와이즈</alias><alias>XWise GUI Engine</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>XWise</strong>는 TML SD가 Orion·Origin용으로 개발한 그래픽 사용자 인터페이스 및 화면합성 엔진이다. 창·문자·영상·벡터도형·3차원 장면과 애니메이션을 하나의 장면그래프로 다루며 2013년 <ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>에서 처음 정식 지원되었다.</p>
+      <p>단순한 창관리자나 테마가 아니라 레이아웃, 입력, 접근성, 애니메이션, GPU 합성과 앱 간 화면전환을 함께 제공하는 응용프로그램 프레임워크이다. <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>의 상태흐름과 직접 연결되는 것이 가장 큰 특징이다.</p>
+    </section>
+    <section>
+      <title>구조</title>
+      <table>
+        <thead><tr><th>구성요소</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><td>Scene Graph</td><td>화면요소와 부모·자식관계, 변형·가시성·접근성 정보를 유지한다.</td></tr>
+          <tr><td>Layout Solver</td><td>화면크기·언어·입력방식에 따라 제약식 기반 배치를 계산한다.</td></tr>
+          <tr><td>Motion Timeline</td><td>전환·스크롤·물리효과의 시간과 중단·재개 규칙을 관리한다.</td></tr>
+          <tr><td>Compositor</td><td>GPU에서 창·영상·효과를 합성하고 화면재생률에 맞춰 제출한다.</td></tr>
+          <tr><td>Access Tree</td><td>화면읽기·키보드 탐색·확대·고대비 정보를 시각장면과 함께 생성한다.</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>세대</title>
+      <table>
+        <thead><tr><th>세대</th><th>도입</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>XWise 1</td><td>Orion 3.0</td><td>벡터 UI, 기본 GPU 합성과 선언형 장면그래프</td></tr>
+          <tr><td>XWise 2</td><td>Origin 1·Orion 3.2</td><td>터치·회전·절전합성과 이동기기 레이아웃</td></tr>
+          <tr><td>XWise 3</td><td>Orion 3.5·Origin 5</td><td>비동기 렌더링, 접근성 트리와 앱간 공유전환</td></tr>
+          <tr><td>XWise 4</td><td>Orion 4</td><td>프레임 예산제어, HDR·가변재생률과 격리형 표면합성</td></tr>
+          <tr><td>XWise Mobile 12</td><td>Origin 12</td><td>웨어러블·차량·폴더블 장면과 저전력 부분갱신</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>Orion 4</title>
+      <p><ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref>의 XWise는 앱이 그린 표면을 직접 신뢰하지 않고 화면합성 서비스에서 권한과 가시영역을 검증한다. 멈추거나 오작동한 앱의 창은 마지막 안전프레임으로 유지되고 합성기와 입력서비스는 별도로 복구할 수 있다.</p>
+      <p>프레임 예산은 입력반응, 본문과 필수상태 표시를 우선하고 흐림·그림자·배경동작을 후순위로 둔다. 저사양 장치에서도 같은 디자인을 유지하면서 장식효과만 단계적으로 줄일 수 있어 미려한 UI와 안정적인 반응속도를 함께 확보했다.</p>
+    </section>
+    <section>
+      <title>Origin</title>
+      <p><ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref>은 XWise Mobile 분기를 사용한다. 데스크톱 창보다 터치표적, 화면회전, 앱 중단·복원, 배터리와 OLED 부분갱신에 중점을 두며 스마트워치와 차량에서는 같은 장면자원을 다른 입력규칙으로 재구성한다.</p>
+      <p>공통 Scene Graph와 Code B 덕분에 색·문자·아이콘과 업무논리를 공유할 수 있지만 Orion UI를 축소해서 그대로 표시하지는 않는다. 플랫폼별 상호작용 규칙을 지키지 않은 앱은 심사에서 수정권고를 받는다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>XWise는 TML SD 제품이 외형과 동작에서 일관된다는 평가를 받는 핵심기술이다. 앱 개발자가 접근성과 애니메이션을 별도 부가기능이 아니라 장면정의에 함께 넣도록 한 설계도 해외에서 벤치마킹되고 있다.</p>
+      <p>반면 전용 장면모델과 도구에 대한 의존이 커서 다른 GUI 체계에서 복잡한 앱을 옮길 때 자동변환만으로는 품질을 보장하기 어렵다. 지나친 애니메이션을 막는 예산제어가 있어도 앱 설계 자체가 복잡하면 메모리사용량이 커질 수 있다.</p>
+    </section>
+  </body>
+</document>

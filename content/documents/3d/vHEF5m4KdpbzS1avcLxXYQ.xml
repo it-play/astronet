@@ -1,0 +1,51 @@
+<document id="vHEF5m4KdpbzS1avcLxXYQ">
+  <title>OpenOrigin 프로젝트</title>
+  <aliases><alias>Open Origin</alias><alias>오픈오리진</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>OpenOrigin</strong>은 <ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref>의 차기 기능을 공개적으로 개발·검증하는 TML SD 주도의 오픈소스 운영체제 프로젝트이다. 2026년 8월 현재 최신 공개 빌드는 <strong>13.0.41.2</strong>이며 정식 제품 Origin 12보다 메이저 버전이 하나 앞선다.</p>
+      <p>새 커널 기능, 장치 API와 사용자 인터페이스가 OpenOrigin에 먼저 병합되고 공개 자동시험·장기 장치시험·보안검토를 통과하면 정식 Origin의 다음 메이저판으로 이전된다. OpenOrigin은 선행개발판이지 Origin의 무료판이나 안정판을 뜻하지 않는다.</p>
+    </section>
+    <section>
+      <title>역사</title>
+      <p>Origin 초기에는 제조사와 계열사만 소스에 접근할 수 있었다. 장치 종류가 늘면서 TML SD가 모든 드라이버와 포팅을 직접 관리하기 어려워졌고 2019년 Origin 6 개발분기의 커널·기본서비스·도구사슬을 공개하면서 OpenOrigin이 출범했다.</p>
+      <p>Origin 7부터 공개 선행판과 정식판의 승격절차가 정착되었다. 2022년 이후 해외 제조사·대학·개인 개발자의 참여가 늘었고 TML SD 외부의 유지관리자가 장치트리, 접근성, 언어지원과 일부 네트워크 구성요소를 맡기 시작했다.</p>
+    </section>
+    <section>
+      <title>공개 범위</title>
+      <table>
+        <thead><tr><th>구성요소</th><th>공개 여부</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>커널·기본 서비스</td><td>공개</td><td>허용적 라이선스와 구성요소별 기존 라이선스를 적용한다.</td></tr>
+          <tr><td>Code A·Code B 도구사슬</td><td>공개</td><td>재현 가능한 빌드와 정적분석 규칙을 포함한다.</td></tr>
+          <tr><td>XWise Mobile 기본 합성기</td><td>공개</td><td>일부 상용 색관리·매체코덱은 별도 모듈이다.</td></tr>
+          <tr><td>제조사 펌웨어·통신 인증키</td><td>비공개</td><td>장치 공급자와 통신사업자가 관리한다.</td></tr>
+          <tr><td>TML 계정·앱장터 서버</td><td>비공개</td><td>호환 서버를 독립적으로 구현할 수 있는 공개 프로토콜은 제공한다.</td></tr>
+        </tbody>
+      </table>
+      <p>따라서 소스가 공개되었다고 해서 모든 TML 서비스와 상용 코덱이 같은 조건으로 제공되는 것은 아니다. 제3자는 자체 앱장터·계정서비스를 구축하거나 공개 구성만으로 독립 배포판을 만들 수 있다.</p>
+    </section>
+    <section>
+      <title>버전 체계</title>
+      <p>버전은 <strong>메이저.플랫폼.통합.빌드</strong>의 네 자리로 표기한다. 13.0.41.2는 Origin 13 후보 API를 사용하는 기본 플랫폼에서 41번째 통합 묶음의 두 번째 재현빌드라는 뜻이다.</p>
+      <p>통합번호가 높아져도 기능이 모두 유지되는 것은 아니다. 성능·배터리·보안기준을 통과하지 못한 기능은 다음 빌드에서 제거되거나 비활성화될 수 있으며 제조사 호환성도 보장되지 않는다.</p>
+    </section>
+    <section>
+      <title>13 계열</title>
+      <p>13 계열은 화면과 입력장치를 기기간에 실시간으로 재배치하는 분산 XWise 장면, 앱별 서비스구성을 사용량에 따라 줄이는 Adaptive Realm, 차량·개인기기 사이의 강한 자료분리와 Code A 안전 드라이버 인터페이스를 시험하고 있다.</p>
+      <p>이 가운데 일부는 Origin 13에 들어가지 않을 수 있다. 특히 분산 장면합성은 네트워크 지연과 권한표시가, Adaptive Realm은 앱 알림 누락과 디버깅 복잡성이 해결과제로 남아 있다.</p>
+    </section>
+    <section>
+      <title>정식판 승격</title>
+      <ol>
+        <li>기능 제안과 공개 설계검토를 거쳐 실험분기에 들어간다.</li>
+        <li>여러 ARM·ORO 참조장치에서 기능·전력·복구시험을 수행한다.</li>
+        <li>API 동결 뒤 보안감사와 제조사 호환시험을 진행한다.</li>
+        <li>통과한 구성요소만 Origin 후보분기로 복사하고 장기지원 정책을 부여한다.</li>
+      </ol>
+      <p>정식 Origin에는 TML SD가 서명과 사후지원을 제공하며 OpenOrigin 공동체의 유지보수만으로는 제품지원 계약을 대신할 수 없다.</p>
+    </section>
+  </body>
+</document>

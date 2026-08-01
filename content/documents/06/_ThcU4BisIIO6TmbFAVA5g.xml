@@ -1,0 +1,41 @@
+<document id="_ThcU4BisIIO6TmbFAVA5g">
+  <title>Orion 2(운영체제)</title>
+  <aliases><alias>Orion 2.x</alias><alias>Orion 2 Enterprise</alias><alias>오리온 2</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Orion 2</strong>는 2010년에 출시된 <ref href="doc:SpBugADlRQyj1V9SIfMJ5Q">Orion</ref>의 두 번째 세대이다. Linux 커널을 사용했던 <ref href="doc:pmL29mt6-nsViK7kTcAMSw">Orion 1</ref>과 달리 TML SD가 설계한 독자 일체형 커널과 자체 응용프로그램 규격을 채택했다.</p>
+      <p>운영체제 주권과 일관된 장기설계를 얻은 대신 출시 초기에 사용할 수 있는 프로그램이 급감했다. 소비자판의 성과는 제한적이었으나 안정성과 중앙관리 기능을 강화한 <strong>Orion 2 Enterprise</strong>는 공공·금융·산업 전산망에서 널리 판매되었다.</p>
+    </section>
+    <section>
+      <title>독자 커널</title>
+      <p>커널은 스케줄러, 가상메모리, 파일시스템, 네트워크와 주요 드라이버를 하나의 보호영역에서 실행하는 구조였다. Linux의 소스와 ABI에 의존하지 않았기 때문에 국내 하드웨어에 맞춘 전력·입출력 최적화와 고정된 장기 인터페이스를 제공할 수 있었다.</p>
+      <p>반면 장치 드라이버와 시스템 프로그램을 모두 새로 작성해야 했다. Orion 1용 Linux 프로그램은 호환상자 안에서 실행할 수 있었지만 그래픽 가속과 주변기기 접근이 제한되어 소비자가 체감하는 프로그램 부족은 컸다.</p>
+    </section>
+    <section>
+      <title>Orion 2 Enterprise</title>
+      <p>2011년에 출시된 Enterprise판은 데스크톱의 화려함보다 장기지원, 중앙 배포, 원격복구와 정해진 장치구성을 중시했다. 은행 창구, 철도·발전 관제, 공장 단말, 대학 전산실과 정부 민원시스템처럼 프로그램 종류가 적고 변경주기가 긴 환경에 적합했다.</p>
+      <table>
+        <thead><tr><th>기능</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>Fleet Console</td><td>단말의 정책·업데이트·인증서를 중앙에서 배포한다.</td></tr>
+          <tr><td>Stable ABI</td><td>인증된 업무프로그램과 드라이버의 실행규격을 장기간 고정한다.</td></tr>
+          <tr><td>Recovery Partition</td><td>원격명령 또는 현장키로 검증된 시스템 이미지로 복원한다.</td></tr>
+          <tr><td>Locked Profile</td><td>허가되지 않은 프로그램과 외부장치의 실행범위를 제한한다.</td></tr>
+        </tbody>
+      </table>
+      <p>이 구조 덕분에 새 프로그램이 적다는 소비자판의 약점이 기업환경에서는 오히려 변경통제와 장애예측의 장점으로 작용했다. 2026년에도 교체하기 어려운 생산설비와 폐쇄망에서 Orion 2 Enterprise가 발견되는 이유이다.</p>
+    </section>
+    <section>
+      <title>응용프로그램 문제</title>
+      <p>TML SD는 개발도구와 문서규격을 제공했지만 새 API의 변동이 잦았고 시장규모도 작아 외부 개발자의 참여가 저조했다. 일부 주요 업무도구는 공급되었으나 게임·전문제작·국외 상용프로그램의 빈자리를 채우지 못했다.</p>
+      <p>이 실패는 후속 <ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>에서 개발언어와 UI 체계를 함께 설계하고, <ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref>에서 외부 프로그램을 격리 실행하는 방향으로 이어졌다.</p>
+    </section>
+    <section>
+      <title>지원 종료</title>
+      <p>소비자판은 2015년에 지원이 종료되었고 Enterprise판은 보안결함과 인증서 갱신을 중심으로 연장지원되었다. 2025년 12월 정기 보안 업데이트가 마지막 공식 업데이트였으며 같은 달 31일 모든 사후지원이 종료되었다.</p>
+      <p>지원 종료 뒤에도 장비를 즉시 멈출 수 없는 사업자는 네트워크 분리와 응용프로그램 가상화를 조건으로 한시 운영하고 있다. 정부와 TML SD는 2028년까지 핵심 기반시설에서 Orion 2를 제거한다는 전환지침을 적용하고 있다.</p>
+    </section>
+  </body>
+</document>

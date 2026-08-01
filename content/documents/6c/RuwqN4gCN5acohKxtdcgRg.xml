@@ -1,0 +1,40 @@
+<document id="RuwqN4gCN5acohKxtdcgRg">
+  <title>Code A 프로그래밍 언어</title>
+  <aliases><alias>Code A</alias><alias>코드 A</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Code A</strong>는 TML SD가 운영체제 커널·장치 드라이버·실시간 서비스에 사용하기 위해 개발한 정적 컴파일 시스템 프로그래밍 언어이다. <ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>의 C·C++·어셈블리 구성요소를 재작성하는 과정에서 처음 상용화되었다.</p>
+      <p>직접 메모리와 하드웨어를 다룰 수 있으면서도 소유권·수명·권한형을 이용해 해제 뒤 사용, 중복해제와 잘못된 장치접근을 컴파일 단계에서 줄이는 것이 목적이다.</p>
+    </section>
+    <section>
+      <title>언어 구조</title>
+      <table>
+        <thead><tr><th>기능</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>Ownership Region</td><td>객체의 소유권과 참조수명을 함수·스레드·장치영역 단위로 검증한다.</td></tr>
+          <tr><td>Capability Type</td><td>파일·메모리·포트·장치 접근권을 일반 정수와 구분된 형식으로 표현한다.</td></tr>
+          <tr><td>Effect Set</td><td>함수가 수행할 수 있는 입출력·할당·대기·권한변경을 서명에 기록한다.</td></tr>
+          <tr><td>Unsafe Island</td><td>어셈블리와 원시 포인터를 제한된 블록에서만 허용하고 호출경계를 표시한다.</td></tr>
+          <tr><td>Time Contract</td><td>실시간 코드의 최대 대기·할당·잠금 규칙을 정적분석한다.</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>컴파일과 실행</title>
+      <p>Code A 컴파일러는 ARM64, x86-64와 H.O.S의 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref>를 대상으로 네이티브 코드를 만든다. ORO 대상에서는 권한객체와 트랜잭션 메모리 확장을 직접 사용하지만 같은 소스를 다른 프로세서에도 컴파일할 수 있다.</p>
+      <p>가비지 컬렉션은 기본적으로 사용하지 않는다. 필요한 경우 범위형 할당자와 참조계수 라이브러리를 선택하며 실시간 서비스는 동작 중 동적할당을 금지할 수 있다.</p>
+    </section>
+    <section>
+      <title>사용처</title>
+      <p><ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref> 마이크로커널과 핵심 서비스, <ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref> 커널·드라이버, XWise 합성기와 TML SD의 고성능 라이브러리에 사용된다. H.O.S 펌웨어와 저수준 진단도구도 제한된 Code A 프로필을 지원한다.</p>
+      <p>일반 앱 전체를 Code A로 작성할 필요는 없다. UI와 네트워크 중심 응용프로그램은 <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>가 주류이며 Code A 모듈은 명시적인 권한경계와 FFI를 통해 연결된다.</p>
+    </section>
+    <section>
+      <title>호환성과 비판</title>
+      <p>C ABI를 제공해 기존 라이브러리를 호출할 수 있지만 안전성 검증은 FFI 경계 밖의 코드까지 보장하지 않는다. Orion 3 초기의 재작성도 모든 C 코드를 기계적으로 바꾼 것이 아니라 동작을 다시 명세하고 시험하는 장기작업이었다.</p>
+      <p>엄격한 소유권·효과 표기는 대규모 드라이버의 오류를 줄였으나 학습곡선과 컴파일 시간이 크다는 비판을 받는다. TML SD는 오류 메시지와 자동변환기를 개선했지만 복잡한 병렬코드에는 전문적인 설계가 여전히 필요하다.</p>
+    </section>
+  </body>
+</document>

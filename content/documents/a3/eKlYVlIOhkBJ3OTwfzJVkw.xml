@@ -1,0 +1,60 @@
+<document id="eKlYVlIOhkBJ3OTwfzJVkw">
+  <title>Orion 4(운영체제)</title>
+  <aliases><alias>Orion 4.x</alias><alias>오리온 4</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Orion 4</strong>는 2021년에 출시된 <ref href="doc:SpBugADlRQyj1V9SIfMJ5Q">Orion</ref>의 네 번째 세대이자 2026년 현재 주력판이다. 마이크로커널, 세밀한 서비스 격리, <ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise 4</ref>의 고품질 그래픽과 <ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref> 호환 실행환경을 결합했다.</p>
+      <p>국내 전용 운영체제라는 기존 평가를 뒤집고 해외 PC·워크스테이션·서버 시장에서 대규모로 판매된 첫 TML SD 운영체제이다. 마이크로커널의 상용 성능, 외부 응용프로그램 호환성과 일관된 UX를 함께 구현해 해외 운영체제 연구와 제품기획의 벤치마킹 대상이 되었다.</p>
+    </section>
+    <section>
+      <title>출시</title>
+      <p>개발은 2017년 시작되었고 2020년 개발자 미리보기가 국내에 배포되었다. 2021년 11월 정식판이 출시되었지만 <ref href="doc:8c0vpmjgqqbIfcd7ii8uDw">청성1호 명령</ref>에 따른 대외 정보제한 때문에 초기 사용은 국내와 일부 협력사업에 집중되었다.</p>
+      <p>2022년 개방 뒤 영문 개발도구와 하드웨어 인증규격이 공개되었고 2023년부터 해외 OEM·기업용 판매가 본격화되었다. 운영체제 단독 라이선스, 제조사 선탑재판, 클라우드·가상 데스크톱판이 함께 공급되면서 TML 전자 완제품보다 넓은 유통망을 확보했다.</p>
+    </section>
+    <section>
+      <title>마이크로커널</title>
+      <p>커널에는 스레드 스케줄링, 주소공간, 인터럽트, 권한객체와 IPC만 남아 있다. 파일시스템, 네트워크, 그래픽 정책, 장치 드라이버와 대부분의 보안서비스는 권한이 제한된 사용자 공간 서비스로 실행된다.</p>
+      <table>
+        <thead><tr><th>기술</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><td>Capability Object</td><td>파일·장치·메모리·서비스 접근권을 복제하기 어려운 객체로 전달한다.</td></tr>
+          <tr><td>Shared Ring IPC</td><td>대량 입출력을 공유메모리 고리로 넘기고 제어정보만 메시지로 전달한다.</td></tr>
+          <tr><td>Service Graph</td><td>부팅 때 필요한 서비스와 권한관계를 검증해 최소 구성만 시작한다.</td></tr>
+          <tr><td>Restart Domain</td><td>드라이버나 서비스가 고장 나면 시스템 전체를 재시작하지 않고 해당 영역만 복구한다.</td></tr>
+        </tbody>
+      </table>
+      <p>마이크로커널의 문맥전환 비용은 메시지 일괄처리, 비동기 입출력과 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref>의 권한·가상화 확장으로 줄였다. 자주 통신하는 서비스는 보안정책을 유지한 채 같은 실행영역에 배치할 수 있어 데스크톱과 게임에서도 높은 성능을 낸다.</p>
+    </section>
+    <section>
+      <title>사용자 인터페이스</title>
+      <p>XWise 4는 창·문자·영상·3차원 장면을 하나의 합성그래프로 처리한다. 화면재생률과 입력지연에 맞춰 애니메이션 단계를 조절하고 프레임 예산을 넘기면 장식효과부터 단순화하므로 화려한 전환효과가 작업성능을 크게 침해하지 않는다.</p>
+      <p>일관된 간격·색·동작규칙, 키보드·터치·펜·음성 입력의 공통 접근성 모델과 앱 사이의 자연스러운 전환이 높은 평가를 받는다. 외형만 미려한 것이 아니라 오류상태, 권한요청과 복구절차까지 같은 상호작용 규칙을 사용한다는 점이 특징이다.</p>
+    </section>
+    <section>
+      <title>호환성과 성능</title>
+      <p>Continuum은 Windows PE·EXE, Linux ELF·AppImage와 제한적인 macOS Mach-O 프로그램을 별도 셀에서 실행한다. DMG는 실행파일이 아니라 디스크 이미지이므로 Mac Cell은 이를 설치매체로 탑재한 뒤 내부 Mach-O 응용프로그램의 지원가능 여부를 판단한다.</p>
+      <p>H.O.S 프로세서에서는 Continuum과 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>가 함께 동작한다. 전자는 운영체제 API와 파일·그래픽 규격을, 후자는 외부 기계어를 변환한다. 네이티브 Code A·Code B 프로그램은 이 변환을 거치지 않아 컴퓨터의 스케줄러·메모리·가속기 잠재력을 가장 잘 활용한다.</p>
+    </section>
+    <section>
+      <title>판본과 갱신</title>
+      <table>
+        <thead><tr><th>계열</th><th>대상</th><th>정책</th></tr></thead>
+        <tbody>
+          <tr><td>Home</td><td>개인용 PC</td><td>반기 기능갱신과 3년 보안지원</td></tr>
+          <tr><td>Pro</td><td>개발·제작·워크스테이션</td><td>가상화·고급 파일시스템·개발도구 포함</td></tr>
+          <tr><td>Enterprise LTS</td><td>기업·공공·서버</td><td>5년 일반지원과 5년 연장보안</td></tr>
+          <tr><td>Cloud</td><td>가상 데스크톱·서버</td><td>화면전송과 대규모 이미지 관리를 최적화</td></tr>
+        </tbody>
+      </table>
+      <p>2026년의 현행 장기지원판은 Orion 4.4 LTS이다. TML SD는 Orion 5로 제품명을 올리기보다 4.x에서 커널 ABI와 앱 생태계를 안정시키는 정책을 유지하고 있다.</p>
+    </section>
+    <section>
+      <title>해외 반응</title>
+      <p>해외 연구기관은 서비스 장애격리, 권한객체와 고성능 IPC를 집중적으로 분석했다. 운영체제 업체들은 XWise의 프레임 예산제어, 설치 뒤 바로 사용할 수 있는 호환 셀과 시스템 전체의 일관된 복구 UX를 벤치마킹했다.</p>
+      <p>판매도 연구용 소량에 머물지 않았다. 기존 프로그램을 대부분 유지하면서 H.O.S 장비의 성능을 사용할 수 있다는 점이 기업 도입을 이끌었고, x86-64 장비에서도 Orion 자체의 안정성과 UI를 이유로 채택하는 사례가 늘었다.</p>
+      <p>다만 폐쇄형 계정서비스, 커널 드라이버와 강한 침입방지 모듈은 호환되지 않는 경우가 많다. TML SD가 외부 API를 독자 구현하는 과정의 특허·상표 논쟁과 특정 국가의 공급망 심사도 계속되고 있다.</p>
+    </section>
+  </body>
+</document>

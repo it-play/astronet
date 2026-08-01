@@ -1,0 +1,49 @@
+<document id="Xok6myax2A1x3wmLIrhTmg">
+  <title>Continuum 호환 실행환경</title>
+  <aliases><alias>Continuum</alias><alias>컨티뉴엄</alias><alias>Continuum Runtime</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Continuum</strong>은 외부 운영체제용 응용프로그램을 <ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref>의 격리영역에서 실행하는 TML SD의 호환 실행환경이다. 실행파일 적재, 외부 API 구현, 파일·레지스트리·그래픽·오디오·네트워크 호출의 중개와 앱별 복구지점을 한 체계로 묶는다.</p>
+      <p>완전한 가상기계보다 가볍고 네이티브 Orion 앱보다 격리가 강하다. 프로그램마다 필요한 외부 서비스만 포함한 실행 셀을 만들기 때문에 서로 다른 Windows·Linux·macOS 응용프로그램이 시스템 전체의 권한을 공유하지 않는다.</p>
+    </section>
+    <section>
+      <title>구성</title>
+      <table>
+        <thead><tr><th>실행 셀</th><th>대상</th><th>처리</th></tr></thead>
+        <tbody>
+          <tr><td>PE Cell</td><td>Windows PE32·PE32+와 EXE</td><td>Win32·NT API, 레지스트리와 Direct3D 호출을 Orion·XWise 서비스로 변환</td></tr>
+          <tr><td>ELF Cell</td><td>Linux ELF·AppImage와 일부 Flatpak</td><td>Linux 시스템 호출, glibc 계열 ABI와 디렉터리 구조를 격리 제공</td></tr>
+          <tr><td>Mach Cell</td><td>지원되는 macOS Mach-O 앱</td><td>공개 프레임워크와 창·파일 호출을 구현하고 폐쇄형 서비스는 차단</td></tr>
+          <tr><td>Droid Cell</td><td>Android APK</td><td>Origin과 공통인 Android API·앱 수명주기·권한중개를 제공</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>DMG와 Linux 패키지</title>
+      <p>DMG는 Linux 실행파일이 아니라 macOS에서 사용하는 디스크 이미지 형식이다. Mach Cell은 DMG를 읽기 전용 설치매체로 탑재하고 내부의 Mach-O 앱과 자원을 검사한 뒤 지원되는 프로그램만 설치한다.</p>
+      <p>Linux 프로그램은 일반적으로 ELF 실행파일을 사용한다. AppImage는 묶음 자체를 실행할 수 있고 DEB·RPM은 설치스크립트를 분석해 ELF Cell용 이미지로 변환한다. 커널 모듈을 설치하거나 호스트의 init 체계를 바꾸려는 패키지는 거부된다.</p>
+    </section>
+    <section>
+      <title>K-Bridge와의 관계</title>
+      <p><ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>는 x86-64·AArch64 기계어를 H.O.S K-Flow 프로세서의 ORO 코드로 바꾸는 명령어·펌웨어 계층이다. Continuum은 Windows·Linux·macOS의 운영체제 API를 Orion 서비스로 바꾸므로 담당 층위가 다르다.</p>
+      <p>x86-64 PC에서 x86-64 Windows 앱을 실행할 때에는 PE Cell만 필요하다. H.O.S 장비에서 같은 앱을 실행할 때에는 K-Bridge가 기계어를, PE Cell이 운영체제 호출을 처리한다. 두 체계를 구분한 덕분에 x86-64 장비에서도 Continuum을 판매할 수 있다.</p>
+    </section>
+    <section>
+      <title>그래픽과 장치</title>
+      <p>PE Cell의 Direct3D와 ELF Cell의 Vulkan·OpenGL 호출은 <ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref> 표면과 H.O.S GPU 드라이버로 전달된다. 자주 쓰이는 셰이더와 파이프라인은 서명된 변환캐시에 저장되어 두 번째 실행부터 지연이 줄어든다.</p>
+      <p>일반 입력·오디오·프린터는 가상장치로 제공되지만 외부 커널 드라이버를 Orion 커널에 직접 설치할 수는 없다. 특수 산업장비는 제조사가 Code A 중개 드라이버를 제공하거나 별도 가상기계를 사용해야 한다.</p>
+    </section>
+    <section>
+      <title>보안</title>
+      <p>각 셀에는 별도 파일영역, 레지스트리·환경변수와 네트워크 정책이 부여된다. 외부 앱의 취약점이 악용되어도 셀 밖의 장치·문서에 접근하려면 Orion의 권한객체를 다시 통과해야 하며 셀은 전체 운영체제를 재시작하지 않고 초기화할 수 있다.</p>
+      <p>호환 API 자체가 넓은 공격면을 만든다는 비판도 있다. TML SD는 사용하지 않는 API를 셀 이미지에서 제외하고 위험한 오래된 구성요소를 기본 비활성화하지만 기업이 레거시 호환성을 위해 다시 켤 수 있어 정책관리가 중요하다.</p>
+    </section>
+    <section>
+      <title>한계</title>
+      <p>커널 드라이버, 저수준 가상화, 일부 침입방지형 게임과 폐쇄형 계정·결제서비스는 동작하지 않거나 기능이 제한된다. macOS 호환은 공개 API와 독자 구현 범위에 한정되므로 최신 폐쇄 프레임워크를 사용하는 앱은 지원하지 않는다.</p>
+      <p>프로그램이 실행된다는 것과 원래 운영체제와 같은 속도·동작을 보장한다는 것은 다르다. TML SD는 앱별 인증목록에 완전지원, 제한지원과 실행불가를 구분하고 호환문제가 발견되면 셀 프로필을 개별 갱신한다.</p>
+    </section>
+  </body>
+</document>

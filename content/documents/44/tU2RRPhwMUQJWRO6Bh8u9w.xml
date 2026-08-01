@@ -6,7 +6,7 @@
     <section>
       <title>개요</title>
       <p><strong>TML 전자</strong>는 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>의 완제품 전자기기 제조업체이다. 가전제품, 스마트폰과 노트북을 주력으로 하며 북조선 국내시장에서 85%의 점유율을 차지한다.</p>
-      <p><ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref>의 프로세서, <ref href="doc:SZi9IUErjDfuVjjaNsxTLw">TML 메모리</ref>의 반도체와 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>의 운영체제를 결합해 핵심부품과 소프트웨어를 그룹 안에서 조달한다.</p>
+      <p><ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref>의 프로세서, <ref href="doc:SZi9IUErjDfuVjjaNsxTLw">TML 메모리</ref>의 반도체와 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>의 <ref href="doc:SpBugADlRQyj1V9SIfMJ5Q">Orion</ref>·<ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref>을 결합해 핵심부품과 소프트웨어를 그룹 안에서 조달한다.</p>
     </section>
     <section>
       <title>국내시장</title>
@@ -15,8 +15,8 @@
     </section>
     <section>
       <title>해외사업의 한계</title>
-      <p>국외 판매실적은 다른 기술계열사보다 부진하다. Orion·Origin 계열 운영체제와 기기의 완성도는 높지만 해외 소비자가 기존 응용프로그램, 계정과 주변기기 생태계를 포기하면서까지 전혀 다른 제품을 선택할 유인이 약하기 때문이다.</p>
-      <p>이 때문에 뛰어난 하드웨어 성능이 곧바로 판매량으로 이어지지 않는다. 회사는 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref> 호환성 확대와 해외 소프트웨어 공급을 추진하고 있으나 계열사 평균과 비교하면 성장률이 낮은 편이다.</p>
+      <p>완제품의 국외 판매실적은 다른 기술계열사보다 부진하다. <ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref> 자체는 해외에서 잘 팔리지만 소비자가 운영체제만 선택하는 것과 TML 전자의 기기·계정·주변기기 생태계 전체로 옮겨오는 것은 다른 문제이기 때문이다.</p>
+      <p><ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref>과 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>가 기존 응용프로그램의 이행부담을 줄이면서 2024년 이후 수출은 빠르게 늘었으나 절대 규모와 해외 유통·수리망은 계열사의 부품·소프트웨어 사업에 미치지 못한다.</p>
     </section>
   </body>
 </document>

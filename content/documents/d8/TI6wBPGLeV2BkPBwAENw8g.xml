@@ -5,8 +5,9 @@
     <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
     <section>
       <title>개요</title>
-      <p><strong>K-Bridge</strong>는 x86-64와 AArch64 프로그램을 <ref href="doc:B-dT-FarcUpPgzcwMSQFaQ">K-Flow</ref> 프로세서에서 실행하기 위한 H.O.S의 호환 계층이다. 응용프로그램의 기계어와 운영체제 호출을 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref> 유동묶음으로 바꾸며, 네이티브 재컴파일이 어려운 상용 소프트웨어의 이행을 목적으로 한다.</p>
+      <p><strong>K-Bridge</strong>는 x86-64와 AArch64 프로그램을 <ref href="doc:B-dT-FarcUpPgzcwMSQFaQ">K-Flow</ref> 프로세서에서 실행하기 위한 H.O.S의 호환 계층이다. 응용프로그램의 기계어와 프로세서 ABI를 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref> 유동묶음과 호출규약으로 바꾸며, 네이티브 재컴파일이 어려운 상용 소프트웨어의 이행을 목적으로 한다.</p>
       <p>완전한 하드웨어 복제장치가 아니라 정적변환, 실행중 변환과 시스템 호출 중개를 결합한 소프트웨어·펌웨어 체계이다. 따라서 호환된다는 표현이 모든 프로그램이 같은 속도와 기능으로 동작한다는 뜻은 아니다.</p>
+      <p><ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref>이 Windows·Linux·macOS의 응용프로그램 API와 파일·그래픽 환경을 Orion으로 옮긴다면 K-Bridge는 외부 프로세서의 기계어를 ORO로 옮긴다. H.O.S 장비에서는 두 체계가 함께 동작할 수 있지만 x86-64 장비의 Orion 4는 Continuum만으로 같은 아키텍처의 외부 프로그램을 실행한다.</p>
     </section>
     <section>
       <title>구성</title>
@@ -15,7 +16,7 @@
         <tbody>
           <tr><td>K-Bridge AOT</td><td>설치할 때 실행파일 전체를 분석해 재사용 가능한 ORO 묶음을 생성한다.</td></tr>
           <tr><td>K-Bridge Live</td><td>처음 실행되는 코드구간을 동적으로 변환하고 서명된 캐시에 저장한다.</td></tr>
-          <tr><td>ABI 중개기</td><td>파일·그래픽·네트워크·스레드 호출을 TML SD 운영체제의 호출로 바꾼다.</td></tr>
+          <tr><td>ABI 중개기</td><td>레지스터·스택·원자연산과 시스템호출 진입점을 ORO 호출규약에 맞추고 상위 운영체제 호출은 Continuum에 넘긴다.</td></tr>
           <tr><td>장치 샌드박스</td><td>기존 드라이버를 격리된 가상장치 안에서 실행하고 실제 장치와 메시지로 통신한다.</td></tr>
         </tbody>
       </table>

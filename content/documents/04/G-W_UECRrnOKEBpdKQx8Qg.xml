@@ -1,0 +1,45 @@
+<document id="G-W_UECRrnOKEBpdKQx8Qg">
+  <title>붉은별 사용자용체계</title>
+  <aliases><alias>붉은별 OS</alias><alias>Red Star OS</alias><alias>RedStar OS</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>붉은별 사용자용체계</strong>는 조선컴퓨터센터가 개발한 Linux 기반 운영체제이다. Fedora 계열 배포판과 KDE 데스크톱을 조선어 환경과 국가 내부망에 맞게 수정했으며 데스크톱판과 서버판이 존재했다.</p>
+      <p>2000년대 국가기관·학교·연구시설에 보급되었고 초기 <ref href="doc:pmL29mt6-nsViK7kTcAMSw">Orion 1</ref>과 Linux 패키지·현지화 기술의 계보를 공유했다. Orion이 민간·기업용 상용체계로 발전한 반면 붉은별은 국가 배포와 정보통제 기능을 강하게 유지했다.</p>
+    </section>
+    <section>
+      <title>개발과 판본</title>
+      <p>개발은 1990년대 말 조선컴퓨터센터에서 시작되었고 첫 공개판은 2008년에 등장했다. 1·2 계열은 당시 Windows와 비슷한 KDE 환경을 사용했으며 3 계열은 화면 배치와 외형을 macOS에 가깝게 바꾸었다.</p>
+      <p>3.0 데스크톱판은 전자우편, 일정, 문서작성, 매체재생과 조선어 웹 브라우저를 포함했다. 서버판은 웹·파일·인증 서비스에 맞춘 별도 패키지 구성을 사용했다.</p>
+      <table>
+        <thead><tr><th>계열</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>1.x</td><td>조선어 Linux 데스크톱과 기본 업무프로그램을 통합한 초기판</td></tr>
+          <tr><td>2.x</td><td>Windows식 화면구성과 국가망용 설정·패키지 관리 강화</td></tr>
+          <tr><td>3.x</td><td>macOS식 화면구성, 데스크톱·서버판 분리와 무결성 기능 강화</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>기술적 특징</title>
+      <p>일반적인 Linux 커널과 GNU 사용자 공간을 사용했지만 핵심 프로세스와 시스템 파일의 무결성을 지속적으로 확인하는 구성요소가 추가되었다. 필수 프로세스를 임의로 종료하거나 시스템 파일을 바꾸면 복구 또는 실행차단이 이루어졌다.</p>
+      <p>이미지·영상·문서와 같은 매체파일에는 장치와 복사경로를 식별하는 워터마크를 덧붙이는 기능이 있었다. 워터마크는 매체 유통경로를 추적하는 데 쓰였으나 실행파일에는 같은 방식이 적용되지 않았고 분석도구로 제거할 수 있어 완전한 통제수단은 아니었다.</p>
+    </section>
+    <section>
+      <title>Orion 1과의 관계</title>
+      <p>붉은별과 Orion 1은 Linux 커널, RPM 계열 패키지, KDE·X11과 조선어 입력·글꼴 기반을 사용했다. 일부 개발자와 현지화 자료도 오갔기 때문에 초기 화면과 기본도구가 비슷했다.</p>
+      <p>그러나 붉은별은 국가기관의 승인된 저장소와 내부망 운용을 우선했고 Orion 1은 민간 주변기기, 공개 패키지와 기업 응용프로그램을 더 폭넓게 받아들였다. Orion 2가 독자 커널로 옮겨가면서 기술적 공통점은 급격히 줄었다.</p>
+    </section>
+    <section>
+      <title>외부 공개와 인식</title>
+      <p>붉은별 3.0의 서버판과 데스크톱판은 2014년 전후 국외로 유출되어 분석되었다. 당시 외부 연구자는 이 체계의 오래된 Linux 기반, 국가망 설정과 감시기능을 북한 소프트웨어 산업 전체의 수준으로 받아들이는 경우가 많았다.</p>
+      <p>실제로는 국내에서 <ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>와 <ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref>이 이미 보급되고 있었지만 <ref href="doc:8c0vpmjgqqbIfcd7ii8uDw">청성1호 명령</ref> 때문에 그 규모와 기술자료는 공개되지 않았다. 붉은별 유출본은 조작된 가짜 체계가 아니었으나 외부가 관측할 수 있던 표본이 전체를 대표하지 못했다.</p>
+    </section>
+    <section>
+      <title>쇠퇴</title>
+      <p>2016년 이후 정치적 감시기능과 불투명한 시스템 통제가 헌법상 권리보장과 충돌하면서 일반 행정·교육용 신규설치는 중단되었다. 기존 서버와 폐쇄형 단말은 기능을 제거한 유지보수판으로 한동안 운용되었고 민간·공공의 범용 환경은 Orion으로 이전했다.</p>
+      <p>2026년에는 일부 보존시스템과 복구가 어려운 폐쇄망에서만 확인된다. 유출판과 보존판은 초기 정보통제 기술, 조선어 Linux 현지화와 Orion 계보를 연구하는 자료로 남아 있다.</p>
+    </section>
+  </body>
+</document>

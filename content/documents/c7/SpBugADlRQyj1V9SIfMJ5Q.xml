@@ -1,0 +1,45 @@
+<document id="SpBugADlRQyj1V9SIfMJ5Q">
+  <title>Orion 운영체제</title>
+  <aliases><alias>Orion</alias><alias>Orion OS</alias><alias>오리온 운영체제</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Orion</strong>은 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>가 개발하는 개인용 컴퓨터·워크스테이션·서버 운영체제이다. 2008년 출시된 <ref href="doc:pmL29mt6-nsViK7kTcAMSw">Orion 1</ref>부터 2021년 출시된 <ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref>까지 네 세대가 존재한다.</p>
+      <p>초기에는 Linux 배포판에서 출발했으나 Orion 2부터 독자 커널을 사용했다. Orion 3에서 개발언어와 그래픽 체계를 전면 교체했고 Orion 4에서 마이크로커널, 격리형 호환 실행환경과 완성도 높은 사용자 경험을 결합하면서 북조선 밖에서도 널리 판매되는 운영체제가 되었다.</p>
+    </section>
+    <section>
+      <title>역사</title>
+      <table>
+        <thead><tr><th>세대</th><th>출시</th><th>주요 변화</th><th>2026년 상태</th></tr></thead>
+        <tbody>
+          <tr><td><ref href="doc:pmL29mt6-nsViK7kTcAMSw">Orion 1</ref></td><td>2008년</td><td>Linux 커널과 당시의 조선어 Linux 생태계를 이용한 첫 상용판</td><td>지원 종료</td></tr>
+          <tr><td><ref href="doc:_ThcU4BisIIO6TmbFAVA5g">Orion 2</ref></td><td>2010년</td><td>독자 커널·기업 관리기능 도입</td><td>2 Enterprise 지원 종료, 교체 진행</td></tr>
+          <tr><td><ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref></td><td>2013년</td><td>Code A·Code B 재작성, XWise 도입, Origin 분리</td><td>소비자판 종료, Enterprise 유지</td></tr>
+          <tr><td><ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref></td><td>2021년</td><td>마이크로커널·격리형 호환계층·신형 UX</td><td>현행 주력</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>세대별 구조</title>
+      <p>Orion 1은 <ref href="doc:G-W_UECRrnOKEBpdKQx8Qg">붉은별 사용자용체계</ref>와 같은 Linux 커널·KDE 계열 환경에서 출발했다. Orion 2는 외부 커널 의존을 끝내기 위해 독자적인 일체형 커널을 도입했지만 응용프로그램 수가 크게 줄었다.</p>
+      <p>Orion 3는 커널과 시스템 서비스를 <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>, 상위 서비스와 사용자 인터페이스를 <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>로 재작성했다. 이 세대부터 <ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref>가 화면합성·애니메이션·입력처리를 맡았다.</p>
+      <p>Orion 4는 스케줄링·주소공간·권한·IPC만 커널에 남기고 드라이버와 파일·네트워크 서비스를 격리된 사용자 공간으로 옮겼다. 성능 손실은 공유메모리 고리, 일괄 메시지 전달과 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref>의 운영체제 확장으로 줄였다.</p>
+    </section>
+    <section>
+      <title>응용프로그램과 호환성</title>
+      <p>Orion용 네이티브 응용프로그램은 Code A 또는 Code B로 작성되며 XWise를 공통 그래픽 기반으로 사용한다. <ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref>은 Windows용 PE·EXE와 Linux용 ELF·AppImage, 제한적인 macOS용 Mach-O 응용프로그램을 각각 격리된 실행 셀에서 처리한다.</p>
+      <p>Continuum이 외부 운영체제의 파일·그래픽·네트워크 API를 Orion 호출로 바꾸는 체계라면 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>는 x86-64·AArch64 기계어를 H.O.S 프로세서의 ORO 코드로 바꾸는 체계이다. H.O.S 장비에서 외국 프로그램을 실행할 때에는 두 계층이 함께 쓰일 수 있다.</p>
+    </section>
+    <section>
+      <title>Origin과의 관계</title>
+      <p><ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref>은 Orion 3 개발 도중 이동기기 부문이 분리되어 탄생했다. Code A·Code B의 형식체계와 XWise의 일부 기술을 공유하지만 커널, 전력관리, 응용프로그램 수명주기와 배포정책은 별도로 발전했다.</p>
+      <p>따라서 Origin을 Orion의 모바일판으로만 보는 것은 정확하지 않다. Orion 4는 마이크로커널을 사용하지만 Origin은 장치 드라이버와 핵심 입출력을 커널 안에 두는 모듈형 일체형 커널을 유지한다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>Orion 계보는 Linux 기반 국산화판, 독자 커널의 시행착오, 개발체계 재작성과 마이크로커널 상용화가 한 제품명 안에서 이어졌다는 점에서 연구대상이 되었다. 특히 Orion 4는 사용자 경험과 레거시 호환성을 동시에 확보하면서 2022년 이후 TML SD의 대표 수출품으로 자리 잡았다.</p>
+      <p>반면 넓은 호환범위가 모든 프로그램의 완전한 동작을 뜻하지는 않는다. 커널 드라이버, 일부 보안제품과 침입방지형 게임은 격리모델 때문에 동작하지 않으며 외부 플랫폼의 폐쇄형 서비스까지 복제하지는 못한다.</p>
+    </section>
+  </body>
+</document>
