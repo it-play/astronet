@@ -1,0 +1,13 @@
+<navigation-board id="z1jrwf9QqXU4Jqt3lr4TIA" theme="default">
+  <header><title>북조선자유민주주의공화국의 상위 기업집단 TOP 10</title></header>
+  <section id="ranking" label="재계서열" group="enterprise-group-ranking">
+    <document-table>
+      <row label="1위">
+        <document target="ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</document>
+      </row>
+      <row label="2위">
+        <document target="lu8hAqgdEtMhCBBi9tbFNA">백두그룹</document>
+      </row>
+    </document-table>
+  </section>
+</navigation-board>
