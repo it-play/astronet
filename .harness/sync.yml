@@ -20,4 +20,4 @@ overrides:
 base_branch: main
 language: ko
 pr_label: false
-enabled: true
+enabled: false
