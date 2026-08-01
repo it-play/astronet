@@ -33,6 +33,7 @@
     <section>
       <title>그래픽과 장치</title>
       <p>PE Cell의 Direct3D와 ELF Cell의 Vulkan·OpenGL 호출은 <ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref> 표면과 H.O.S GPU 드라이버로 전달된다. 자주 쓰이는 셰이더와 파이프라인은 서명된 변환캐시에 저장되어 두 번째 실행부터 지연이 줄어든다.</p>
+      <p><ref href="doc:5IgKUeL6AjY2DT_t9Qb6Hg#ge45">GE 4.5</ref>의 외부 API 어댑터는 게임 프로젝트 내부의 렌더링·연산 자원과 작업순서를 연결한다. Orion에서 외부 운영체제용 구성요소를 실행해야 할 때에는 Continuum 셀이 API와 권한을 중개하므로 GE가 외부 앱 호환환경을 별도로 구현하지 않는다.</p>
       <p>일반 입력·오디오·프린터는 가상장치로 제공되지만 외부 커널 드라이버를 Orion 커널에 직접 설치할 수는 없다. 특수 산업장비는 제조사가 Code A 중개 드라이버를 제공하거나 별도 가상기계를 사용해야 한다.</p>
     </section>
     <section>
