@@ -1,0 +1,39 @@
+<document id="efqlddQqL4UMXuBHFQNp6A">
+  <title>H.O.S Sky 시리즈</title>
+  <aliases><alias>Sky 시리즈</alias><alias>H.O.S Sky</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Sky 시리즈</strong>는 <ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref>가 2014년부터 2016년까지 공급한 최초의 소비자용 CPU 제품군이다. 교육기관·가정용 컴퓨터와 저가 업무단말을 목표로 했으며 K32 실행창과 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO1</ref>을 처음 상용화했다.</p>
+      <p>동시기 국제제품보다 절대성능은 낮았지만 수입부품 의존도를 줄이고 H.O.S의 컴파일러·내장그래픽·메인보드 규격을 실제 대량사용 환경에서 검증했다는 의미가 있다. 후속 <ref href="doc:1T2BWzlakD2oHXdIzg7-bQ">Ion 시리즈</ref>와 A 계열의 소프트웨어 기반도 이 제품에서 출발했다.</p>
+    </section>
+    <section>
+      <title>제품 계보</title>
+      <table>
+        <thead><tr><th>대표제품</th><th>출시</th><th>코어</th><th>기본·최대클럭</th><th>전력등급</th></tr></thead>
+        <tbody>
+          <tr><td>Sky 1000</td><td>2014년</td><td>2코어 2스레드</td><td>0.7·1.0GHz</td><td>40W</td></tr>
+          <tr><td>Sky 1200X</td><td>2014년</td><td>4코어 4스레드</td><td>0.92·1.3GHz</td><td>90W</td></tr>
+          <tr><td>Sky 1400X</td><td>2014년</td><td>6코어 6스레드</td><td>1.1·1.47GHz</td><td>125W</td></tr>
+          <tr><td>Sky 2000X</td><td>2015년</td><td>4코어 4스레드</td><td>1.0·1.3GHz</td><td>75W</td></tr>
+          <tr><td>Sky 2000XEU</td><td>2016년</td><td>2코어 4스레드</td><td>1.4·1.5GHz</td><td>30W</td></tr>
+        </tbody>
+      </table>
+      <p>1000번대는 HCS 소켓과 초기 Graphics 100 계열 내장그래픽을, 2000번대는 개선된 메모리제어기와 운영체제 보조명령을 사용했다. L은 저전력, X는 상위클럭, H는 고전력, FE는 기능을 줄인 보급형을 뜻하는 접미사였다.</p>
+    </section>
+    <section>
+      <title>구조와 특징</title>
+      <p>Sky는 단일다이 K32 프로세서로 작은 유동창과 고정된 경로표를 사용했다. 컴파일러가 충분한 병렬경로를 만들지 못하면 성능이 크게 떨어져 초기 사용자들은 같은 프로그램이라도 빌드버전에 따라 속도가 달라지는 문제를 겪었다.</p>
+      <p>반대로 정해진 교육용·행정용 프로그램에서는 전력과 제조비용을 낮출 수 있었다. H.O.S는 자주 쓰는 프로그램의 유동묶음을 운영체제와 함께 배포했고 이 방식이 훗날 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref> 변환캐시의 기원이 되었다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>Sky는 빠른 CPU로 기억되기보다 북조선의 독자 컴퓨터산업이 소비자시장에 정착한 출발점으로 평가된다. 초기 HCS 보드의 전원부와 드라이버 품질이 고르지 않아 안정성 논란이 있었고, 2016년부터 Ion과 Fastcoll이 역할을 나누면서 단종되었다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>초기 포장에는 “푸른 하늘, 우리의 하늘, 연산의 끝없는 하늘”이라는 문구가 여러 언어로 인쇄되었다. 번역품질이 일정하지 않아 수집가 사이에서는 정상포장보다 오역판이 더 유명하다.</p>
+    </section>
+  </body>
+</document>

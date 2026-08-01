@@ -1,0 +1,39 @@
+<document id="ojBmZ4KYMXK_LJ9rkUwIYQ">
+  <title>H.O.S GC 시리즈</title>
+  <aliases><alias>GC 시리즈</alias><alias>Graphics Compute</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>GC 시리즈</strong>는 H.O.S의 소비자·고성능 그래픽카드 계열이다. GC는 Graphics Compute의 약자로 게임·렌더링과 범용 GPU 연산을 함께 목표로 하며 H.O.S 외장 GPU 가운데 가장 넓은 가격대를 담당한다.</p>
+      <p><ref href="doc:67nJ3pMP9bJkgcmStNrELQ">Top·Middel·Under</ref>를 통합해 600번대부터 1100번대까지 이어졌고 Pie·Sigma·MEGA·EOX-2 구조를 차례로 사용했다. 1000번대 후기제품이 2022~2023년 외부에 공개되며 <ref href="doc:cdrm-Ch_9Ro9tQri3l_zCg">반도체 성능쇼크</ref>의 GPU 비교대상이 되었다.</p>
+    </section>
+    <section>
+      <title>세대</title>
+      <table>
+        <thead><tr><th>계열</th><th>시기</th><th>구조</th><th>대표제품</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>GC 600~800</td><td>2017~2018년</td><td>Pie</td><td>GC-650·750·850</td><td>타일형 렌더러와 중급 소비전력</td></tr>
+          <tr><td>GC 900</td><td>2019~2021년</td><td>Sigma</td><td>GC-950·970·990X</td><td>통합 벡터연산과 드라이버 안정화</td></tr>
+          <tr><td>GC 1000 초기</td><td>2021~2022년</td><td>Sigma</td><td>GC-1000·1020·1030</td><td>HCC와 대용량 메모리</td></tr>
+          <tr><td>GC 1000 후기</td><td>2023년</td><td>MEGA</td><td>GC-1050·1080·1090</td><td>행렬엔진·광선교차장치와 ORO4 작업발행</td></tr>
+          <tr><td>GC 1100</td><td>2024년</td><td>EOX-2</td><td>GC-1100</td><td>가상화·전력효율과 외부시장용 안정성</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>MEGA 세대</title>
+      <p>GC-1080은 약 4,900개의 스칼라 경로와 32GB급 그래픽메모리, 350W 전력등급을 사용한 대표제품이다. GC-1090은 더 많은 연산자원과 메모리를 갖춘 500W급 상위형으로 PF-D 수랭을 권장했다. 실제 사양은 보드제조사에 따라 달라졌으며 연산경로 수를 다른 회사의 셰이더 코어 수와 그대로 비교할 수는 없다.</p>
+      <p>MEGA는 행렬누산기와 광선교차장치를 편성단에 직접 연결해 AI·렌더링 혼합작업에서 높은 처리량을 냈다. 반면 장치가 놀지 않도록 작업을 배치하는 드라이버가 복잡해 K-Bridge 위의 오래된 게임은 하드웨어 성능을 충분히 사용하지 못했다.</p>
+    </section>
+    <section>
+      <title>이전 제품군과의 차이</title>
+      <p>과거 Top·Middel·Under는 성능등급만 구분했지만 GC는 같은 세대 안에서도 저전력·표준·X·FE를 운영했다. X는 높은 전력한도, FE는 일부 행렬·광선장치를 줄인 보급형을 뜻한다. 세대가 달라지면 같은 번호라도 구조가 다르므로 GC-990과 BC-990은 동일한 다이의 단순 재상표가 아니다.</p>
+    </section>
+    <section>
+      <title>평가와 여담</title>
+      <p>네이티브 ORO·HCC 소프트웨어에서는 높은 성능을 보였지만 해외 게임과 제작도구의 호환성은 K-Bridge와 드라이버 성숙도에 좌우되었다. 1100번대가 MEGA보다 최대연산량이 낮다는 비판도 있었으나 전력효율과 안정성은 크게 개선되었다.</p>
+      <p>GC-1030은 이름상 보급형처럼 보이지만 당시 Sigma 완전구성을 시험한 고전력 개발자판이 먼저 나와 후속 GC-1040보다 전력을 더 많이 쓰는 기묘한 계보가 되었다.</p>
+    </section>
+  </body>
+</document>

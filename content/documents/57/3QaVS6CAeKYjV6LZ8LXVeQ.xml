@@ -1,0 +1,41 @@
+<document id="3QaVS6CAeKYjV6LZ8LXVeQ">
+  <title>H.O.S N1 시리즈</title>
+  <aliases><alias>N1 시리즈</alias><alias>H.O.S N1</alias><alias>N1 Arcron</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>N1 시리즈</strong>는 2023년 H.O.S가 출시한 고클럭 소비자·소형 워크스테이션 CPU이다. 코어수가 제품명에 직접 드러나는 Duo·Triple·Quad·Penta·Octa·Twelve와 최상위 Arcron으로 구성된다.</p>
+      <p>K128 실행창을 소비자제품에 적용해 적은 코어에서도 큰 유동묶음을 유지하고 Graphics 800 계열 내장그래픽을 탑재했다. <ref href="doc:C679Hm7eJXl81-Bu5MTpQQ">A3</ref>보다 코어수는 적지만 직렬작업과 짧은 응답시간에 특화했다.</p>
+    </section>
+    <section>
+      <title>제품</title>
+      <table>
+        <thead><tr><th>제품</th><th>코어·스레드</th><th>기본·최대클럭</th><th>전력등급</th><th>내장그래픽</th></tr></thead>
+        <tbody>
+          <tr><td>N1 Duo</td><td>2·4</td><td>3.2·5.5GHz</td><td>25W</td><td>Graphics 850</td></tr>
+          <tr><td>N1 Triple</td><td>3·6</td><td>3.9·5.7GHz</td><td>35W</td><td>Graphics 850</td></tr>
+          <tr><td>N1 Quad</td><td>4·8</td><td>4.1·5.9GHz</td><td>40W</td><td>Graphics 850</td></tr>
+          <tr><td>N1 Penta</td><td>5·10</td><td>4.2·6.6GHz</td><td>50W</td><td>Graphics 850</td></tr>
+          <tr><td>N1 Octa</td><td>8·16</td><td>4.5·7.0GHz</td><td>65W</td><td>Graphics 850</td></tr>
+          <tr><td>N1 Twelve</td><td>12·24</td><td>4.6·7.6GHz</td><td>90W</td><td>Graphics 860</td></tr>
+          <tr><td>N1 Arcron</td><td>18·36</td><td>4.8·7.8GHz</td><td>140W</td><td>Graphics 870</td></tr>
+        </tbody>
+      </table>
+      <p>7GHz대 수치는 <ref href="doc:vAykcZWMf_4zG08K6IPbNQ">PulseDrive</ref>가 전류와 열 여유를 확보한 동안 한두 코어에 적용하는 최대부스트이다. 특히 Twelve와 Arcron은 규격 보드·전원부·냉각기를 사용해야 공식 최고치가 보증된다.</p>
+    </section>
+    <section>
+      <title>A3와의 차이</title>
+      <p>N1은 코어칩렛 수를 줄이는 대신 각 코어에 더 큰 지역경로표와 캐시를 배정했다. 분기와 포인터추적이 많은 프로그램에서 유동창이 자주 비는 문제를 줄였고, 내장그래픽·NPU와 낮은 지연으로 자료를 교환하도록 패키지 경로를 단순화했다.</p>
+      <p>반면 렌더링·대규모 컴파일과 서버 가상화에서는 많은 코어와 메모리채널을 가진 A3·Nano보다 느리다. Arcron도 최고부스트를 오래 유지할 수 없으므로 7.8GHz라는 수치만으로 전 제품군의 성능을 비교해서는 안 된다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>Duo부터 Arcron까지 같은 소켓과 기본 펌웨어를 사용해 소형시스템의 선택폭을 넓혔다. 그러나 홀수 코어제품은 일부 외부 운영체제와 게임의 스레드배분기가 제대로 처리하지 못해 K-Bridge 프로필이 보급될 때까지 성능편차가 컸다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>N1 Twelve의 초도 펌웨어는 제품문자열을 N1 Triple로 잘못 보고했다. 코어수와 기능에는 문제가 없었지만 중고거래와 자산관리 시스템에서 혼란이 이어져 H.O.S가 별도 식별도구를 배포했다.</p>
+    </section>
+  </body>
+</document>

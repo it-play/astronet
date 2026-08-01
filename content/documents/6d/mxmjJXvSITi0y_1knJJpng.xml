@@ -1,0 +1,41 @@
+<document id="mxmjJXvSITi0y_1knJJpng">
+  <title>H.O.S Nano 시리즈</title>
+  <aliases><alias>Nano 시리즈</alias><alias>H.O.S Nano</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Nano 시리즈</strong>는 2020년부터 H.O.S가 공급한 고밀도 서버용 K128 CPU 계열이다. ‘Nano’는 작은 칩을 뜻하기보다 많은 코어칩렛을 하나의 논리시스템처럼 묶는 세분화 설계를 가리킨다.</p>
+      <p>A 계열보다 낮은 소수코어 성능을 감수하고 코어수, 메모리대역폭, 다중소켓과 가상화 처리량을 우선한다. 4세대부터 대형 관리타일과 칩렛 장애격리를, 5세대부터 ORO4·HCC+와 <ref href="doc:S-J2WrNTW9t95Pr1rjqolw">GlassLink</ref> 패키지를 도입했다.</p>
+    </section>
+    <section>
+      <title>세대</title>
+      <table>
+        <thead><tr><th>제품</th><th>출시</th><th>코어·스레드</th><th>지속·최대클럭</th><th>전력등급</th></tr></thead>
+        <tbody>
+          <tr><td>Nano 1</td><td>2020년</td><td>24·48</td><td>2.6·3.0GHz</td><td>140W</td></tr>
+          <tr><td>Nano 2</td><td>2021년</td><td>56·112</td><td>3.2·3.7GHz</td><td>185W</td></tr>
+          <tr><td>Nano 3</td><td>2022년</td><td>64·128</td><td>3.0·3.8GHz</td><td>250W</td></tr>
+          <tr><td>Nano 4</td><td>2023년</td><td>128·256</td><td>3.5·5.1GHz</td><td>275W</td></tr>
+          <tr><td>Nano 4S</td><td>2023년</td><td>138·276</td><td>3.6·5.5GHz</td><td>300W</td></tr>
+          <tr><td>Nano 5</td><td>2024년</td><td>128·256</td><td>3.8·7.0GHz</td><td>240W</td></tr>
+          <tr><td>Nano 5S</td><td>2024년</td><td>152·304</td><td>3.7·7.5GHz</td><td>300W</td></tr>
+        </tbody>
+      </table>
+      <p>Nano 5의 7GHz대 최대클럭은 운영체제·데이터베이스의 직렬구간을 처리하는 선별코어 한두 개에만 적용된다. 128~152개의 코어가 동시에 해당 속도로 동작한다는 뜻이 아니며 장시간 전 코어 작업은 표의 지속클럭 부근에서 이루어진다.</p>
+    </section>
+    <section>
+      <title>이전 세대와의 변화</title>
+      <p>Nano 1·2는 큰 단일 입출력다이에 여러 코어칩렛을 붙였고 Nano 3은 메모리제어기를 분산했다. Nano 4는 고장난 칩렛을 작업중 격리하고 유동창을 다른 칩렛으로 옮길 수 있게 했으며, 4E는 코어수를 줄이고 메모리용량과 전력효율을 높인 기업형이었다.</p>
+      <p>Nano 5는 <ref href="doc:eZ1BTwra524rUJ6cL7vApA">NW2B</ref> 고성능 코어와 성숙공정의 캐시·입출력다이를 혼합한다. PF-R 냉각을 선택한 데이터센터는 더 높은 지속전력을 사용할 수 있지만 일반 수랭구성도 공식 지원된다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>Nano는 TML 내부 데이터센터에서 장기간 운용되어 대외공개 시점에는 이미 성숙한 서버생태계를 갖고 있었다. 반면 K-Bridge로 변환한 상용 서버프로그램은 K128 유동창을 충분히 활용하지 못해 초기 해외평가에서 제품간 편차가 컸다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>Nano 3의 일부 내부 사양표에는 최대클럭이 기본클럭보다 낮게 기록된 오류가 있었다. 실제 규격은 기본 3.0GHz·최대 3.8GHz였으며 오류는 대외공개 전에 고쳐졌으나 유출자료를 통해 오래 회자되었다.</p>
+    </section>
+  </body>
+</document>

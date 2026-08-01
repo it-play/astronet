@@ -1,0 +1,33 @@
+<document id="80ql5gKPFFh336LN41xlsg">
+  <title>HCC·LANS 확장 명령체계</title>
+  <aliases><alias>HCC</alias><alias>HCC+</alias><alias>LANS</alias><alias>ALANS</alias><alias>DLANS</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>HCC·LANS</strong>는 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref> 위에서 CPU·GPU·NPU와 원격 연산타일을 하나의 자료흐름으로 다루기 위한 표준 확장이다. HCC는 장치간 메모리와 작업발행을, LANS는 타일 사이의 경로예약과 지연시간을 관리한다.</p>
+      <p>두 확장은 독립적으로 사용할 수 있으나 H.O.S의 서버와 고성능 그래픽 제품은 대체로 함께 구현한다. 이 조합 덕분에 가속기에 작업을 보낸 뒤 CPU가 결과를 복사해 오는 전통적인 절차를 줄이고 동일한 확정경계 안에서 여러 장치가 결과를 교환할 수 있다.</p>
+    </section>
+    <section>
+      <title>HCC</title>
+      <p>HCC는 Heterogeneous Coherent Compute의 약자이다. HSPAWN은 가속기 유동창을 생성하고, HMAP은 가상주소 범위를 장치에 매핑하며, HREDUCE는 여러 장치의 결과를 하나의 토큰으로 축약한다. HFENCE는 장치간 메모리효과가 모두 보일 때까지 확정을 지연한다.</p>
+      <p>HCC+는 2022년 도입된 확장규격으로 보안영역, 페이지 결함의 공동처리와 장치간 선점기능을 추가했다. 가속기가 CPU와 같은 주소공간을 사용하더라도 권한과 오류전파는 장치별로 분리된다.</p>
+    </section>
+    <section>
+      <title>LANS</title>
+      <p>LANS는 Latency-Aware Network Scheduling의 약자이다. LRESERVE로 필요한 대역폭과 최대지연을 예약하고, LSEND·LWAIT로 토큰을 전송하거나 도착을 기다리며, LMIGRATE로 실행중인 유동창을 다른 타일에 옮긴다.</p>
+      <table>
+        <thead><tr><th>규격</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td>LANS</td><td>단일 패키지 안의 기본 경로예약과 혼잡제어</td></tr>
+          <tr><td>ALANS</td><td>부하와 온도에 따라 경로와 실행위치를 자동 변경하는 적응형 규격</td></tr>
+          <tr><td>DLANS</td><td>실시간·산업제어용으로 최악지연을 보장하는 결정론 규격</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>한계</title>
+      <p>장치가 많아질수록 경로예약표와 일관성 트래픽이 커지며, HCC를 지원하지 않는 외부 가속기는 일반 PCIe 장치처럼 취급해야 한다. DLANS의 지연보장은 예약하지 않은 작업의 처리량을 낮출 수 있어 소비자제품에서는 기본적으로 꺼져 있다.</p>
+    </section>
+  </body>
+</document>

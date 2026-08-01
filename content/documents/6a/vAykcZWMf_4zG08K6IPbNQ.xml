@@ -1,0 +1,47 @@
+<document id="vAykcZWMf_4zG08K6IPbNQ">
+  <title>PulseDrive 전력·클럭 제어</title>
+  <aliases><alias>PulseDrive</alias><alias>펄스드라이브</alias><alias>H.O.S 고클럭 플랫폼</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>PulseDrive</strong>는 H.O.S 프로세서의 전력공급, 전압변환과 부스트클럭을 통합 관리하는 기술이다. 제품표에 기재되는 최대 7~8GHz는 모든 코어가 계속 동작하는 속도가 아니라 전류·온도와 작업지연 조건을 만족할 때 소수의 고성능 코어에 짧게 적용되는 부스트 상한이다.</p>
+      <p>2026년 상용제품의 공식 최고치는 7.8GHz이다. 일반 냉각과 장시간 전 코어 작업에서는 제품에 따라 3.2~5.6GHz 부근으로 낮아지며, 대형 서버제품은 코어수가 많아 순간최고클럭도 소비자용 고클럭 제품보다 낮다.</p>
+    </section>
+    <section>
+      <title>전력경로</title>
+      <p>서버 트레이는 48V, 소비자 보드는 12V를 입력받는다. 패키지 가장자리의 스위치드커패시터 변환기가 이를 중간전압으로 낮추고, 칩렛별 다상 집적전압조정기가 코어에 필요한 약 0.55~1.05V를 공급한다. 부스트 순간에는 선별된 코어만 최대 약 1.30V까지 올라가며 지속적인 고전압 동작은 허용하지 않는다.</p>
+      <p><ref href="doc:eZ1BTwra524rUJ6cL7vApA">NanoWeave</ref>의 후면 전력망과 <ref href="doc:S-J2WrNTW9t95Pr1rjqolw">GlassLink</ref>의 낮은 인덕턴스 배선, 패키지 안의 박막 축전기가 급격한 전류변화 때 전압이 꺼지는 현상을 줄인다. 48V라는 수치는 코어전압이 아니라 랙의 배전전압이다.</p>
+    </section>
+    <section>
+      <title>부스트 제어</title>
+      <table>
+        <thead><tr><th>단계</th><th>동작</th></tr></thead>
+        <tbody>
+          <tr><td>예측</td><td>작업의 임계경로와 필요한 유동창을 골라 고클럭 효과가 큰 코어를 정한다.</td></tr>
+          <tr><td>예약</td><td>전압조정기·캐시·냉각계통에서 사용할 전류와 열 여유를 미리 확보한다.</td></tr>
+          <tr><td>점화</td><td>한두 코어의 전압과 클럭을 단계적으로 올려 최대 7.8GHz까지 진입한다.</td></tr>
+          <tr><td>회수</td><td>누적에너지, 접합온도나 전압강하가 한계에 닿기 전에 기본영역으로 복귀한다.</td></tr>
+        </tbody>
+      </table>
+      <p>제어기는 순간온도만 보지 않고 수 초간의 누적에너지와 패키지 각 부분의 온도기울기를 계산한다. 따라서 가벼운 단일스레드 작업은 여러 차례 최고부스트에 진입할 수 있지만 렌더링·과학계산처럼 모든 코어를 쓰는 작업에서는 낮고 안정된 클럭을 택한다.</p>
+    </section>
+    <section>
+      <title>적용</title>
+      <table>
+        <thead><tr><th>제품군</th><th>최대부스트</th><th>운용성격</th></tr></thead>
+        <tbody>
+          <tr><td><ref href="doc:C679Hm7eJXl81-Bu5MTpQQ">A3 5000번대</ref></td><td>최대 7.2GHz</td><td>고성능 소비자·워크스테이션</td></tr>
+          <tr><td><ref href="doc:3QaVS6CAeKYjV6LZ8LXVeQ">N1 Arcron</ref></td><td>최대 7.8GHz</td><td>선별다이와 규격냉각 사용시 한두 코어 단기부스트</td></tr>
+          <tr><td><ref href="doc:9nmnFkkSHvefIb67zVRh3g">Automaton 9000번대</ref></td><td>최대 5.5GHz</td><td>코어수와 지속처리량 우선</td></tr>
+          <tr><td><ref href="doc:mxmjJXvSITi0y_1knJJpng">Nano 5</ref></td><td>최대 7.5GHz</td><td>서버 관리스레드용 소수코어 부스트</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>한계와 논란</title>
+      <p>최대클럭은 정해진 냉각기와 전원설정에서 측정한 상한이므로 실제 완제품에서 항상 재현되지 않는다. 초기 광고가 7GHz대 수치를 전면에 내세워 전 코어 지속성능으로 오해하게 했다는 비판이 있었고 H.O.S는 2024년부터 최대부스트 코어수와 지속전력범위를 함께 표기한다.</p>
+      <p>장기간 높은 전압을 인가하면 트랜지스터와 배선의 열화가 빨라진다. PulseDrive는 누적 고전압 시간을 수명모델에 반영하며 사용자가 안전제한을 해제한 경우 보증범위를 축소한다.</p>
+    </section>
+  </body>
+</document>

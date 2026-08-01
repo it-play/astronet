@@ -1,0 +1,42 @@
+<document id="9nmnFkkSHvefIb67zVRh3g">
+  <title>Automaton/9000번대</title>
+  <aliases><alias>H.O.S Automaton 9000 시리즈</alias><alias>Automaton 9000번대</alias><alias>Automata9</alias><alias>오토마톤 9000</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Automaton/9000번대</strong>는 2023년 H.O.S가 출시한 대형 워크스테이션·고성능 서버용 K64 CPU 제품군이다. 64~136개의 물리코어와 많은 메모리채널을 하나의 패키지에 구성하며 내장그래픽을 생략하고 지속적인 병렬처리량에 집중했다.</p>
+      <p>제품명은 자동기계를 뜻하는 Automaton에서 왔다. ‘9000번대’는 9500·9700·9900·9900X의 상품군을 뜻하며 9000개의 코어나 9세대 K-Flow를 의미하지 않는다.</p>
+    </section>
+    <section>
+      <title>제품</title>
+      <table>
+        <thead><tr><th>제품</th><th>코어·스레드</th><th>전 코어 기준클럭</th><th>소수코어 최대부스트</th><th>전력등급</th></tr></thead>
+        <tbody>
+          <tr><td>Automaton 9500</td><td>64·128</td><td>3.2GHz</td><td>4.8GHz</td><td>180W</td></tr>
+          <tr><td>Automaton 9700</td><td>96·192</td><td>3.1GHz</td><td>5.0GHz</td><td>285W</td></tr>
+          <tr><td>Automaton 9900</td><td>128·256</td><td>3.0GHz</td><td>5.1GHz</td><td>320W</td></tr>
+          <tr><td>Automaton 9900X</td><td>136·272</td><td>3.2GHz</td><td>5.5GHz</td><td>360W</td></tr>
+        </tbody>
+      </table>
+      <p>표의 전 코어 기준클럭은 규격 냉각에서 장시간 정수·벡터혼합 작업을 수행할 때의 목표치이다. 실제 클럭은 메모리트래픽과 가속기 사용량에 따라 달라지며 5GHz대 부스트는 일부 관리·직렬구간에만 적용된다.</p>
+    </section>
+    <section>
+      <title>A3와의 차이</title>
+      <p><ref href="doc:C679Hm7eJXl81-Bu5MTpQQ">A3</ref>가 강한 소수코어 성능과 내장그래픽을 갖춘 범용제품이라면 Automaton은 코어칩렛 여덟 개 이상과 대형 입출력·캐시타일을 사용한다. <ref href="doc:80ql5gKPFFh336LN41xlsg">LANS</ref> 경로를 이중화해 한 칩렛이 정지해도 나머지 패키지가 축소된 상태로 작업을 계속할 수 있다.</p>
+      <p>가상화 관리엔진은 게스트의 유동창과 입출력토큰을 별도로 추적한다. 이 엔진은 일반 명령을 실행하는 ‘가상화 코어’가 아니며 제품의 물리코어 수에 포함되지 않는다.</p>
+    </section>
+    <section>
+      <title>패키징과 냉각</title>
+      <p>2023년 초도형은 실리콘 브리지와 유기기판을 사용했다. 2024년 갱신형은 <ref href="doc:S-J2WrNTW9t95Pr1rjqolw">GlassLink GL2</ref> 기판을 선택할 수 있게 되어 HBM과 입출력칩렛 배치를 넓혔다. 9500은 대형 공랭·PF-A 수랭도 지원하지만 9900X의 지속성능을 내려면 <ref href="doc:JJl5FcJUQO_PbNPGcNbLJQ">PF-D</ref>가 권장된다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>코어수에 비해 전력효율과 장애격리 능력이 높아 렌더팜·과학계산·가상화 시장에서 주목받았다. 반면 단일스레드 소프트웨어와 K-Bridge 위의 구형 데이터베이스에서는 A3 5000보다 느린 경우가 있었고 대형 패키지의 가격과 공급량도 한계였다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>개발등록명은 ‘Automata9’였으나 복수형처럼 읽히고 세대번호와 혼동된다는 지적에 따라 출시명은 Automaton/9000번대로 정리되었다. 초기 펌웨어와 시제품 덮개에는 Automata9 표기가 남아 있다.</p>
+    </section>
+  </body>
+</document>

@@ -1,0 +1,37 @@
+<document id="tp6rGHqKQfht8yyRyXm1pg">
+  <title>H.O.S 그래픽 연산 아키텍처</title>
+  <aliases><alias>H.O.S GPU 아키텍처</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>H.O.S 그래픽 연산 아키텍처</strong>는 H.O.S GPU에서 사용된 Function·EOX·Pie·Sigma·MEGA·EOX-2와 AGC 계열을 통칭한다. 세대가 바뀔 때마다 이름을 하나씩 교체한 단일계보가 아니라 표시·소비자 그래픽·범용연산에 맞춰 갈라진 여러 설계계통이다.</p>
+      <p>2020년 이후 설계는 <ref href="doc:80ql5gKPFFh336LN41xlsg">HCC</ref>를 통해 CPU의 <ref href="doc:B-dT-FarcUpPgzcwMSQFaQ">K-Flow</ref> 유동창과 자료토큰을 공유한다. GPU 내부의 실행은 대규모 데이터흐름 방식이지만 범용 CPU와 같은 분기·예외 모델을 그대로 사용하지는 않는다.</p>
+    </section>
+    <section>
+      <title>계통</title>
+      <table>
+        <thead><tr><th>계통</th><th>성격</th><th>대표 제품군</th></tr></thead>
+        <tbody>
+          <tr><td>Function</td><td>고정기능 표시·래스터 처리 중심의 초기구조</td><td><ref href="doc:67nJ3pMP9bJkgcmStNrELQ">Top·Middel·Under 초기형</ref></td></tr>
+          <tr><td>EOX</td><td>통합 셰이더와 기본 범용연산을 도입한 구조</td><td>후기 Top·Middel·Under</td></tr>
+          <tr><td>Pie</td><td>작은 타일과 낮은 메모리대역폭에 최적화한 소비자 구조</td><td><ref href="doc:ojBmZ4KYMXK_LJ9rkUwIYQ">초기 GC</ref></td></tr>
+          <tr><td>Sigma</td><td>그래픽과 범용벡터연산의 균형을 맞춘 확장구조</td><td>GC·BC·PC</td></tr>
+          <tr><td>MEGA</td><td>행렬엔진과 광선교차검사를 추가한 고성능 구조</td><td>GC·BC·PC 후기형</td></tr>
+          <tr><td>EOX-2</td><td>작업별 전원차단과 가상화에 초점을 둔 재설계</td><td>기업·전문가용 후기형</td></tr>
+          <tr><td>AGC</td><td>표시·영상·색관리와 저전력 제작작업 특화</td><td><ref href="doc:ngq8-nXXGXvQ5ldNNI0MCg">PhotoGraphics</ref></td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>실행단위</title>
+      <p>Sigma 이후의 기본단위는 32개의 스칼라 경로와 공유 벡터·행렬장치를 가진 ‘편성단’이다. 하나의 작업묶음 안에서 분기가 갈리면 술어토큰으로 경로를 끄고 켜며, 장시간 갈라지는 경로는 별도 편성단으로 나눈다. MEGA는 편성단 네 개마다 행렬누산기와 광선교차장치를 하나씩 둔다.</p>
+      <p>이 구조는 같은 명령을 수천 스레드가 반복하는 전통적인 SIMT와 유사하지만 작업의 경로와 자료도착을 ORO 형식으로 기록한다는 차이가 있다. H.O.S는 이를 ‘편성자료흐름’이라 부른다.</p>
+    </section>
+    <section>
+      <title>한계와 여담</title>
+      <p>MEGA는 행렬연산과 광선추적에서 높은 처리량을 내지만 편성단의 자원배분이 복잡해 드라이버 품질에 민감하다. EOX-2는 이를 단순화하고 전력효율을 높였으나 순수한 최대연산량은 같은 면적의 MEGA보다 낮다.</p>
+      <p>Pie라는 이름은 원형 타일배치에서, Sigma는 여러 경로의 합산기호에서 유래했다. MEGA는 약자가 아니라 개발팀이 사용하던 과장된 별칭이 정식명칭으로 굳어진 사례이다.</p>
+    </section>
+  </body>
+</document>

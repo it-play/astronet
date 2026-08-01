@@ -1,0 +1,48 @@
+<document id="jFiXMBMM-ULMzUo7I_HZrQ">
+  <title>ORO 명령어 집합</title>
+  <aliases><alias>ORO</alias><alias>Operation Route Object</alias><alias>연산경로기록</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>ORO</strong>는 <ref href="doc:B-dT-FarcUpPgzcwMSQFaQ">K-Flow 실행 아키텍처</ref>의 기본 명령어 집합이다. 명칭은 Operation Route Object의 약자로, 하나의 명령이 연산부호만 담는 것이 아니라 입력토큰, 결과의 목적지, 실행조건과 확정방식을 함께 기록한다는 뜻이다.</p>
+      <p>일반적인 기계어처럼 명령을 한 줄씩 해석할 수도 있으나 성능을 내려면 여러 ORO 기록을 유동묶음으로 구성해야 한다. 유동묶음의 헤더에는 경로표와 예외영역이, 본문에는 연산기록이, 끝에는 외부효과를 확정하는 기록이 들어간다.</p>
+    </section>
+    <section>
+      <title>주요 기록</title>
+      <table>
+        <thead><tr><th>기록</th><th>기능</th></tr></thead>
+        <tbody>
+          <tr><td>ROUTE</td><td>생산자의 결과토큰을 하나 이상의 소비자 입력포트에 연결한다.</td></tr>
+          <tr><td>FIRE</td><td>필요한 토큰과 술어가 준비된 유동묶음을 실행가능 상태로 바꾼다.</td></tr>
+          <tr><td>GUARD</td><td>분기조건, 권한과 예외영역을 하나의 술어토큰에 묶는다.</td></tr>
+          <tr><td>STREAM</td><td>반복되는 메모리 주소와 전송간격을 기술해 선행가져오기를 시작한다.</td></tr>
+          <tr><td>FORK·JOIN</td><td>토큰을 여러 경로로 나누거나 병렬경로의 완료를 다시 합친다.</td></tr>
+          <tr><td>COMMIT</td><td>메모리 쓰기와 입출력처럼 외부에 보이는 효과를 순서대로 확정한다.</td></tr>
+          <tr><td>MIGRATE</td><td>유동창의 토큰과 상태를 다른 코어·타일로 이동한다.</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>세대</title>
+      <table>
+        <thead><tr><th>세대</th><th>도입</th><th>변화</th></tr></thead>
+        <tbody>
+          <tr><td>ORO1</td><td>2014년</td><td>정수·기본 술어와 단일 유동창을 규격화했다.</td></tr>
+          <tr><td>ORO2</td><td>2016년</td><td>확정경계, 가상메모리와 다중 유동창을 추가했다.</td></tr>
+          <tr><td>ORO3</td><td>2020년</td><td>타일간 이동, 벡터기록과 트랜잭션 메모리를 정식화했다.</td></tr>
+          <tr><td>ORO4</td><td>2023년</td><td>보안영역, 압축경로표와 CPU·GPU·NPU 공동 유동묶음을 도입했다.</td></tr>
+        </tbody>
+      </table>
+      <p>ORO4 프로세서는 ORO3 이진파일을 직접 실행한다. ORO1·2는 운영체제와 메모리모델의 차이가 커서 대부분 재컴파일하거나 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>의 구형 실행환경을 사용한다.</p>
+    </section>
+    <section>
+      <title>표준 확장</title>
+      <p>OROS는 권한·가상화·보안영역, OTC는 순서화된 트랜잭션 일관성, PTMD는 술어형 트랜잭션 메모리 발행을 담당한다. MEGA+는 행렬·벡터연산, CCA3는 암호연산과 기밀컴퓨팅을 위한 확장이다. 이 가운데 이기종 연산과 칩간 통신은 별도의 <ref href="doc:80ql5gKPFFh336LN41xlsg">HCC·LANS 확장 명령체계</ref>로 관리된다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>ORO는 같은 연산을 적은 제어전력으로 반복하는 데 강하지만 컴파일 결과가 하드웨어 구조를 노골적으로 드러낸다. 세대가 다른 프로세서에서는 같은 원시코드라도 최적의 유동묶음이 달라지며, 수작업 어셈블리의 유지보수가 어렵다는 점이 개발자 사이에서 자주 지적된다.</p>
+    </section>
+  </body>
+</document>

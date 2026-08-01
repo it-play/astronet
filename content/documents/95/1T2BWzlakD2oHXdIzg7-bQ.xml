@@ -1,0 +1,38 @@
+<document id="1T2BWzlakD2oHXdIzg7-bQ">
+  <title>H.O.S Ion 시리즈</title>
+  <aliases><alias>Ion 시리즈</alias><alias>H.O.S Ion</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Ion 시리즈</strong>는 2016~2017년 H.O.S가 공급한 보급형·주류 소비자 CPU이다. <ref href="doc:efqlddQqL4UMXuBHFQNp6A">Sky</ref>의 K32 기반을 유지하면서 동시다중스레드, ORO2 확정경계와 Graphics 200 계열 내장그래픽을 도입했다.</p>
+      <p>100·200·300·400번대로 코어수를 구분하고 S·L·FE 접미사로 성능과 소비전력을 나누는 비교적 단순한 체계를 사용했다. 이 체계는 이후 A 계열의 숫자·접미사 상품명에 직접적인 영향을 주었다.</p>
+    </section>
+    <section>
+      <title>대표제품</title>
+      <table>
+        <thead><tr><th>제품</th><th>코어·스레드</th><th>기본·최대클럭</th><th>전력등급</th><th>성격</th></tr></thead>
+        <tbody>
+          <tr><td>Ion 100</td><td>1·2</td><td>1.27·1.30GHz</td><td>35W</td><td>저가 단말</td></tr>
+          <tr><td>Ion 300</td><td>4·8</td><td>1.49·1.60GHz</td><td>60W</td><td>주류 가정용</td></tr>
+          <tr><td>Ion 300L</td><td>4·8</td><td>1.10·1.13GHz</td><td>30W</td><td>저전력 일체형</td></tr>
+          <tr><td>Ion 400S</td><td>6·12</td><td>1.65·1.79GHz</td><td>90W</td><td>상위형</td></tr>
+          <tr><td>Ion 499</td><td>8·16</td><td>1.78·1.90GHz</td><td>110W</td><td>최종 기념형</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>Sky와의 차이</title>
+      <p>Sky가 프로그램별 정적경로표에 크게 의존했다면 Ion은 실행중 경로충돌을 완화하는 작은 보조스케줄러를 넣었다. 완전한 동적 재정렬기는 아니었지만 분기실패 뒤 유동창 전체를 버리는 경우가 줄어 체감성능과 안정성이 개선되었다.</p>
+      <p>또한 ORO2의 확정경계를 사용해 운영체제와 응용프로그램의 오류영역을 분리했다. 이 기능은 당시 확대되던 인터넷 사용환경에서 브라우저나 플러그인의 오류가 시스템 전체를 멈추는 문제를 줄였다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>Ion은 절대성능보다 낮은 가격과 많은 코어로 보급에 성공했다. 다만 400번대는 작은 K32 유동창에 비해 코어가 많아 메모리 병목이 심했고, 고전력 S형은 냉각소음으로 악명이 높았다. 2018년 <ref href="doc:sUOKEhn8hRfZnVSjitnA8w">A1 시리즈</ref>가 출시되면서 주력자리를 넘겼다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>Ion 499는 정식 세대교체 직전 남은 양품다이를 선별해 만든 제품이다. 숫자 500을 쓰지 않은 것은 개발진이 “K32로는 완성된 500을 만들 수 없다”고 반대한 데서 비롯되었다고 알려져 있다.</p>
+    </section>
+  </body>
+</document>

@@ -10,9 +10,19 @@
     </section>
     <section>
       <title>사업</title>
-      <p>파운드리와 메모리 생산을 함께 운영해 공정개발, 첨단 패키징과 고대역폭 메모리를 하나의 공급체계로 제공한다. <ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref>의 CPU·GPU·NPU가 대표적인 그룹 내부 고객이며 해외 팹리스의 주문도 받는다.</p>
+      <p>파운드리와 메모리 생산을 함께 운영해 공정개발, 첨단 패키징, HBM·DDR·GDDR 메모리를 하나의 공급체계로 제공한다. <ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref>의 CPU·GPU·NPU가 대표적인 그룹 내부 고객이며 해외 팹리스의 주문도 받는다.</p>
       <p>2022년 하반기 <ref href="doc:cdrm-Ch_9Ro9tQri3l_zCg">북한발 반도체 성능쇼크</ref>를 통해 H.O.S의 성능뿐 아니라 이를 뒷받침한 TML 메모리의 파운드리·HBM·첨단 패키징 통합능력도 국제 경쟁의 대상으로 떠올랐다.</p>
       <p><ref href="doc:sUTEEDeLP3s2L5g0scpN4w">Stella</ref>의 반도체 장비와 그룹 연구조직을 활용하는 수직계열화가 빠른 기술발전을 뒷받침했다. 동시에 장비·설계·생산의 내부거래가 실제 경쟁력을 과장한다는 비판과 국제 공급망이 한 그룹에 의존한다는 우려도 제기된다.</p>
+    </section>
+    <section>
+      <title>논리공정</title>
+      <p><ref href="doc:eZ1BTwra524rUJ6cL7vApA">NanoWeave Process Platform</ref>은 TML 메모리의 고성능 논리공정이다. NW3에서 나노시트 GAAFET을 양산했고 NW2B부터 후면 전력공급망을 도입했다. CFET·2차원 채널을 시험하는 NW-X는 2026년에도 연구·파일럿 단계이며 주력제품에 일괄 적용되지 않는다.</p>
+      <p>H.O.S는 이 공정의 대표 설계고객이지만 수율, 생산규칙과 웨이퍼 공급은 TML 메모리가 책임진다. 고클럭 코어칩렛은 최신공정으로, 입출력·캐시다이는 비용과 수율이 안정된 이전공정으로 만드는 혼합구성이 일반적이다.</p>
+    </section>
+    <section>
+      <title>패키징</title>
+      <p><ref href="doc:S-J2WrNTW9t95Pr1rjqolw">GlassLink Platform</ref>은 초박형 웨이퍼 운반체와 관통유리전극을 가진 유리핵 기판을 제공한다. 트랜지스터를 유리 위에 만드는 기술이 아니라 칩렛과 HBM을 낮은 뒤틀림과 짧은 배선으로 연결하는 후공정이다.</p>
+      <p>고밀도 서버패키지는 <ref href="doc:JJl5FcJUQO_PbNPGcNbLJQ">PhaseFlow</ref>용 냉각덮개를 함께 접합할 수 있다. TML 메모리는 패키지 접합과 누설검사를 맡고 H.O.S는 온도·전력 제어펌웨어를 제공한다.</p>
     </section>
   </body>
 </document>

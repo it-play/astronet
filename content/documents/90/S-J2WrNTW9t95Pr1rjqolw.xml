@@ -1,0 +1,34 @@
+<document id="S-J2WrNTW9t95Pr1rjqolw">
+  <title>TML GlassLink Platform(유리 웨이퍼·패키지)</title>
+  <aliases><alias>GlassLink</alias><alias>글래스링크</alias><alias>TML 유리핵 패키지 기판</alias><alias>TML 유리 웨이퍼 기술</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>GlassLink Platform</strong>은 <ref href="doc:SZi9IUErjDfuVjjaNsxTLw">TML 메모리</ref>가 사용하는 반도체용 유리 웨이퍼·유리핵 패키지 기술군이다. ‘유리 웨이퍼’라는 통칭과 달리 상용제품의 트랜지스터를 유리 위에 형성하지 않는다. 유리는 얇아진 실리콘 웨이퍼를 지지하는 운반체와 칩렛을 연결하는 패키지 기판·중간연결층으로 쓰인다.</p>
+      <p>실리콘보다 큰 패키지에서 평탄도를 유지하기 쉽고 열팽창계수를 조정할 수 있어 CPU·GPU 칩렛과 HBM을 넓은 면적에 배치하는 데 유리하다. <ref href="doc:eZ1BTwra524rUJ6cL7vApA">NanoWeave</ref>의 후면전력 작업과 대형 서버패키지를 잇는 핵심 후공정으로 평가된다.</p>
+    </section>
+    <section>
+      <title>구성</title>
+      <table>
+        <thead><tr><th>기술</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td>유리 운반웨이퍼</td><td>후면을 극박화한 실리콘 웨이퍼를 임시접합해 연마·관통전극 공정 중 변형을 막는다.</td></tr>
+          <tr><td>유리핵 기판</td><td>대형 패키지의 골격으로 사용해 휨을 줄이고 전력·신호 배선층을 지지한다.</td></tr>
+          <tr><td>관통유리전극</td><td>레이저로 만든 미세구멍을 구리로 채워 기판 앞뒤를 짧게 연결한다.</td></tr>
+          <tr><td>유리 중간연결층</td><td>칩렛·HBM 사이의 고밀도 신호와 클럭을 배선한다.</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>제조</title>
+      <p><ref href="doc:sUTEEDeLP3s2L5g0scpN4w">Stella</ref>의 레이저 개질장비가 유리 내부에 절단선과 비아 시작점을 만들고 선택식각으로 구멍을 연다. 이후 장벽막·시드층을 입히고 구리를 채운 뒤 양면 재배선층을 형성한다. 조성별 열팽창계수와 응력을 맞추는 공정조건은 TML 메모리가 관리한다.</p>
+      <p>GlassLink GL1은 2022년 후면공정 운반웨이퍼로 먼저 쓰였고, 영구 유리핵 기판인 GL2는 2024년 <ref href="doc:mxmjJXvSITi0y_1knJJpng">Nano</ref>와 대형 가속기 패키지에 제한적으로 양산되었다. 소비자용 소형패키지는 비용 때문에 유기기판을 계속 사용한다.</p>
+    </section>
+    <section>
+      <title>장점과 한계</title>
+      <p>낮은 뒤틀림과 미세배선, 큰 기판면적은 칩렛 수와 메모리채널을 늘리고 전력경로의 인덕턴스를 줄인다. 반면 유리는 충격에 취약하고 관통전극의 구리와 유리 사이 응력이 누적되기 쉽다. 미세균열이 검사단계에서 발견되지 않으면 열순환 뒤 고장으로 이어질 수 있어 검사비가 높다.</p>
+      <p>대형 유리기판의 수리와 재활용도 과제로 남아 있다. H.O.S는 2025년부터 고가 서버패키지에 교체가능한 칩렛을 늘렸지만 유리핵 자체에 균열이 생기면 패키지 전체를 폐기해야 한다.</p>
+    </section>
+  </body>
+</document>

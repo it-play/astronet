@@ -1,0 +1,37 @@
+<document id="JJl5FcJUQO_PbNPGcNbLJQ">
+  <title>PhaseFlow Cooling Platform(냉각 플랫폼)</title>
+  <aliases><alias>PhaseFlow</alias><alias>페이즈플로 냉각</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>PhaseFlow Cooling Platform</strong>은 H.O.S 프로세서와 TML 메모리의 고밀도 패키지를 위한 냉각규격이다. 하나의 특수 냉각장치를 뜻하지 않고 일반 완제품용 증기챔버, 워크스테이션용 직접다이 수랭과 서버용 미세유로 2상 냉각을 공통 센서·제어규격으로 묶은 체계이다.</p>
+      <p><ref href="doc:PhlJ2Cfki6jsOzvSojEZ-g">TML 종합기술연구소</ref>가 열유동과 재료를 연구하고 H.O.S가 프로세서 제어기를, TML 메모리가 냉각덮개와 패키지 접합을 담당한다. <ref href="doc:vAykcZWMf_4zG08K6IPbNQ">PulseDrive</ref>는 PhaseFlow 제어기가 보고하는 열 여유 안에서만 고클럭 부스트를 허용한다.</p>
+    </section>
+    <section>
+      <title>등급</title>
+      <table>
+        <thead><tr><th>등급</th><th>방식</th><th>주요 적용</th></tr></thead>
+        <tbody>
+          <tr><td>PF-A</td><td>대형 증기챔버와 히트파이프 또는 폐회로 일체형 수랭</td><td>노트북·데스크톱·저전력 워크스테이션</td></tr>
+          <tr><td>PF-D</td><td>히트스프레더를 줄인 직접다이 콜드플레이트와 이중펌프</td><td>A3 상위형·Automaton 워크스테이션</td></tr>
+          <tr><td>PF-R</td><td>패키지 위 실리콘 냉각덮개의 미세유로와 2상 냉매순환</td><td>Nano·가속기 서버랙과 검증장비</td></tr>
+        </tbody>
+      </table>
+      <p>PF-R의 미세유로는 트랜지스터가 형성된 활성실리콘을 직접 파내지 않고 별도로 접합한 실리콘 덮개에 만든다. 끓는점 부근에서 액체가 기화하며 국부열을 가져가고 랙의 응축기에서 다시 액체로 돌아온다.</p>
+    </section>
+    <section>
+      <title>제어와 안전</title>
+      <p>패키지에는 온도·압력·유량·누설센서가 이중화되어 있다. 유량이 떨어지면 먼저 부스트를 차단하고, 회복되지 않으면 유동창을 다른 칩렛으로 이동한 뒤 해당 다이를 정지한다. 랙은 냉매회로를 서버별로 격리해 한 모듈의 누설이 전체 배관으로 번지는 것을 막는다.</p>
+      <p>2상 냉각은 높은 열유속을 처리할 수 있으나 펌프·응축기와 정비교육이 필요하다. 일반 소비자 제품은 비용과 소음, 누설관리 때문에 PF-A를 사용하며 7GHz대 부스트를 위해 PF-R이 반드시 필요한 것은 아니다.</p>
+    </section>
+    <section>
+      <title>한계</title>
+      <p>미세유로의 침전물과 기포정체, 서로 다른 재료의 열팽창으로 생기는 접합피로가 장기신뢰성 문제이다. PF-R은 2024년부터 TML 데이터센터에 제한도입되었으며 2026년에도 현장교체 가능한 폐쇄형 모듈로만 외부에 공급된다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>PhaseFlow라는 이름은 PF-R에서 액체와 기체의 상변화를 제어한다는 뜻에서 붙었다. 실제 운전온도는 영하가 아니며 결로를 막기 위해 냉각수 온도를 주변 이슬점보다 높게 유지한다.</p>
+    </section>
+  </body>
+</document>

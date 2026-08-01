@@ -3,10 +3,38 @@
   <aliases><alias>H.O.S</alias><alias>HOS</alias></aliases>
   <body>
     <include-board ref="NMt_svl0AVCBFR3ZkL6Y3g"/>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
     <section>
       <title>개요</title>
-      <p><strong>H.O.S</strong>는 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>의 프로세서 설계·공급업체이다. <ref href="doc:tf7L7fe9Yu9o5tUN_oWXow">새천년 혁신 계획</ref>의 핵심 기업으로 CPU와 GPU를 생산해 왔으며 최근에는 NPU까지 제품군을 확대했다.</p>
+      <p><strong>H.O.S</strong>는 <ref href="doc:ZfGEEKUEa6L0BVqo4UlAAA">TML 그룹</ref>의 프로세서 설계·공급업체이다. <ref href="doc:tf7L7fe9Yu9o5tUN_oWXow">새천년 혁신 계획</ref>의 핵심 기업으로 CPU와 GPU를 설계·출시해 왔으며 최근에는 NPU까지 제품군을 확대했다.</p>
       <p>장기간 외부에 알려지지 않았던 북조선 반도체산업을 상징하는 회사이다. 개혁개방과 함께 제품이 세계시장에 공개되자 예상 밖의 성능으로 <ref href="doc:cdrm-Ch_9Ro9tQri3l_zCg">북한발 반도체 성능쇼크</ref>를 일으켰다.</p>
+    </section>
+    <section>
+      <title>역사</title>
+      <p>H.O.S의 전신은 2000년대 <ref href="doc:PhlJ2Cfki6jsOzvSojEZ-g">TML 종합기술연구소</ref>와 그룹 전자사업 안에서 운영되던 프로세서 설계조직이다. 2010년대 초 별도 계열사로 분리된 뒤 2014년 <ref href="doc:efqlddQqL4UMXuBHFQNp6A">Sky 시리즈</ref>를 내놓으며 소비자 CPU 사업에 진입했다.</p>
+      <p>2015~2017년에는 <ref href="doc:nrKAIwbuBXV2gO-VUrfVHw">P 실험계열</ref>, <ref href="doc:1T2BWzlakD2oHXdIzg7-bQ">Ion</ref>·<ref href="doc:GwfBC9B68A6V5-1OxIE8rQ">Fastcoll</ref>과 <ref href="doc:67nJ3pMP9bJkgcmStNrELQ">초기 GPU</ref>를 통해 독자 실행체계와 드라이버를 다듬었다. <ref href="doc:sUOKEhn8hRfZnVSjitnA8w">A1</ref>과 <ref href="doc:ksJ6iZ2EOzqonDVrzu1Apw">A2</ref>가 국내 주류시장을 장악한 뒤 서버용 <ref href="doc:mxmjJXvSITi0y_1knJJpng">Nano</ref>와 전문 GPU까지 사업을 넓혔다.</p>
+      <p>2022년 하반기 <ref href="doc:C679Hm7eJXl81-Bu5MTpQQ">A3 4000번대</ref>를 시작으로 제품사양과 개발도구를 해외에 공개했다. 2023년에는 A3 5000번대, <ref href="doc:9nmnFkkSHvefIb67zVRh3g">Automaton/9000번대</ref>와 <ref href="doc:3QaVS6CAeKYjV6LZ8LXVeQ">N1</ref>을 내놓고 해외판매조직을 확대했다.</p>
+    </section>
+    <section>
+      <title>제품군</title>
+      <table>
+        <thead><tr><th>부문</th><th>제품군</th><th>용도</th></tr></thead>
+        <tbody>
+          <tr><td>소비자 CPU</td><td>Sky·Ion·A1·A2·A3·N1</td><td>보급형 컴퓨터에서 고성능 데스크톱·워크스테이션까지 담당한다.</td></tr>
+          <tr><td>서버 CPU</td><td>Nano·Automaton 9000</td><td>고밀도 가상화, 과학계산과 대형 워크스테이션을 목표로 한다.</td></tr>
+          <tr><td>실험 CPU</td><td>P·Fastcoll</td><td>호환계층, 결정론 실행과 전력·클럭 기술을 검증했다.</td></tr>
+          <tr><td>소비자 GPU</td><td><ref href="doc:ojBmZ4KYMXK_LJ9rkUwIYQ">GC</ref></td><td>게임·렌더링과 범용연산을 함께 처리한다.</td></tr>
+          <tr><td>기업·전문 GPU</td><td><ref href="doc:43hYhTCANEDbI-s7_xvQ3A">BC</ref>·<ref href="doc:JuIIwXJIG3MIQZ1tq58Ysw">PC</ref></td><td>가상화·오류검출과 전문시각화를 중시한다.</td></tr>
+          <tr><td>표시·영상 GPU</td><td><ref href="doc:ngq8-nXXGXvQ5ldNNI0MCg">PhotoGraphics</ref></td><td>저전력 다중화면, 영상변환과 색관리를 담당한다.</td></tr>
+        </tbody>
+      </table>
+      <p>제품번호는 개별 지식으로 분리하지 않고 같은 실행구조와 시장을 공유하는 세대·시리즈 단위로 관리한다. 개별 모델의 코어수·전력등급·접미사는 해당 제품군 문서에서 확인할 수 있다.</p>
+    </section>
+    <section>
+      <title>실행체계</title>
+      <p>범용 CPU는 <ref href="doc:B-dT-FarcUpPgzcwMSQFaQ">K-Flow 실행 아키텍처</ref>와 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO 명령어 집합</ref>을 사용한다. 이는 전통적인 순차 명령흐름보다 자료의 의존성과 이동경로를 명시하는 구조이며 CPU·GPU·NPU의 공동작업은 <ref href="doc:80ql5gKPFFh336LN41xlsg">HCC·LANS</ref>가 담당한다.</p>
+      <p>기존 x86-64·AArch64 프로그램은 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>로 변환한다. 계산구간은 높은 성능을 낼 수 있지만 드라이버·자기수정코드·저수준 가상화에는 제약이 있어 해외시장 확대의 가장 큰 장벽으로 남아 있다.</p>
+      <p>GPU는 <ref href="doc:tp6rGHqKQfht8yyRyXm1pg">Function·EOX·Pie·Sigma·MEGA·EOX-2와 AGC</ref> 계통을 사용한다. CPU와 같은 HCC 주소공간을 공유하지만 내부 실행단위와 예외모델은 그래픽·행렬연산에 맞게 단순화되어 있다.</p>
     </section>
     <section>
       <title>대외 공개</title>
@@ -15,7 +43,13 @@
     </section>
     <section>
       <title>생산 생태계</title>
-      <p>칩 설계, 컴퓨팅 구조와 완제품의 사양·판매는 H.O.S가 담당하고 실제 웨이퍼 생산공정과 고대역폭 메모리 공급은 <ref href="doc:SZi9IUErjDfuVjjaNsxTLw">TML 메모리</ref>가 맡는다. 따라서 H.O.S가 프로세서를 생산한다는 표현은 제품의 설계·출시 주체라는 뜻이며 반도체 제조공정까지 직접 보유한다는 의미는 아니다. <ref href="doc:tU2RRPhwMUQJWRO6Bh8u9w">TML 전자</ref>의 노트북·스마트폰과 TML 데이터센터가 초기 대량수요를 제공했다.</p>
+      <p>칩 설계, 컴퓨팅 구조와 완제품의 사양·판매는 H.O.S가 담당하고 실제 웨이퍼 생산공정과 고대역폭 메모리 공급은 <ref href="doc:SZi9IUErjDfuVjjaNsxTLw">TML 메모리</ref>가 맡는다. 따라서 H.O.S가 프로세서를 생산한다는 표현은 제품의 설계·출시 주체라는 뜻이며 반도체 제조공정까지 직접 보유한다는 의미는 아니다.</p>
+      <p>TML 메모리의 <ref href="doc:eZ1BTwra524rUJ6cL7vApA">NanoWeave 공정</ref>과 <ref href="doc:S-J2WrNTW9t95Pr1rjqolw">GlassLink 패키징</ref>, H.O.S의 <ref href="doc:vAykcZWMf_4zG08K6IPbNQ">PulseDrive</ref>와 <ref href="doc:JJl5FcJUQO_PbNPGcNbLJQ">PhaseFlow</ref>가 하나의 플랫폼으로 검증된다. <ref href="doc:tU2RRPhwMUQJWRO6Bh8u9w">TML 전자</ref>의 노트북·스마트폰과 TML 데이터센터가 초기 대량수요를 제공했다.</p>
+    </section>
+    <section>
+      <title>성능과 클럭표기의 원칙</title>
+      <p>H.O.S의 상용 CPU 가운데 2026년 공식 최고부스트는 7.8GHz이다. 이는 N1 Arcron과 같은 선별제품에서 전류·열 여유가 있을 때 한두 코어가 짧게 도달하는 수치이며 대형 서버제품의 전 코어 지속클럭은 훨씬 낮다.</p>
+      <p>회사도 2024년부터 최대부스트와 함께 활성코어 수, 지속전력범위와 규격냉각을 표시한다. 성능우위는 클럭 하나가 아니라 실행체계, 캐시·메모리, 공정·패키징과 소프트웨어 최적화가 결합된 결과이다.</p>
     </section>
   </body>
 </document>

@@ -1,0 +1,49 @@
+<document id="C679Hm7eJXl81-Bu5MTpQQ">
+  <title>H.O.S A3 시리즈</title>
+  <aliases><alias>A3 시리즈</alias><alias>A3 4000번대</alias><alias>A3 5000번대</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>A3 시리즈</strong>는 2022~2023년 출시된 H.O.S의 고성능 소비자·워크스테이션 CPU이다. 4000번대는 <ref href="doc:eZ1BTwra524rUJ6cL7vApA">NanoWeave NW3</ref>와 개선된 K-Flow 스케줄러를, 5000번대는 ORO4·HCC+와 <ref href="doc:vAykcZWMf_4zG08K6IPbNQ">PulseDrive</ref>를 채택했다.</p>
+      <p>2022년 하반기 외부에 처음 상세가 공개된 H.O.S 주력제품이어서 <ref href="doc:cdrm-Ch_9Ro9tQri3l_zCg">북한발 반도체 성능쇼크</ref>의 대표적인 CPU로 꼽힌다. 높은 부스트클럭뿐 아니라 큰 캐시, 칩렛간 대역폭과 ORO에 맞춰 최적화된 소프트웨어가 성능에 함께 기여했다.</p>
+    </section>
+    <section>
+      <title>4000번대</title>
+      <table>
+        <thead><tr><th>대표제품</th><th>코어·스레드</th><th>기본·최대클럭</th><th>전력등급</th><th>성격</th></tr></thead>
+        <tbody>
+          <tr><td>A3 4200FE</td><td>6·12</td><td>3.3·5.4GHz</td><td>65W</td><td>보급형</td></tr>
+          <tr><td>A3 4500L</td><td>12·24</td><td>3.1·5.2GHz</td><td>45W</td><td>저전력형</td></tr>
+          <tr><td>A3 4700</td><td>20·40</td><td>3.7·6.3GHz</td><td>180W</td><td>주력형</td></tr>
+          <tr><td>A3 4750</td><td>20·40</td><td>3.9·6.5GHz</td><td>190W</td><td>2023년 갱신형</td></tr>
+          <tr><td>A3 4900H</td><td>30·60</td><td>3.6·6.6GHz</td><td>320W</td><td>고성능형</td></tr>
+        </tbody>
+      </table>
+      <p>4000번대는 <ref href="doc:ksJ6iZ2EOzqonDVrzu1Apw">A2</ref>보다 유동창 복구시간을 줄이고 코어칩렛마다 전압영역을 분리했다. HCC+의 일부 기능은 펌웨어로 제공했지만 완전한 ORO4 공동유동묶음은 지원하지 않았다.</p>
+    </section>
+    <section>
+      <title>5000번대</title>
+      <table>
+        <thead><tr><th>대표제품</th><th>코어·스레드</th><th>기본·최대클럭</th><th>전력등급</th><th>성격</th></tr></thead>
+        <tbody>
+          <tr><td>A3 5200C</td><td>18·36</td><td>3.4·5.7GHz</td><td>105W</td><td>소형 워크스테이션</td></tr>
+          <tr><td>A3 5700</td><td>28·56</td><td>3.7·6.6GHz</td><td>240W</td><td>주력 상위형</td></tr>
+          <tr><td>A3 5900C</td><td>28·56</td><td>3.5·6.4GHz</td><td>220W</td><td>지속성능형</td></tr>
+          <tr><td>A3 5900</td><td>28·56</td><td>3.9·7.0GHz</td><td>300W</td><td>고클럭형</td></tr>
+          <tr><td>A3 5950H</td><td>32·64</td><td>4.0·7.2GHz</td><td>360W</td><td>최상위 선별형</td></tr>
+        </tbody>
+      </table>
+      <p>5000번대의 7GHz대 수치는 한두 코어의 단기부스트이다. 전 코어 렌더링과 과학계산에서는 대체로 4GHz 안팎으로 동작하며 PF-D 직접다이 냉각을 사용해도 최고부스트를 전 코어에 적용할 수 없다.</p>
+    </section>
+    <section>
+      <title>기술적 특징</title>
+      <p>ORO4는 CPU·내장그래픽·NPU의 작업을 하나의 공동유동묶음으로 표현한다. 5000번대는 이전 세대의 고정된 내장그래픽 연결을 HCC+ 주소공간으로 바꾸고, 캐시일관성 트래픽을 전담하는 별도 관리타일을 추가했다.</p>
+      <p>외부 프로그램은 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>를 거쳐 실행할 수 있으나 네이티브 ORO4 프로그램과 같은 수준의 가속기 공동스케줄링은 제한된다.</p>
+    </section>
+    <section>
+      <title>평가와 여담</title>
+      <p>4000번대는 외부 검증을 견딘 첫 세대라는 상징성이 크고 5000번대는 실제 해외판매를 염두에 둔 첫 세대로 평가된다. 초기 A3 4750은 4700H의 갱신판이면서도 H 접미사를 떼어 유통망과 성능표에서 혼란을 일으켰다.</p>
+    </section>
+  </body>
+</document>

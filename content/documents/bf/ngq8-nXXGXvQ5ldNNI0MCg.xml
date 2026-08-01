@@ -1,0 +1,37 @@
+<document id="ngq8-nXXGXvQ5ldNNI0MCg">
+  <title>H.O.S PhotoGraphics 시리즈</title>
+  <aliases><alias>PhotoGraphics</alias><alias>PG 시리즈</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>PhotoGraphics 시리즈</strong>는 H.O.S의 저전력 표시·영상·사진처리용 GPU 계열이다. 15~30W 범위의 소형카드로 내장그래픽이 없는 업무용 시스템에 표시기능을 추가하거나 다수의 고해상도 화면과 영상변환을 처리하는 데 쓰인다.</p>
+      <p>게임성능보다 색관리, 영상부호화·복호화와 저전력 다중화면을 우선하며 AGC 계열 구조를 사용한다. 외장카드이지만 CPU의 Graphics 내장그래픽에서 발전한 고정기능 블록을 상당부분 공유한다.</p>
+    </section>
+    <section>
+      <title>세대</title>
+      <table>
+        <thead><tr><th>세대</th><th>대표제품</th><th>구조</th><th>메모리</th><th>최대전력</th></tr></thead>
+        <tbody>
+          <tr><td>1세대</td><td>PG-300</td><td>AGC-17</td><td>2GB</td><td>15W</td></tr>
+          <tr><td>2세대</td><td>PG-440·450·480</td><td>AGC-18</td><td>2~4GB</td><td>25~30W</td></tr>
+          <tr><td>2세대 갱신형</td><td>PG-520·580</td><td>AGC-18v2</td><td>4~6GB</td><td>25~30W</td></tr>
+          <tr><td>3세대</td><td>PG-620·640·660·680·690</td><td>AGC-22</td><td>4~8GB</td><td>20~30W</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>이전 세대와의 차이</title>
+      <p>AGC-17은 표시와 기본 영상변환에 집중했고 AGC-18은 색공간 변환과 다중영상 합성을 추가했다. AGC-18v2는 같은 기능을 낮은 전력으로 다시 설계했으며 AGC-22는 HCC 주소공간과 제한적인 범용연산을 지원한다.</p>
+      <p>AGC-22의 범용연산은 GC·BC·PC와 같은 대형 편성단이 아니라 영상필터와 신경망 후처리를 위한 작은 벡터블록이다. 제품의 ‘코어 수’를 다른 H.O.S GPU와 직접 비교할 수 없다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>저전력과 긴 공급기간 덕분에 방송모니터, 병원·관제시설과 디지털 안내판에 널리 쓰였다. 게임시장에서는 존재감이 적었지만 해외개방 뒤 다중화면 업무용 카드로 먼저 인증을 받은 H.O.S GPU이기도 하다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>PhotoGraphics는 사진전용 카드라는 이름과 달리 방송영상과 산업용 표시가 판매량의 대부분을 차지한다. H.O.S는 명칭변경을 검토했으나 이미 PG라는 약칭이 공공조달 규격에 굳어 유지했다.</p>
+    </section>
+  </body>
+</document>

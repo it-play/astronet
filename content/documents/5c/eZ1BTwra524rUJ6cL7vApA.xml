@@ -1,0 +1,39 @@
+<document id="eZ1BTwra524rUJ6cL7vApA">
+  <title>TML NanoWeave Process Platform(반도체 공정)</title>
+  <aliases><alias>NanoWeave</alias><alias>NanoWeave 공정</alias><alias>NW 공정</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>NanoWeave Process Platform</strong>은 <ref href="doc:SZi9IUErjDfuVjjaNsxTLw">TML 메모리</ref>가 개발·운영하는 고성능 논리반도체 공정군이다. H.O.S의 CPU·GPU·NPU가 대표 고객이지만 공정의 소유권과 웨이퍼 양산책임은 TML 메모리에 있다.</p>
+      <p>양산세대는 나노시트 GAAFET와 후면 전력공급망을 중심으로 한다. ‘3nm·2nm·1.4nm급’이라는 표기는 실제 게이트 길이가 아니라 집적도·전력·성능을 묶은 세대명이며, 서로 다른 회사의 노드명과 직접 같은 치수라는 뜻은 아니다.</p>
+    </section>
+    <section>
+      <title>세대</title>
+      <table>
+        <thead><tr><th>공정</th><th>상태</th><th>핵심 변화</th></tr></thead>
+        <tbody>
+          <tr><td>NW3</td><td>2022년 양산</td><td>나노시트 GAAFET, 전면 전력망과 1세대 고밀도 칩렛 접합</td></tr>
+          <tr><td>NW2B</td><td>2023년 말 양산</td><td>후면 전력공급, 매립전력선과 신호·전력 배선의 분리</td></tr>
+          <tr><td>NW14</td><td>2025년 제한양산</td><td>2세대 후면전력망, 더 촘촘한 직접접합과 고성능 코어다이 특화</td></tr>
+          <tr><td>NW-X</td><td>2026년 연구·파일럿</td><td>CFET 적층과 2차원 반도체 채널을 시험하는 비상용 계통</td></tr>
+        </tbody>
+      </table>
+      <p>NW14는 수율과 비용 때문에 모든 제품에 쓰이지 않는다. 고클럭 코어칩렛과 일부 가속기만 NW14로 만들고 입출력·캐시·메모리제어 다이는 성숙한 NW3·NW2B에 남기는 혼합공정 패키지가 일반적이다.</p>
+    </section>
+    <section>
+      <title>후면 전력공급</title>
+      <p>NW2B 이후에는 트랜지스터 아래쪽에서 전력을 공급하고 앞면 배선은 신호에 집중한다. 웨이퍼 뒷면을 얇게 갈아 매립전력선에 나노관통전극을 연결하며, 전류경로가 짧아져 전압강하와 클럭변동이 줄어든다. 이는 <ref href="doc:vAykcZWMf_4zG08K6IPbNQ">PulseDrive</ref>의 짧은 고클럭 부스트를 가능하게 하는 조건 가운데 하나이다.</p>
+      <p>후면공급 자체가 클럭을 몇 배로 높이는 기술은 아니다. 트랜지스터 지연, 배선길이, 캐시구조, 전압변환과 냉각이 함께 맞아야 하며 대형 서버다이의 전 코어를 최고클럭으로 유지할 수는 없다.</p>
+    </section>
+    <section>
+      <title>개발과 생산분업</title>
+      <p><ref href="doc:PhlJ2Cfki6jsOzvSojEZ-g">TML 종합기술연구소</ref>가 소자구조와 재료를 연구하고 <ref href="doc:sUTEEDeLP3s2L5g0scpN4w">Stella</ref>가 후면정렬, 극박화·접합과 검사장비를 개발한다. TML 메모리는 설계를 양산규칙으로 바꾸고 수율과 신뢰성을 책임지며 H.O.S는 그 규칙에 맞춰 칩을 설계한다.</p>
+      <p>NW-X의 CFET와 2차원 채널은 시험칩에서만 검증되고 있다. 2026년 상용 H.O.S 제품의 우위를 해당 연구소자 덕분이라고 설명하는 것은 잘못이며 주력제품은 나노시트 공정과 칩렛·메모리·패키징을 사용한다.</p>
+    </section>
+    <section>
+      <title>한계</title>
+      <p>극박화 과정의 균열, 후면전극 정렬오차와 열밀도 증가가 주요 수율문제이다. NW14는 고성능 다이에 유리하지만 마스크·검사시간과 불량비용이 높아 저가제품에는 경제성이 떨어진다.</p>
+    </section>
+  </body>
+</document>

@@ -1,0 +1,40 @@
+<document id="sUOKEhn8hRfZnVSjitnA8w">
+  <title>H.O.S A1 시리즈</title>
+  <aliases><alias>A1 시리즈</alias><alias>A1 100번대</alias><alias>A1 1000번대</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>A1 시리즈</strong>는 2018년 H.O.S가 출시한 K64 기반 소비자 CPU이다. A는 Advanced의 약자로, <ref href="doc:efqlddQqL4UMXuBHFQNp6A">Sky</ref>·<ref href="doc:1T2BWzlakD2oHXdIzg7-bQ">Ion</ref>으로 나뉘어 있던 보급형과 고성능 제품을 하나의 소켓·소프트웨어 계열로 통합했다.</p>
+      <p>100번대는 안정성과 보급을, 1000번대는 고클럭과 다중스레드를 중시했다. A1은 북조선 안에서 H.O.S가 단순한 국산대체품 제조사를 넘어 고성능 프로세서 회사로 인식되는 계기가 되었다.</p>
+    </section>
+    <section>
+      <title>제품 계보</title>
+      <table>
+        <thead><tr><th>계열·대표제품</th><th>코어·스레드</th><th>기본·최대클럭</th><th>전력등급</th><th>성격</th></tr></thead>
+        <tbody>
+          <tr><td>A1 CFV100</td><td>4·4</td><td>1.9·2.1GHz</td><td>35W</td><td>검증·보급형</td></tr>
+          <tr><td>A1 900</td><td>12·24</td><td>3.0·3.3GHz</td><td>70W</td><td>100번대 상위형</td></tr>
+          <tr><td>A1 1000</td><td>6·12</td><td>3.6·5.1GHz</td><td>45W</td><td>1000번대 기본형</td></tr>
+          <tr><td>A1 1500</td><td>10·20</td><td>4.0·5.6GHz</td><td>60W</td><td>주력형</td></tr>
+          <tr><td>A1 1750T</td><td>10·20</td><td>4.2·6.1GHz</td><td>75W</td><td>선별 고클럭형</td></tr>
+          <tr><td>A1 1900</td><td>12·24</td><td>4.3·6.5GHz</td><td>110W</td><td>최상위 한정형</td></tr>
+        </tbody>
+      </table>
+      <p>최대클럭은 가벼운 작업에서 소수코어에 적용되는 부스트이다. A1 1000번대의 전 코어 지속클럭은 냉각과 전력설정에 따라 대체로 3GHz 후반에서 4GHz 초반에 머물렀다.</p>
+    </section>
+    <section>
+      <title>이전 세대와의 차이</title>
+      <p>K64는 더 큰 유동창과 64비트 가상주소, 확장된 경로표를 지원했다. 코어마다 독립된 작은 캐시를 두던 Ion과 달리 A1은 코어집단이 공유하는 마지막단계 캐시와 통합 메모리제어기를 사용해 다중스레드 성능을 높였다.</p>
+      <p><ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO2</ref>가 기본규격이 되었고 운영체제·응용프로그램 사이의 확정경계가 강화되었다. 다만 호환성은 여전히 네이티브 재컴파일에 의존했으며 외국 소프트웨어의 이용은 제한적이었다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>100번대는 낮은 가격과 안정성으로 공공기관 교체수요를 흡수했고 1000번대는 게임·콘텐츠 제작시장을 키웠다. 반면 최고클럭을 지나치게 강조한 포장과 모델별 냉각기 차이가 소비자 혼란을 낳아 후속 A2부터 전력등급과 부스트 조건을 더 자세히 표시했다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>A1 1900은 초기 제품목록에서 실수로 ‘A2 1000번대’에 분류되었다. 유통물량은 A1 소켓과 펌웨어를 사용했으므로 곧 수정되었지만 일부 시스템 정보도구에는 오분류 문자열이 오래 남았다.</p>
+    </section>
+  </body>
+</document>

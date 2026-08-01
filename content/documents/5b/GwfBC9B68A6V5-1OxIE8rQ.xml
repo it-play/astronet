@@ -1,0 +1,34 @@
+<document id="GwfBC9B68A6V5-1OxIE8rQ">
+  <title>H.O.S Fastcoll 시리즈</title>
+  <aliases><alias>Fastcoll</alias><alias>패스트콜</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Fastcoll 시리즈</strong>는 2016~2017년 H.O.S가 교육·개발·산업제어용으로 공급한 K32 CPU이다. 이름은 Fast Collection의 줄임말로 여러 작은 유동묶음을 빠르게 모아 확정하는 구조를 강조했다.</p>
+      <p>소비자용 <ref href="doc:1T2BWzlakD2oHXdIzg7-bQ">Ion</ref>과 시기가 겹치지만 Fastcoll은 내장그래픽보다 예측가능한 실행시간과 개발도구를 우선했다. ORO1 프로그램을 ORO2 환경으로 옮기는 전환기 시험대 역할도 했다.</p>
+    </section>
+    <section>
+      <title>제품</title>
+      <table>
+        <thead><tr><th>제품</th><th>출시</th><th>코어·스레드</th><th>기본·최대클럭</th><th>전력등급</th></tr></thead>
+        <tbody>
+          <tr><td>Fastcoll 1-Core Single</td><td>2016년</td><td>1·2</td><td>1.2·1.6GHz</td><td>30W</td></tr>
+          <tr><td>Fastcoll 1-Core Duo</td><td>2016년</td><td>2·4</td><td>1.44·1.79GHz</td><td>55W</td></tr>
+          <tr><td>Fastcoll 2-Core Single</td><td>2017년</td><td>1·2</td><td>1.35·1.68GHz</td><td>40W</td></tr>
+          <tr><td>Fastcoll 2-Core Duo</td><td>2017년</td><td>2·4</td><td>1.50·1.73GHz</td><td>65W</td></tr>
+          <tr><td>Fastcoll 2-Core X</td><td>2017년</td><td>4·8</td><td>1.90·2.29GHz</td><td>80W</td></tr>
+        </tbody>
+      </table>
+      <p>제품명 앞의 1-Core·2-Core는 물리코어 수가 아니라 유동수집기의 세대를 뜻한다. 뒤의 Single·Duo·X가 실제 실행클러스터 구성을 나타내기 때문에 명칭만 보고 코어수를 오해하기 쉽다.</p>
+    </section>
+    <section>
+      <title>특징</title>
+      <p>Fastcoll은 같은 입력에 대한 실행시간 편차를 줄이기 위해 추측분기와 자동경로변경을 제한했다. 실시간 제어에서는 장점이었지만 일반 응용프로그램에서는 Ion보다 느린 경우가 많았다. <ref href="doc:80ql5gKPFFh336LN41xlsg">DLANS</ref>의 결정론적 예약방식은 이 제품의 산업제어 펌웨어에서 발전했다.</p>
+    </section>
+    <section>
+      <title>평가와 여담</title>
+      <p>판매량은 많지 않았으나 학교의 프로그래밍 실습장비와 공장제어기에 오래 남았다. 제품명 때문에 ‘1-Core Duo’가 허위광고라는 항의가 이어지자 H.O.S는 후속 산업용 제품부터 세대와 코어수를 분리해 표기했다.</p>
+    </section>
+  </body>
+</document>

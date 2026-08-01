@@ -1,0 +1,48 @@
+<document id="ksJ6iZ2EOzqonDVrzu1Apw">
+  <title>H.O.S A2 시리즈</title>
+  <aliases><alias>A2 시리즈</alias><alias>A2 2000번대</alias><alias>A2 3000번대</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>A2 시리즈</strong>는 2019년 말부터 2022년 상반기까지 H.O.S의 주력 소비자·워크스테이션 CPU였던 K64 계열이다. 2000번대에서 칩렛구조와 <ref href="doc:80ql5gKPFFh336LN41xlsg">LANS</ref>를 도입했고, 3000번대에서 코어수와 가상화 기능을 크게 늘렸다.</p>
+      <p><ref href="doc:sUOKEhn8hRfZnVSjitnA8w">A1</ref>의 고클럭 코어를 단순히 늘리지 않고 코어칩렛·입출력다이·공유캐시를 분리한 것이 핵심이다. 이 구조는 H.O.S가 여러 가격대의 제품을 같은 설계자산으로 만들 수 있게 했으며 후속 A3와 서버제품의 기반이 되었다.</p>
+    </section>
+    <section>
+      <title>2000번대</title>
+      <table>
+        <thead><tr><th>대표제품</th><th>출시</th><th>코어·스레드</th><th>기본·최대클럭</th><th>전력등급</th></tr></thead>
+        <tbody>
+          <tr><td>A2 2200</td><td>2019년</td><td>4·8</td><td>3.8·5.4GHz</td><td>55W</td></tr>
+          <tr><td>A2 2200X</td><td>2019년</td><td>4·8</td><td>4.1·5.8GHz</td><td>70W</td></tr>
+          <tr><td>A2 2305</td><td>2020년</td><td>6·12</td><td>3.9·5.7GHz</td><td>75W</td></tr>
+          <tr><td>A2 2700</td><td>2020년</td><td>12·24</td><td>3.7·6.0GHz</td><td>120W</td></tr>
+          <tr><td>A2 2900H</td><td>2020년</td><td>20·40</td><td>3.5·6.1GHz</td><td>190W</td></tr>
+        </tbody>
+      </table>
+      <p>2000번대는 한두 개의 코어칩렛과 별도 입출력다이를 사용했다. A1보다 메모리지연은 늘었지만 불량이 적은 작은 다이를 조합할 수 있어 코어수와 수율이 개선되었다.</p>
+    </section>
+    <section>
+      <title>3000번대</title>
+      <table>
+        <thead><tr><th>대표제품</th><th>출시</th><th>코어·스레드</th><th>기본·최대클럭</th><th>전력등급</th></tr></thead>
+        <tbody>
+          <tr><td>A2 3050</td><td>2022년</td><td>6·12</td><td>3.2·5.0GHz</td><td>45W</td></tr>
+          <tr><td>A2 3200FE</td><td>2022년</td><td>6·12</td><td>3.6·5.2GHz</td><td>55W</td></tr>
+          <tr><td>A2 3500</td><td>2021년</td><td>12·24</td><td>4.0·6.0GHz</td><td>105W</td></tr>
+          <tr><td>A2 3700</td><td>2021년</td><td>20·40</td><td>3.8·6.2GHz</td><td>180W</td></tr>
+          <tr><td>A2 3900H</td><td>2021년</td><td>28·56</td><td>3.5·6.4GHz</td><td>280W</td></tr>
+        </tbody>
+      </table>
+      <p>3000번대는 ORO3의 타일간 이동과 확장된 가상화기능을 앞서 지원했다. 일부 저전력형은 상위다이에서 코어와 그래픽을 비활성화한 제품이어서 같은 모델명이라도 캐시용량이 달랐다.</p>
+    </section>
+    <section>
+      <title>A1과의 차이</title>
+      <p>A2는 코어 하나의 최대성능보다 칩렛 사이 통신과 메모리처리량을 중시했다. ALANS가 작업과 온도에 따라 유동창을 다른 칩렛으로 옮기고, 입출력다이가 메모리 일관성과 외부장치를 전담했다. 이 구조는 코어수가 많은 작업에서 강했지만 초기 펌웨어의 경로선택 오류가 지연시간을 늘리는 문제가 있었다.</p>
+    </section>
+    <section>
+      <title>평가와 여담</title>
+      <p>A2는 2022년 대외공개 이전 국내 데이터센터와 제작시장의 사실상 표준이었다. 3000번대의 세대번호보다 출시일이 앞선 일부 3900H 물량이 존재하는데, 장기검증용 서버물량을 소비자용 제품등록에 뒤늦게 편입했기 때문이다.</p>
+    </section>
+  </body>
+</document>

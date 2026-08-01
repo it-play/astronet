@@ -1,0 +1,53 @@
+<navigation-board id="Jld-JLFVtFfW77DmqoVarQ" theme="default">
+  <header><title>H.O.S 컴퓨팅 생태계</title></header>
+  <section id="company" label="기업" group="hos-company">
+    <document-links>
+      <document target="cas6-en_tBOltIjgyWGU7g">H.O.S(에이치오에스)</document>
+    </document-links>
+  </section>
+  <section id="cpu" label="CPU 제품군" group="hos-cpu">
+    <document-links>
+      <document target="efqlddQqL4UMXuBHFQNp6A">H.O.S Sky 시리즈</document>
+      <document target="1T2BWzlakD2oHXdIzg7-bQ">H.O.S Ion 시리즈</document>
+      <document target="GwfBC9B68A6V5-1OxIE8rQ">H.O.S Fastcoll 시리즈</document>
+      <document target="sUOKEhn8hRfZnVSjitnA8w">H.O.S A1 시리즈</document>
+      <document target="ksJ6iZ2EOzqonDVrzu1Apw">H.O.S A2 시리즈</document>
+      <document target="C679Hm7eJXl81-Bu5MTpQQ">H.O.S A3 시리즈</document>
+      <document target="9nmnFkkSHvefIb67zVRh3g">Automaton/9000번대</document>
+      <document target="mxmjJXvSITi0y_1knJJpng">H.O.S Nano 시리즈</document>
+      <document target="3QaVS6CAeKYjV6LZ8LXVeQ">H.O.S N1 시리즈</document>
+      <document target="nrKAIwbuBXV2gO-VUrfVHw">H.O.S P 시리즈</document>
+    </document-links>
+  </section>
+  <section id="gpu" label="GPU 제품군" group="hos-gpu">
+    <document-links>
+      <document target="67nJ3pMP9bJkgcmStNrELQ">H.O.S 초기 GPU 제품군</document>
+      <document target="ojBmZ4KYMXK_LJ9rkUwIYQ">H.O.S GC 시리즈</document>
+      <document target="43hYhTCANEDbI-s7_xvQ3A">H.O.S BC 시리즈</document>
+      <document target="JuIIwXJIG3MIQZ1tq58Ysw">H.O.S PC 시리즈</document>
+      <document target="ngq8-nXXGXvQ5ldNNI0MCg">H.O.S PhotoGraphics 시리즈</document>
+    </document-links>
+  </section>
+  <section id="execution" label="실행·호환체계" group="hos-execution">
+    <document-links>
+      <document target="B-dT-FarcUpPgzcwMSQFaQ">K-Flow 실행 아키텍처</document>
+      <document target="jFiXMBMM-ULMzUo7I_HZrQ">ORO 명령어 집합</document>
+      <document target="80ql5gKPFFh336LN41xlsg">HCC·LANS 확장 명령체계</document>
+      <document target="TI6wBPGLeV2BkPBwAENw8g">K-Bridge 호환 계층</document>
+      <document target="tp6rGHqKQfht8yyRyXm1pg">H.O.S 그래픽 연산 아키텍처</document>
+    </document-links>
+  </section>
+  <section id="platform" label="공정·패키징·운용" group="hos-platform">
+    <document-links>
+      <document target="eZ1BTwra524rUJ6cL7vApA">TML NanoWeave Process Platform(반도체 공정)</document>
+      <document target="S-J2WrNTW9t95Pr1rjqolw">TML GlassLink Platform(유리 웨이퍼·패키지)</document>
+      <document target="vAykcZWMf_4zG08K6IPbNQ">PulseDrive 전력·클럭 제어</document>
+      <document target="JJl5FcJUQO_PbNPGcNbLJQ">PhaseFlow Cooling Platform(냉각 플랫폼)</document>
+    </document-links>
+  </section>
+  <section id="events" label="관련 사건" group="hos-events">
+    <document-links>
+      <document target="cdrm-Ch_9Ro9tQri3l_zCg">북한발 반도체 성능쇼크</document>
+    </document-links>
+  </section>
+</navigation-board>

@@ -1,0 +1,34 @@
+<document id="JuIIwXJIG3MIQZ1tq58Ysw">
+  <title>H.O.S PC 시리즈</title>
+  <aliases><alias>PC 시리즈</alias><alias>Professional Compute</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>PC 시리즈</strong>는 H.O.S의 전문시각화·공학연산용 GPU 계열이다. PC는 Professional Compute의 약자이며 CAD, 과학시각화, 방송제작과 로컬 AI 개발환경을 목표로 한다.</p>
+      <p><ref href="doc:43hYhTCANEDbI-s7_xvQ3A">BC</ref>보다 높은 부동소수점 정확도와 표시동기 기능을, <ref href="doc:ojBmZ4KYMXK_LJ9rkUwIYQ">GC</ref>보다 긴 드라이버 인증기간과 ECC 메모리를 제공한다. 단일제품이 아니라 1200~1260번대의 세대군으로 관리된다.</p>
+    </section>
+    <section>
+      <title>제품</title>
+      <table>
+        <thead><tr><th>제품</th><th>구조</th><th>메모리</th><th>최대전력</th><th>성격</th></tr></thead>
+        <tbody>
+          <tr><td>PC-1200</td><td>Sigma</td><td>14GB ECC</td><td>110W</td><td>기본형</td></tr>
+          <tr><td>PC-1200X</td><td>Sigma</td><td>14GB ECC</td><td>150W</td><td>고클럭 시각화</td></tr>
+          <tr><td>PC-1210</td><td>MEGA</td><td>14GB ECC</td><td>100W</td><td>저전력 행렬연산</td></tr>
+          <tr><td>PC-1250</td><td>MEGA</td><td>16GB ECC</td><td>140W</td><td>제작·CAD 주력형</td></tr>
+          <tr><td>PC-1260</td><td>EOX-2</td><td>24GB ECC</td><td>220W</td><td>대형 장면·가상화</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>특징</title>
+      <p>PC 드라이버는 결과재현성을 위해 연산축약과 혼합정밀도 사용여부를 작업별로 고정할 수 있다. 여러 표시장치의 프레임을 하드웨어 시간토큰으로 동기화하고 색관리표를 장치의 보호메모리에 저장한다.</p>
+      <p>MEGA 행렬엔진을 사용하면 AI와 렌더링이 빠르지만 인증모드에서는 속도보다 비트단위 재현을 우선해 일부 가속을 끈다. 이 때문에 같은 PC 카드도 게임용 드라이버를 사용할 때와 전문드라이버를 사용할 때 벤치마크가 크게 달라진다.</p>
+    </section>
+    <section>
+      <title>평가와 여담</title>
+      <p>국내 방송·설계시장을 장악했으나 해외 전문소프트웨어의 공식인증을 받는 데 시간이 걸렸다. 2023년 초 제품등록 데이터에서 PC-1200 계열이 BC-1200으로 잘못 출력되는 오류가 있었고, 일부 초기 보드의 펌웨어 문자열에도 BC 표기가 남았다.</p>
+    </section>
+  </body>
+</document>

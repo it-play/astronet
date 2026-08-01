@@ -1,0 +1,47 @@
+<document id="B-dT-FarcUpPgzcwMSQFaQ">
+  <title>K-Flow 실행 아키텍처</title>
+  <aliases><alias>K-Flow</alias><alias>케이플로</alias><alias>유동자료흐름 아키텍처</alias></aliases>
+  <body>
+    <include-board ref="Jld-JLFVtFfW77DmqoVarQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>K-Flow</strong>는 <ref href="doc:cas6-en_tBOltIjgyWGU7g">H.O.S</ref>가 개발한 범용 프로세서 실행 아키텍처이다. 명령어를 프로그램 순서대로 가져와 해석하는 대신 컴파일러가 만든 의존성 그래프와 피연산자 이동경로를 실행창에 올리고, 필요한 자료가 도착한 연산부터 발화시키는 방식이다.</p>
+      <p>H.O.S는 이를 CISC나 RISC가 아닌 <em>경로기록형 자료흐름 구조</em>로 분류한다. 다만 고정 길이 연산기록과 정적 스케줄링을 사용한다는 점에서 학계에서는 VLIW·TTA·EDGE 계열의 변형으로 보는 견해도 있다. K-Flow는 실행모델이고 실제 이진명령의 규격은 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO 명령어 집합</ref>이 담당한다.</p>
+    </section>
+    <section>
+      <title>실행 방식</title>
+      <table>
+        <thead><tr><th>구성요소</th><th>기능</th></tr></thead>
+        <tbody>
+          <tr><td>유동창</td><td>서로 의존하는 연산기록과 자료 토큰을 한 묶음으로 유지한다.</td></tr>
+          <tr><td>경로표</td><td>연산결과가 어느 실행포트와 다음 유동창으로 이동할지를 명시한다.</td></tr>
+          <tr><td>발화기</td><td>모든 입력과 술어가 준비된 연산을 프로그램 순서와 무관하게 실행한다.</td></tr>
+          <tr><td>확정경계</td><td>메모리 쓰기, 예외와 입출력처럼 외부에 보이는 결과를 순서대로 확정한다.</td></tr>
+          <tr><td>복구지도</td><td>예측실패나 예외가 발생했을 때 유동창 단위로 상태를 되돌린다.</td></tr>
+        </tbody>
+      </table>
+      <p>복잡한 전역 재정렬기를 줄이는 대신 컴파일러와 경로표가 더 많은 책임을 진다. 하드웨어는 실행창 안에서 자료도착 순서를 조정하지만 프로그램 전체를 다시 스케줄하지 않는다. 이 때문에 병렬성이 명확한 코드에서는 전력효율이 높고 지연시간을 예측하기 쉽지만, 분기와 포인터 추적이 많은 코드는 컴파일러 품질에 크게 좌우된다.</p>
+    </section>
+    <section>
+      <title>K 계열 실행창</title>
+      <p>K32·K64·K128은 주소폭이나 정수자료형의 크기가 아니라 한 클러스터가 동시에 추적할 수 있는 활성 자료토큰의 등급이다. 현대 제품은 모두 64비트 가상주소를 사용하며 K 등급이 높을수록 대형 유동창과 서버 작업에 유리한 대신 제어회로와 검증비용이 증가한다.</p>
+      <table>
+        <thead><tr><th>등급</th><th>주요 용도</th><th>특징</th></tr></thead>
+        <tbody>
+          <tr><td>K32</td><td>초기 소비자·임베디드</td><td>작은 유동창과 단순한 경로표를 사용한다.</td></tr>
+          <tr><td>K64</td><td>일반 소비자·워크스테이션</td><td>클럭과 병렬성의 균형을 맞춘 주력구성이다.</td></tr>
+          <tr><td>K128</td><td>서버·고성능 컴퓨팅</td><td>긴 메모리지연을 여러 유동창으로 숨기고 대규모 가상화에 대응한다.</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>장단점</title>
+      <p>명시적인 자료이동 덕분에 불필요한 레지스터 복사와 추측실행을 줄이고 CPU·GPU·NPU 사이에 같은 의존성 표현을 사용할 수 있다. <ref href="doc:80ql5gKPFFh336LN41xlsg">HCC·LANS</ref>를 함께 사용하면 연산을 다른 타일로 보내더라도 확정경계와 메모리 일관성을 유지할 수 있다.</p>
+      <p>반면 기존 프로그램을 그대로 실행할 수 없고 컴파일러가 충분한 병렬성을 찾지 못하면 넓은 실행자원이 놀게 된다. 이러한 생태계 문제는 2022년 대외 공개 뒤 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>가 빠르게 보급될 때까지 H.O.S 제품의 가장 큰 약점으로 꼽혔다.</p>
+    </section>
+    <section>
+      <title>여담</title>
+      <p>개발초기에는 ‘K’가 자료폭을 뜻한다는 설명이 널리 퍼져 K128을 128비트 CPU로 소개한 홍보물도 있었다. H.O.S는 2023년 해외기술문서를 개정하면서 K가 실행창의 추적등급이라는 점을 명시했다.</p>
+    </section>
+  </body>
+</document>
