@@ -1,0 +1,74 @@
+<document id="RPtyqZq0nyT_m_NiE8S-EA">
+  <title>Core 프로그래밍 언어</title>
+  <aliases><alias>Core</alias><alias>코어 프로그래밍 언어</alias><alias>Core Language</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Core</strong>는 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>가 개발한 DSL 기반 함수지향 저수준 프로그래밍 언어이다. <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>가 담당하던 커널·장치·실시간 처리 가운데 하드웨어 성능이 가장 중요한 부분을 계승한다.</p>
+      <p>하나의 범용문법으로 모든 문제를 표현하기보다 벡터연산, 신호처리, 패킷처리, 장치자료경로처럼 목적이 뚜렷한 영역마다 전용 DSL 블록을 사용한다. 개발자가 자료배치와 실행제약을 명시하면 컴파일러가 그 범위 안에서 목표 하드웨어에 맞는 배치·벡터화·명령선택을 끝까지 수행한다.</p>
+    </section>
+    <section>
+      <title>역사</title>
+      <table>
+        <thead><tr><th>시기</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>2022년</td><td>Code A 컴파일러 조직에서 고성능 DSL 연구분기로 개발 시작</td></tr>
+          <tr><td>2023년</td><td>하드웨어 DSL과 ORO 백엔드를 포함한 기술공개판 배포</td></tr>
+          <tr><td>2024년</td><td>Core 1.0 정식 출시</td></tr>
+          <tr><td>2025년</td><td>Core 2 계열과 Code A 변환도구 공개</td></tr>
+          <tr><td>2026년</td><td>Core 2.x가 현행 안정판으로 지정</td></tr>
+          <tr><td>2027년 예정</td><td>Origin 13의 양산용 드라이버·미디어·가속기 도구에 정식 채택</td></tr>
+        </tbody>
+      </table>
+      <p>Core 1은 Code A 함수 안에 삽입하는 계산 DSL의 성격이 강했다. Core 2부터 독립 모듈, 장치 권한과 TMC-ABI 내보내기를 지원하면서 커널과 드라이버의 전체 자료경로를 작성할 수 있게 되었다.</p>
+    </section>
+    <section>
+      <title>설계</title>
+      <table>
+        <thead><tr><th>요소</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>Domain Block</td><td>vector·signal·packet·device와 같은 목적별 DSL이 허용 연산과 자료형을 제한한다.</td></tr>
+          <tr><td>Pure Dataflow</td><td>계산함수는 입력과 출력이 명시된 불변 자료흐름으로 작성하고 상태변경은 별도 구문에 표시한다.</td></tr>
+          <tr><td>Layout Contract</td><td>정렬·배치·별칭·대역폭과 장치메모리 조건을 컴파일 계약으로 고정한다.</td></tr>
+          <tr><td>Schedule Clause</td><td>타일·벡터폭·펼치기·실행장소를 소스에서 지정하거나 컴파일러 탐색에 맡긴다.</td></tr>
+          <tr><td>Explicit Effect</td><td>메모리 쓰기와 장치입출력은 순수 계산과 구분된 효과구문에서만 수행한다.</td></tr>
+        </tbody>
+      </table>
+      <p>동적 객체, 암묵적 자료변환과 범용 예외처리를 핵심문법에서 제외했다. 복잡한 응용프로그램을 Core만으로 작성하기보다 <ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref> 서비스가 Core 계산모듈을 호출하는 구성이 일반적이다.</p>
+    </section>
+    <section>
+      <title>문법 예시</title>
+      <p>다음은 두 실수배열에 <code>y = a×x + y</code> 연산을 적용하는 Core 2 예시이다. <code>domain vector</code>가 사용할 수 있는 연산을 한정하고 <code>schedule</code>이 벡터폭과 타일 크기를 지정한다.</p>
+      <blockquote>
+        <p><code>target ORO4;</code></p>
+        <p><code>domain vector Axpy {</code></p>
+        <p><code>  input x: f32[4096] align 64;</code></p>
+        <p><code>  inout y: f32[4096] align 64;</code></p>
+        <p><code>  param a: f32;</code></p>
+        <p><code>  pure update(i) = fma(a, x[i], y[i]);</code></p>
+        <p><code>  run forall i in 0..4096</code></p>
+        <p><code>    schedule vector(16), tile(256), unroll(4)</code></p>
+        <p><code>    write y[i] &lt;- update(i);</code></p>
+        <p><code>}</code></p>
+      </blockquote>
+      <p><code>pure update</code>에는 외부상태를 바꾸는 연산을 넣을 수 없고 실제 저장은 <code>write</code>에 드러난다. 지정한 ORO4가 벡터폭이나 정렬조건을 만족하지 못하면 컴파일러가 조용히 느린 코드로 바꾸지 않고 계약실패를 보고한다.</p>
+    </section>
+    <section>
+      <title>컴파일과 실행</title>
+      <p>각 DSL 블록은 <strong>Core Domain IR</strong>, 약칭 <strong>CDIR</strong>로 변환된다. 컴파일러는 CDIR에서 정적 자료배치와 실행계획을 확정한 뒤 ARM64·x86-64·<ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref> 네이티브 기계어를 생성한다.</p>
+      <p>상주 가상기계와 가비지 컬렉션은 사용하지 않는다. 실행파일에는 오류·권한·작업계획을 전달하는 소형 지원 라이브러리만 연결되며 실시간 프로필에서는 이 라이브러리의 동적할당도 끌 수 있다.</p>
+      <p>Code A와 연결할 때에는 C ABI를 실제 호출규약으로 사용하고 TMC-ABI의 권한·계약 기술자를 함께 붙인다. 다른 TML SD 언어와의 경계에서는 직접적인 C ABI 노출 없이 TMC-ABI 형식화 어댑터를 사용한다. 이때 원시 포인터 대신 값 레코드·버퍼 뷰·권한 핸들과 오류결과를 전달해 언어별 메모리 규칙이 섞이지 않도록 한다.</p>
+    </section>
+    <section>
+      <title>성능</title>
+      <p>벡터연산·신호처리·패킷처리·드라이버 자료경로처럼 입력범위와 하드웨어 계약을 완전히 제시한 작업에서 Core의 결과물은 수작업 어셈블리에 근접한다. 같은 알고리즘을 충분히 다듬었을 때 어셈블리 쪽이 대체로 조금 더 빠르지만 차이가 작아 유지보수성과 검증가능성을 위해 Core를 선택하는 경우가 많다.</p>
+      <p>모든 프로그램에서 같은 결과를 보장하는 것은 아니다. 분기와 동적 객체가 많은 상위 응용프로그램, 컴파일러가 알 수 없는 외부상태나 잘못 지정된 스케줄에서는 이점이 줄어들며 숙련된 개발자가 작성한 어셈블리가 여전히 성능상한이다.</p>
+    </section>
+    <section>
+      <title>생태계와 평가</title>
+      <p>Orion 4의 2026년 SDK는 Core 2 시스템 모듈을 정식 지원하고 Origin 12는 개발자 기술공개판을 제공한다. 프로젝트·패키지 서명·디버거와 성능분석기는 Code A·Atlran 도구와 통합되어 한 제품 안에서 언어별 모듈을 나눌 수 있다.</p>
+      <p>문법이 문제영역과 기계제약을 그대로 드러내기 때문에 처음 보는 사람에게는 1990년대의 수치계산 언어나 어셈블리 매크로처럼 보인다는 비판이 많다. TML SD도 일반개발자용 언어로 홍보하지 않으며 높은 성능과 예측가능성이 실제로 필요한 모듈에만 사용할 것을 권장한다.</p>
+    </section>
+  </body>
+</document>

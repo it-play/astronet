@@ -1,0 +1,84 @@
+<document id="eKbaOOhIBNPJygwXaaVTzA">
+  <title>Atlran 프로그래밍 언어</title>
+  <aliases><alias>Atlran</alias><alias>아틀란</alias><alias>Atlran Language</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Atlran</strong>은 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>가 개발한 객체지향·함수지향 프로그래밍 언어이다. <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>의 후속으로 개발되었으며 2026년 현재 TML SD가 신규 응용프로그램과 상위 서비스에 가장 우선적으로 권장하는 주력 언어이다.</p>
+      <p>설계원칙은 ‘사람은 실수한다’는 문장으로 요약된다. 개발자의 주의력과 문서에만 의존하던 입력조건, 결과보장, 객체불변식과 모듈 의존순서를 언어구조로 끌어올려 잘못된 프로그램을 가능한 한 빌드 단계에서 거부한다.</p>
+    </section>
+    <section>
+      <title>역사</title>
+      <table>
+        <thead><tr><th>시기</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>2022년</td><td>Code B 후속 언어 설계사업 시작</td></tr>
+          <tr><td>2023년</td><td>계약·의존관계 모형을 적용한 내부 시험판 배포</td></tr>
+          <tr><td>2024년</td><td>외부 개발자 기술공개판과 Code B 변환진단 도구 공개</td></tr>
+          <tr><td>2025년</td><td>Atlran 1.0 정식 출시</td></tr>
+          <tr><td>2026년</td><td>Atlran 2.x를 현행 주력판으로 지정하고 XWise Atlran SDK 정식지원</td></tr>
+          <tr><td>2027년 예정</td><td>Origin 13 신규 앱의 기본 권장언어로 채택</td></tr>
+          <tr><td>2028년 예정</td><td>Code B 28에 최종 이행도구와 BIR·AIR 어댑터 제공</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>언어 구조</title>
+      <table>
+        <thead><tr><th>기능</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>Contract</td><td>입력조건·결과조건·객체불변식을 함수와 형식 선언에 포함한다.</td></tr>
+          <tr><td>Dependency Graph</td><td>서비스가 요구하는 모듈과 초기화·종료 순서를 이름 있는 관계로 선언한다.</td></tr>
+          <tr><td>Object·Value</td><td>수명과 정체성을 가진 객체, 기본 불변인 값 레코드를 구분한다.</td></tr>
+          <tr><td>Functional Pipeline</td><td>자료변환을 함수합성과 파이프라인으로 연결하고 중간상태를 최소화한다.</td></tr>
+          <tr><td>Result Type</td><td>복구 가능한 오류를 예외 대신 반환형에 포함해 호출자가 처리하도록 강제한다.</td></tr>
+          <tr><td>Permission Effect</td><td>파일·네트워크·센서·권한전환을 함수효과와 패키지 권한에 함께 기록한다.</td></tr>
+        </tbody>
+      </table>
+      <p>계약은 컴파일러가 증명할 수 있으면 실행코드에서 제거된다. 외부 입력, 다른 언어 모듈과의 경계, 권한전환처럼 정적으로 확정할 수 없는 조건은 실행 중에도 검사하며 실패원인과 계약위치를 함께 남긴다.</p>
+    </section>
+    <section>
+      <title>문법 예시</title>
+      <p>다음은 결제와 장부기록의 의존관계를 선언하고 성공한 결제가 반드시 장부에 남는지 검사하는 Atlran 2 예시이다.</p>
+      <blockquote>
+        <p><code>service PaymentService</code></p>
+        <p><code>  depends gateway: PaymentGateway</code></p>
+        <p><code>  depends ledger: Ledger after gateway</code></p>
+        <p><code>{</code></p>
+        <p><code>  public charge(order: Order): Result&lt;Receipt, PaymentError&gt;</code></p>
+        <p><code>    requires order.total &gt; Money.zero</code></p>
+        <p><code>    ensures Ok(receipt) =&gt; ledger.contains(order.id)</code></p>
+        <p><code>  = order.items</code></p>
+        <p><code>      |&gt; validate</code></p>
+        <p><code>      |&gt; price</code></p>
+        <p><code>      |&gt; gateway.charge</code></p>
+        <p><code>      |&gt; on_success { receipt -&gt; ledger.record(order.id, receipt) };</code></p>
+        <p><code>}</code></p>
+      </blockquote>
+      <p><code>depends</code>는 숨은 전역객체 대신 필요한 서비스를 드러내고 <code>after gateway</code>는 장부 모듈을 결제연결 뒤에 준비하도록 한다. <code>requires</code>는 잘못된 주문을 호출경계에서 막으며 <code>ensures</code>는 성공값이 반환되기 전에 장부기록을 확인한다.</p>
+    </section>
+    <section>
+      <title>컴파일과 실행</title>
+      <p>Atlran 소스는 <strong>Atlran IR</strong>, 약칭 <strong>AIR</strong>로 컴파일되어 Orion·Origin 패키지에 들어간다. 설치 때 ARM64·x86-64·<ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref> 네이티브 코드로 미리 변환하며 Orion에서는 선택적으로 일부 함수의 실행 중 재최적화를 허용한다.</p>
+      <p><strong>Atlran Runtime</strong>, 약칭 <strong>ATR</strong>은 관리 메모리, 비동기 작업, 의존성 그래프와 실행 중 계약검사를 담당한다. Origin의 저전력·실시간 프로필에서는 설치 시 AOT 결과를 기본으로 사용하고 계약검사도 외부경계와 권한전환에 집중한다.</p>
+      <p>AIR은 Code B의 BIR을 대체해 이름만 바꾼 형식이 아니다. 두 중간표현은 TMC-ABI의 형식화 어댑터를 거치며 관리객체를 직접 공유하지 않고 값 레코드·버퍼 뷰·서비스 핸들·오류결과와 비동기 작업 핸들을 주고받는다.</p>
+    </section>
+    <section>
+      <title>Core와의 관계</title>
+      <p>Atlran이 업무논리·UI·네트워크와 서비스 수명주기를 맡는다면 <ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core</ref>는 수치연산·신호처리·패킷과 장치자료경로를 맡는다. 한 프로젝트에서 Atlran 서비스가 Core 모듈을 호출할 수 있지만 원시 포인터나 ATR 관리객체는 경계를 그대로 넘지 못한다.</p>
+      <p>이 분리는 최고성능 코드의 자료배치를 Core가 통제하면서도 상위 프로그램이 저수준 메모리 규칙에 오염되는 것을 막기 위한 것이다. 성능이 충분한 기능까지 무리하게 Core로 작성하는 것은 권장되지 않는다.</p>
+    </section>
+    <section>
+      <title>생태계 호환성</title>
+      <p>Orion 4의 2026년 SDK는 Atlran 2 앱·서비스를 정식 지원하며 Origin 12는 개발자 기술공개판을 제공한다. 2027년 예정된 Origin 13에서는 신규 앱 템플릿의 기본언어가 Atlran으로 바뀔 예정이다.</p>
+      <p>XWise Atlran SDK는 계약과 의존관계, 반응형 속성을 기존 XWise 장면그래프에 연결한다. Code B State Flow 어댑터를 통해 한 화면 안에서 기존 Code B 구성요소와 Atlran 구성요소를 함께 사용할 수 있다.</p>
+      <p>프로젝트 형식, 패키지 서명, 앱 권한, 디버거와 성능분석기는 기존 TML SD 도구와 통합된다. 다만 강한 생태계 호환성이 Code B 소스를 수정 없이 Atlran으로 컴파일한다는 뜻은 아니며 자동변환기는 계약으로 바꿀 수 없는 동적 동작을 이행보고서에 남긴다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>계약과 의존관계가 문서가 아니라 실행 가능한 언어구조라는 점은 대규모 서비스에서 초기화순서, 누락된 오류처리와 상태불일치를 줄였다는 평가를 받는다. 객체지향 코드와 함수형 자료흐름을 한 언어에서 자연스럽게 섞을 수 있다는 점도 Code B 이행에 유리하다.</p>
+      <p>반면 계약을 과도하게 작성하면 작은 기능에도 선언이 길어지고 컴파일러의 증명시간이 늘어난다. 추상화와 ATR에 의존하는 만큼 실시간 장치제어나 극단적인 성능최적화에는 적합하지 않으며 이 영역은 Core와 Code A가 계속 맡는다.</p>
+    </section>
+  </body>
+</document>

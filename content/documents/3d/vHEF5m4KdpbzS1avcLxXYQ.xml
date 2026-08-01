@@ -20,6 +20,7 @@
         <tbody>
           <tr><td>커널·기본 서비스</td><td>공개</td><td>허용적 라이선스와 구성요소별 기존 라이선스를 적용한다.</td></tr>
           <tr><td>Code A·Code B 도구사슬</td><td>공개</td><td>재현 가능한 빌드와 정적분석 규칙을 포함한다.</td></tr>
+          <tr><td>Core·Atlran 통합도구</td><td>기술공개</td><td>Core 드라이버 인터페이스, AIR 설치 컴파일러와 TMC-ABI 검증기를 포함한다.</td></tr>
           <tr><td>XWise Mobile 기본 합성기</td><td>공개</td><td>일부 상용 색관리·매체코덱은 별도 모듈이다.</td></tr>
           <tr><td>제조사 펌웨어·통신 인증키</td><td>비공개</td><td>장치 공급자와 통신사업자가 관리한다.</td></tr>
           <tr><td>TML 계정·앱장터 서버</td><td>비공개</td><td>호환 서버를 독립적으로 구현할 수 있는 공개 프로토콜은 제공한다.</td></tr>
@@ -34,7 +35,8 @@
     </section>
     <section>
       <title>13 계열</title>
-      <p>13 계열은 화면과 입력장치를 기기간에 실시간으로 재배치하는 분산 XWise 장면, 앱별 서비스구성을 사용량에 따라 줄이는 Adaptive Realm, 차량·개인기기 사이의 강한 자료분리와 Code A 안전 드라이버 인터페이스를 시험하고 있다.</p>
+      <p>13 계열은 화면과 입력장치를 기기간에 실시간으로 재배치하는 분산 XWise 장면, 앱별 서비스구성을 사용량에 따라 줄이는 Adaptive Realm, 차량·개인기기 사이의 강한 자료분리를 시험하고 있다.</p>
+      <p>개발언어 쪽에서는 <ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core</ref> 드라이버 인터페이스, <ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref> 서비스·앱 SDK와 AIR 설치 컴파일러가 선행시험 중이다. Code A·Code B와 새 언어가 한 패키지에 들어갈 때에는 TMC-ABI 검증기가 권한·형식·수명경계를 확인한다.</p>
       <p>이 가운데 일부는 Origin 13에 들어가지 않을 수 있다. 특히 분산 장면합성은 네트워크 지연과 권한표시가, Adaptive Realm은 앱 알림 누락과 디버깅 복잡성이 해결과제로 남아 있다.</p>
     </section>
     <section>
@@ -46,6 +48,7 @@
         <li>통과한 구성요소만 Origin 후보분기로 복사하고 장기지원 정책을 부여한다.</li>
       </ol>
       <p>정식 Origin에는 TML SD가 서명과 사후지원을 제공하며 OpenOrigin 공동체의 유지보수만으로는 제품지원 계약을 대신할 수 없다.</p>
+      <p>13 계열에서 기준을 통과한 Core·Atlran 도구는 2027년 예정된 Origin 13에 들어간다. Atlran은 신규 앱의 기본 권장언어가 되지만 기존 Code A·Code B 패키지의 실행과 빌드는 계속 지원된다.</p>
     </section>
   </body>
 </document>

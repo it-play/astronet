@@ -1,23 +1,36 @@
 <document id="dO53MxvWZcGcvEkdtE9xOA">
   <title>Code B 프로그래밍 언어</title>
-  <aliases><alias>Code B</alias><alias>코드 B</alias></aliases>
+  <aliases><alias>Code B</alias><alias>코드 B</alias><alias>Code B Language</alias></aliases>
   <body>
     <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
     <section>
       <title>개요</title>
-      <p><strong>Code B</strong>는 TML SD가 응용프로그램·사용자 인터페이스·네트워크 서비스에 사용하기 위해 개발한 정적 형식 언어이다. <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>가 커널과 저수준 제어를 담당한다면 Code B는 이식성, 비동기 작업과 <ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref> UI 작성을 중시한다.</p>
-      <p><ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>에서 시스템 서비스와 기본 응용프로그램의 C++ 코드를 재작성하며 도입되었고 이후 Orion·Origin의 공통 앱 생태계를 떠받치는 언어가 되었다.</p>
+      <p><strong>Code B</strong>는 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>가 응용프로그램·사용자 인터페이스·네트워크 서비스용으로 개발한 강타입 객체지향 프로그래밍 언어이다. <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>가 C·C++에 해당하는 저수준 위치를 맡았다면 Code B는 Java의 형식·컴파일 체계와 JavaScript의 웹 친화적 표현을 함께 받아들였다.</p>
+      <p><ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>에서 시스템 서비스와 기본 응용프로그램의 C++ 코드를 재작성하며 도입되었다. 이후 Orion·Origin의 공통 앱 생태계, 비동기 네트워크 작업과 <ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref> 사용자 인터페이스를 떠받치는 주력 언어가 되었다.</p>
     </section>
     <section>
-      <title>실행모델</title>
-      <p>소스는 BIR이라는 이식형 중간표현으로 변환된다. 앱장터는 검증된 BIR과 자원을 배포하고 장치는 설치 때 ARM64·x86-64·ORO 네이티브 코드로 미리 컴파일한다. 필요한 경우 작은 함수만 실행 중 재최적화할 수 있다.</p>
-      <p>이 방식은 하나의 앱 패키지를 서로 다른 Origin 장치와 Orion PC에 배포하면서도 일반적인 바이트코드 가상기계보다 시작시간과 전력손실을 줄이기 위한 것이다.</p>
+      <title>역사와 버전</title>
+      <table>
+        <thead><tr><th>버전·시기</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>Code B 13</td><td>2013년 Orion 3와 함께 정식 출시</td></tr>
+          <tr><td>Code B 14</td><td>Origin 앱 수명주기와 이동기기 Web API 프로필 추가</td></tr>
+          <tr><td>Code B 19</td><td>2019년 OpenOrigin 출범과 함께 BIR 기본규격·컴파일러 공개</td></tr>
+          <tr><td>Code B 26</td><td>2026년 현행판. TMC-ABI와 Atlran 이행진단을 기본 도구에 포함</td></tr>
+          <tr><td>Code B 28</td><td>2028년 출시 예정인 마지막 기능판</td></tr>
+          <tr><td>2040년</td><td>컴파일러·BIR·표준 라이브러리·보안수정을 포함한 사후지원 완전 종료 예정</td></tr>
+        </tbody>
+      </table>
+      <p>주 버전은 발표연도의 뒤 두 자리를 사용한다. Code B 28 이후에는 새 문법이나 표준 API를 추가하지 않고 2040년까지 기존 응용프로그램의 빌드·보안·운영체제 호환성을 유지한다.</p>
     </section>
     <section>
       <title>언어 구조</title>
       <table>
         <thead><tr><th>기능</th><th>내용</th></tr></thead>
         <tbody>
+          <tr><td>Class·Interface</td><td>Java 계열과 유사한 명시적 클래스·인터페이스·제네릭과 접근제어를 제공한다.</td></tr>
+          <tr><td>Typed Arrow</td><td>JavaScript식 화살표 함수를 사용하되 매개변수와 반환형을 컴파일 단계에서 검증한다.</td></tr>
+          <tr><td>Web API</td><td>HTTP, URL, 스트림, 문서객체와 각종 웹 형식 API를 네이티브 앱에서도 호출한다.</td></tr>
           <tr><td>Actor Task</td><td>공유메모리 대신 형식화된 메시지로 비동기 작업을 연결한다.</td></tr>
           <tr><td>State Flow</td><td>자료변화와 UI 상태의 의존성을 선언해 필요한 부분만 다시 계산한다.</td></tr>
           <tr><td>Realm Permission</td><td>카메라·위치·파일과 네트워크 권한을 모듈 선언에 포함한다.</td></tr>
@@ -25,6 +38,35 @@
           <tr><td>Native Gate</td><td>검증된 Code A 모듈을 권한과 수명규칙이 명시된 경계로 호출한다.</td></tr>
         </tbody>
       </table>
+      <p>동적 언어처럼 간결한 콜백과 자료변환식을 작성할 수 있지만 변수·제네릭·예외·비동기 반환값은 모두 정적으로 검사한다. 명시적 형변환이나 동적 자료형을 쓰지 않는 한 실행 중에 객체형이 바뀌지 않는다.</p>
+    </section>
+    <section>
+      <title>문법 예시</title>
+      <p>다음 예시는 웹 API에서 날씨자료를 받아 강수확률이 높은 항목만 남기는 Code B 26 코드이다. Java식 클래스·생성자·제네릭과 JavaScript식 <code>async</code>·<code>await</code>·화살표 함수를 한 코드 안에서 사용한다.</p>
+      <blockquote>
+        <p><code>package weather.client;</code></p>
+        <p><code>public final class ForecastService {</code></p>
+        <p><code>  private readonly Uri endpoint;</code></p>
+        <p><code>  public ForecastService(Uri endpoint) {</code></p>
+        <p><code>    this.endpoint = endpoint;</code></p>
+        <p><code>  }</code></p>
+        <p><code>  public async Task&lt;List&lt;Forecast&gt;&gt; rainyDays() {</code></p>
+        <p><code>    const Response response = await Web.fetch(endpoint);</code></p>
+        <p><code>    const List&lt;Forecast&gt; rows =</code></p>
+        <p><code>      await response.json&lt;List&lt;Forecast&gt;&gt;();</code></p>
+        <p><code>    return rows</code></p>
+        <p><code>      .map((Forecast item) =&gt; item.normalize())</code></p>
+        <p><code>      .filter((Forecast item) =&gt; item.rainChance &gt;= 0.40);</code></p>
+        <p><code>  }</code></p>
+        <p><code>}</code></p>
+      </blockquote>
+      <p><code>Web.fetch</code>는 브라우저 전용 기능이 아니라 Code B 표준 Web API의 네트워크 호출이다. 화살표 함수의 <code>item</code>이 Forecast가 아니거나 변환결과가 목록의 형식과 맞지 않으면 BIR을 만들기 전에 컴파일이 실패한다.</p>
+    </section>
+    <section>
+      <title>실행모델</title>
+      <p>소스는 <strong>BIR</strong>이라는 이식형 중간표현으로 변환된다. 앱장터는 검증된 BIR과 자원을 배포하고 장치는 설치 때 ARM64·x86-64·ORO 네이티브 코드로 미리 컴파일한다. ARM32 Origin 장치는 유지보수용 레거시 백엔드로 32비트 네이티브 코드를 만들며 신규 최적화는 제공하지 않는다. 필요한 경우 다른 대상에서는 작은 함수만 실행 중 재최적화할 수 있다.</p>
+      <p>이 방식은 하나의 앱 패키지를 서로 다른 Origin 장치와 Orion PC에 배포하면서도 일반적인 바이트코드 가상기계보다 시작시간과 전력손실을 줄이기 위한 것이다.</p>
+      <p>BIR은 Code B 배포형식으로 유지되며 후속 언어 <ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref>의 AIR과 합쳐지지 않는다. 대신 두 형식은 TML Module Contract ABI를 통해 형식화된 어댑터를 만들고 같은 패키지 안에서 호출할 수 있다.</p>
     </section>
     <section>
       <title>XWise와의 관계</title>
@@ -32,9 +74,14 @@
       <p>Orion 4의 데스크톱 UI와 Origin의 터치 UI는 같은 언어를 사용하지만 화면구성과 앱 수명주기는 다르다. 한쪽의 앱을 다른 쪽에 그대로 복사하는 것이 아니라 공통 업무논리와 자원을 재사용하고 UI 계층을 대상기기에 맞게 구성한다.</p>
     </section>
     <section>
+      <title>지원 종료와 이전</title>
+      <p>TML SD는 2028년 예정된 Code B 28을 마지막 기능판으로 지정했다. 이 판에는 BIR·AIR 어댑터, 계약식 변환과 자동 이행보고서가 완성될 예정이며 이후에는 보안수정·컴파일러 유지보수와 운영체제 호환작업만 진행한다.</p>
+      <p>신규 앱과 상위 서비스에는 Atlran 사용이 권장된다. 수치연산·신호처리처럼 하드웨어 수준 최적화가 필요한 부분은 <ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core</ref> 모듈로 분리할 수 있다. 기존 Code B 패키지는 2040년까지 지원되므로 Atlran 도입이 즉각적인 전면 재작성을 뜻하지는 않는다.</p>
+    </section>
+    <section>
       <title>평가</title>
       <p>Code B는 TML SD가 독자 운영체제의 프로그램 부족을 해결하는 데 결정적인 역할을 했다. ARM과 ORO 사이의 이식성, 앱 권한검증과 XWise 도구의 통합은 Origin을 외부 제조사에 포팅하기 쉽게 만들었다.</p>
-      <p>반면 BIR과 전용 도구사슬에 대한 의존은 TML SD 생태계 밖에서 장기보존과 독립 구현을 어렵게 한다. OpenOrigin은 BIR 규격과 기본 컴파일러를 공개했지만 상용 최적화기와 일부 디버깅 서비스는 별도 제품으로 남아 있다.</p>
+      <p>반면 Java와 JavaScript 양쪽에서 기능을 받아들이며 언어규격과 BIR 검증기가 지나치게 커졌다는 지적도 있다. OpenOrigin은 BIR 규격과 기본 컴파일러를 공개했지만 상용 최적화기와 일부 디버깅 서비스는 별도 제품으로 남아 있다.</p>
     </section>
   </body>
 </document>

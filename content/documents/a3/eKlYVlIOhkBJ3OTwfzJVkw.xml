@@ -35,7 +35,8 @@
     <section>
       <title>호환성과 성능</title>
       <p>Continuum은 Windows PE·EXE, Linux ELF·AppImage와 제한적인 macOS Mach-O 프로그램을 별도 셀에서 실행한다. DMG는 실행파일이 아니라 디스크 이미지이므로 Mac Cell은 이를 설치매체로 탑재한 뒤 내부 Mach-O 응용프로그램의 지원가능 여부를 판단한다.</p>
-      <p>H.O.S 프로세서에서는 Continuum과 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>가 함께 동작한다. 전자는 운영체제 API와 파일·그래픽 규격을, 후자는 외부 기계어를 변환한다. 네이티브 Code A·Code B 프로그램은 이 변환을 거치지 않아 컴퓨터의 스케줄러·메모리·가속기 잠재력을 가장 잘 활용한다.</p>
+      <p>H.O.S 프로세서에서는 Continuum과 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>가 함께 동작한다. 전자는 운영체제 API와 파일·그래픽 규격을, 후자는 외부 기계어를 변환한다. TML SD 도구사슬로 만든 네이티브 프로그램은 이 변환을 거치지 않아 컴퓨터의 스케줄러·메모리·가속기 잠재력을 가장 잘 활용한다.</p>
+      <p>2026년 Orion 4.4 SDK는 <ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core 2</ref> 시스템 모듈과 <ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran 2</ref> 앱·서비스를 정식 지원한다. Core는 빌드 때 네이티브 기계어로 컴파일되고 Atlran AIR은 설치 때 대상기기용으로 AOT 변환된다. 기존 Code A·Code B 프로그램도 TMC-ABI 어댑터로 함께 사용할 수 있으며 새 SDK가 재컴파일을 강제하지는 않는다.</p>
     </section>
     <section>
       <title>판본과 갱신</title>

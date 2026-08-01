@@ -24,7 +24,10 @@
           <tr><td>2017년</td><td>그룹 사명변경에 따라 TML SD 명칭 사용</td></tr>
           <tr><td>2019년</td><td><ref href="doc:vHEF5m4KdpbzS1avcLxXYQ">OpenOrigin</ref> 공개</td></tr>
           <tr><td>2021년</td><td><ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref> 국내 출시</td></tr>
-          <tr><td>2022년 이후</td><td>해외 개발도구 공개와 운영체제·기업용 소프트웨어 수출 확대</td></tr>
+          <tr><td>2022~2023년</td><td>해외 개발도구 공개와 운영체제·기업용 소프트웨어 수출 확대</td></tr>
+          <tr><td>2024년</td><td><ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core 1.0</ref> 정식 출시</td></tr>
+          <tr><td>2025년</td><td><ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran 1.0</ref> 출시와 Code A 기능규격 동결</td></tr>
+          <tr><td>2026년</td><td>Core·Atlran 2.x 및 TMC-ABI 통합 개발키트 공급</td></tr>
         </tbody>
       </table>
     </section>
@@ -35,7 +38,7 @@
         <tbody>
           <tr><td>운영체제</td><td><ref href="doc:SpBugADlRQyj1V9SIfMJ5Q">Orion</ref>, <ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref>, <ref href="doc:vHEF5m4KdpbzS1avcLxXYQ">OpenOrigin</ref></td></tr>
           <tr><td>업무용 소프트웨어</td><td>Ararat Office</td></tr>
-          <tr><td>개발</td><td><ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>·<ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>, 프로그래밍·디버깅·배포 도구</td></tr>
+          <tr><td>개발</td><td><ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>·<ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>·<ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core</ref>·<ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref>, 프로그래밍·디버깅·배포 도구</td></tr>
           <tr><td>그래픽</td><td><ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref> GUI·화면합성 엔진</td></tr>
           <tr><td>호환성</td><td><ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref> 실행환경</td></tr>
           <tr><td>콘텐츠 제작</td><td>영상편집기와 각종 제작도구</td></tr>
@@ -45,7 +48,9 @@
     </section>
     <section>
       <title>개발 생태계</title>
-      <p>Orion 3 이후 시스템 개발은 Code A, 상위 서비스와 앱 개발은 Code B를 중심으로 재편되었다. 두 언어의 도구사슬, XWise와 패키지 서명·배포체계를 하나의 개발키트로 제공해 운영체제의 세대가 바뀌어도 소스와 화면자원을 재사용할 수 있다.</p>
+      <p>Orion 3 이후 시스템 개발은 Code A, 상위 서비스와 앱 개발은 Code B를 중심으로 재편되었다. 두 언어의 도구사슬, XWise와 패키지 서명·배포체계를 하나의 개발키트로 제공해 운영체제의 세대가 바뀌어도 소스와 화면자원을 재사용할 수 있게 했다.</p>
+      <p>현행 개발전략은 저수준 고성능 모듈을 Core로, 신규 서비스와 앱을 Atlran으로 옮기는 것이다. Code A는 2025년 12월 기능 추가가 끝났고 Code B는 2028년 Code B 28을 마지막 기능판으로 낸다. 두 언어의 컴파일러·보안·호환지원은 2040년까지 유지된다.</p>
+      <p>네 언어는 TML Module Contract ABI를 공통 경계로 사용한다. Code B의 BIR과 Atlran의 AIR은 별도 중간표현으로 남지만 형식화된 어댑터를 거쳐 같은 패키지에서 호출할 수 있고, Code A와 Core도 C ABI·권한객체 기술자와 TMC-ABI를 함께 사용한다.</p>
       <p>외부 응용프로그램은 Continuum이 운영체제 API를 중개하고, H.O.S 장비의 외부 기계어는 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>가 변환한다. TML SD는 호환 API와 앱 인증을, H.O.S는 명령어 변환과 펌웨어를 담당한다.</p>
     </section>
     <section>

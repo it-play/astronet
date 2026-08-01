@@ -7,6 +7,7 @@
       <title>개요</title>
       <p><strong>XWise</strong>는 TML SD가 Orion·Origin용으로 개발한 그래픽 사용자 인터페이스 및 화면합성 엔진이다. 창·문자·영상·벡터도형·3차원 장면과 애니메이션을 하나의 장면그래프로 다루며 2013년 <ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>에서 처음 정식 지원되었다.</p>
       <p>단순한 창관리자나 테마가 아니라 레이아웃, 입력, 접근성, 애니메이션, GPU 합성과 앱 간 화면전환을 함께 제공하는 응용프로그램 프레임워크이다. <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>의 상태흐름과 직접 연결되는 것이 가장 큰 특징이다.</p>
+      <p>2026년에는 후속 앱 언어인 <ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref>을 위한 XWise Atlran SDK가 정식지원되었다. 엔진을 별도로 분기하지 않고 같은 장면그래프를 사용하며 Code B 화면모듈과 Atlran 화면모듈을 함께 구성할 수 있다.</p>
     </section>
     <section>
       <title>구조</title>
@@ -42,7 +43,12 @@
     <section>
       <title>Origin</title>
       <p><ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref>은 XWise Mobile 분기를 사용한다. 데스크톱 창보다 터치표적, 화면회전, 앱 중단·복원, 배터리와 OLED 부분갱신에 중점을 두며 스마트워치와 차량에서는 같은 장면자원을 다른 입력규칙으로 재구성한다.</p>
-      <p>공통 Scene Graph와 Code B 덕분에 색·문자·아이콘과 업무논리를 공유할 수 있지만 Orion UI를 축소해서 그대로 표시하지는 않는다. 플랫폼별 상호작용 규칙을 지키지 않은 앱은 심사에서 수정권고를 받는다.</p>
+      <p>공통 Scene Graph와 Code B·Atlran 도구 덕분에 색·문자·아이콘과 업무논리를 공유할 수 있지만 Orion UI를 축소해서 그대로 표시하지는 않는다. 플랫폼별 상호작용 규칙을 지키지 않은 앱은 심사에서 수정권고를 받는다.</p>
+    </section>
+    <section>
+      <title>Atlran SDK</title>
+      <p>XWise Atlran SDK는 Atlran의 계약·의존관계와 반응형 속성을 Scene Graph에 연결한다. 화면구성요소가 요구하는 자료원과 권한을 <code>depends</code>로 선언하고 화면상태의 허용범위를 계약으로 고정해 잘못된 갱신이 합성기에 도달하기 전에 차단한다.</p>
+      <p>Code B State Flow 어댑터는 기존 화면모듈의 상태를 Atlran 값흐름으로 노출한다. 따라서 대형 앱을 한 번에 재작성하지 않고 화면이나 서비스 단위로 옮길 수 있으며 두 언어의 구성요소는 같은 접근성 트리와 애니메이션 시간을 사용한다.</p>
     </section>
     <section>
       <title>평가</title>

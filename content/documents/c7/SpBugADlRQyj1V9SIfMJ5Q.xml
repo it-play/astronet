@@ -28,7 +28,7 @@
     </section>
     <section>
       <title>응용프로그램과 호환성</title>
-      <p>Orion용 네이티브 응용프로그램은 Code A 또는 Code B로 작성되며 XWise를 공통 그래픽 기반으로 사용한다. <ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref>은 Windows용 PE·EXE와 Linux용 ELF·AppImage, 제한적인 macOS용 Mach-O 응용프로그램을 각각 격리된 실행 셀에서 처리한다.</p>
+      <p>Orion용 네이티브 응용프로그램은 기존 <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>·<ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>와 후속 <ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core</ref>·<ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref> 도구사슬로 작성하며 XWise를 공통 그래픽 기반으로 사용한다. <ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref>은 Windows용 PE·EXE와 Linux용 ELF·AppImage, 제한적인 macOS용 Mach-O 응용프로그램을 각각 격리된 실행 셀에서 처리한다.</p>
       <p>Continuum이 외부 운영체제의 파일·그래픽·네트워크 API를 Orion 호출로 바꾸는 체계라면 <ref href="doc:TI6wBPGLeV2BkPBwAENw8g">K-Bridge</ref>는 x86-64·AArch64 기계어를 H.O.S 프로세서의 ORO 코드로 바꾸는 체계이다. H.O.S 장비에서 외국 프로그램을 실행할 때에는 두 계층이 함께 쓰일 수 있다.</p>
     </section>
     <section>

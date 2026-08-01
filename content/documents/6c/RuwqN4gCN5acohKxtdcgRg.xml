@@ -1,12 +1,26 @@
 <document id="RuwqN4gCN5acohKxtdcgRg">
   <title>Code A 프로그래밍 언어</title>
-  <aliases><alias>Code A</alias><alias>코드 A</alias></aliases>
+  <aliases><alias>Code A</alias><alias>코드 A</alias><alias>Code A Language</alias></aliases>
   <body>
     <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
     <section>
       <title>개요</title>
-      <p><strong>Code A</strong>는 TML SD가 운영체제 커널·장치 드라이버·실시간 서비스에 사용하기 위해 개발한 정적 컴파일 시스템 프로그래밍 언어이다. <ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>의 C·C++·어셈블리 구성요소를 재작성하는 과정에서 처음 상용화되었다.</p>
-      <p>직접 메모리와 하드웨어를 다룰 수 있으면서도 소유권·수명·권한형을 이용해 해제 뒤 사용, 중복해제와 잘못된 장치접근을 컴파일 단계에서 줄이는 것이 목적이다.</p>
+      <p><strong>Code A</strong>는 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>가 개발한 저수준 시스템 프로그래밍 언어이다. TML SD 생태계에서 C·C++가 맡던 위치를 대체했으며 운영체제 커널, 장치 드라이버, 실시간 서비스와 고성능 라이브러리에 사용된다.</p>
+      <p><ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref>의 C·C++·어셈블리 구성요소를 재작성하는 과정에서 처음 상용화되었다. 직접 메모리와 하드웨어를 다룰 수 있으면서도 소유권·수명·권한형으로 해제 뒤 사용, 중복해제와 잘못된 장치접근을 컴파일 단계에서 줄이는 것이 목적이다.</p>
+    </section>
+    <section>
+      <title>역사</title>
+      <table>
+        <thead><tr><th>시기</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>2010년</td><td>Orion 3 커널 재작성용 내부 컴파일러 사업으로 개발 시작</td></tr>
+          <tr><td>2013년</td><td>Code A 13과 Orion 3가 함께 출시되며 정식 상용화</td></tr>
+          <tr><td>2021년</td><td>Code A 21에서 Orion 4 마이크로커널과 ORO 지원을 정비</td></tr>
+          <tr><td>2025년</td><td>Code A 25를 마지막 기능규격으로 지정하고 12월부터 기능 추가 중단</td></tr>
+          <tr><td>2040년</td><td>컴파일러·표준 라이브러리·보안수정을 포함한 사후지원 완전 종료 예정</td></tr>
+        </tbody>
+      </table>
+      <p>공개 뒤의 주 버전은 대체로 발표연도의 뒤 두 자리를 사용한다. 따라서 Code A 25는 스물다섯 번째 언어세대를 뜻하는 명칭이 아니라 2025년 규격이라는 의미이다.</p>
     </section>
     <section>
       <title>언어 구조</title>
@@ -20,21 +34,45 @@
           <tr><td>Time Contract</td><td>실시간 코드의 최대 대기·할당·잠금 규칙을 정적분석한다.</td></tr>
         </tbody>
       </table>
+      <p>문법은 중괄호, 명시적 형식과 문장 끝 세미콜론을 사용해 C 계열 개발자가 저수준 동작을 쉽게 추적하도록 설계되었다. 다만 원시 포인터를 기본값으로 삼지는 않으며 하드웨어 접근도 권한형과 <code>unsafe</code> 경계를 요구한다.</p>
     </section>
     <section>
-      <title>컴파일과 실행</title>
+      <title>문법 예시</title>
+      <p>다음은 메모리 매핑 입출력 장치의 값을 읽는 Code A 25 예시이다. 실제 장치주소를 정수처럼 전달하지 않고 <code>cap&lt;mmio32&gt;</code> 권한형으로 받으며 함수가 입출력을 수행한다는 사실과 최대 실행시간을 서명에 함께 기록한다.</p>
+      <blockquote>
+        <p><code>module flight.sensor;</code></p>
+        <p><code>struct SensorPort {</code></p>
+        <p><code>  cap&lt;mmio32&gt; value;</code></p>
+        <p><code>  cap&lt;mmio32&gt; state;</code></p>
+        <p><code>};</code></p>
+        <p><code>public fn sample(borrow SensorPort port, u32 limit) -&gt; u32</code></p>
+        <p><code>  effects(io) time(max: 40us) {</code></p>
+        <p><code>  let u32 raw = unsafe(io) { port.value.read() };</code></p>
+        <p><code>  return raw &gt; limit ? limit : raw;</code></p>
+        <p><code>}</code></p>
+      </blockquote>
+      <p><code>borrow</code>는 포트의 소유권을 넘기지 않는 참조이고 <code>effects(io)</code>는 순수 계산함수에서 이 함수를 호출하지 못하게 한다. <code>unsafe(io)</code> 안의 실제 읽기는 위험연산이지만 위험범위와 필요한 권한이 소스에 드러난다.</p>
+    </section>
+    <section>
+      <title>컴파일과 상호운용</title>
       <p>Code A 컴파일러는 ARM64, x86-64와 H.O.S의 <ref href="doc:jFiXMBMM-ULMzUo7I_HZrQ">ORO</ref>를 대상으로 네이티브 코드를 만든다. ORO 대상에서는 권한객체와 트랜잭션 메모리 확장을 직접 사용하지만 같은 소스를 다른 프로세서에도 컴파일할 수 있다.</p>
       <p>가비지 컬렉션은 기본적으로 사용하지 않는다. 필요한 경우 범위형 할당자와 참조계수 라이브러리를 선택하며 실시간 서비스는 동작 중 동적할당을 금지할 수 있다.</p>
+      <p>Code A 25부터 TML Module Contract ABI, 약칭 <strong>TMC-ABI</strong> 기술자를 정식으로 내보낸다. 기존 C ABI와 함께 형식·소유권·권한·오류정보를 기록해 <ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core</ref> 모듈과 연결한다. TMC-ABI는 서로 다른 프로세서가 같은 기계어를 사용한다는 뜻이 아니며 각 대상용 연결기가 계약에 맞는 호출경계를 생성한다.</p>
     </section>
     <section>
       <title>사용처</title>
       <p><ref href="doc:eKlYVlIOhkBJ3OTwfzJVkw">Orion 4</ref> 마이크로커널과 핵심 서비스, <ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref> 커널·드라이버, XWise 합성기와 TML SD의 고성능 라이브러리에 사용된다. H.O.S 펌웨어와 저수준 진단도구도 제한된 Code A 프로필을 지원한다.</p>
-      <p>일반 앱 전체를 Code A로 작성할 필요는 없다. UI와 네트워크 중심 응용프로그램은 <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>가 주류이며 Code A 모듈은 명시적인 권한경계와 FFI를 통해 연결된다.</p>
+      <p>일반 앱 전체를 Code A로 작성할 필요는 없다. 기존 UI와 네트워크 중심 응용프로그램은 <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>가 주류였으며 신규 상위 서비스와 앱에는 <ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref>이 권장된다.</p>
     </section>
     <section>
-      <title>호환성과 비판</title>
-      <p>C ABI를 제공해 기존 라이브러리를 호출할 수 있지만 안전성 검증은 FFI 경계 밖의 코드까지 보장하지 않는다. Orion 3 초기의 재작성도 모든 C 코드를 기계적으로 바꾼 것이 아니라 동작을 다시 명세하고 시험하는 장기작업이었다.</p>
-      <p>엄격한 소유권·효과 표기는 대규모 드라이버의 오류를 줄였으나 학습곡선과 컴파일 시간이 크다는 비판을 받는다. TML SD는 오류 메시지와 자동변환기를 개선했지만 복잡한 병렬코드에는 전문적인 설계가 여전히 필요하다.</p>
+      <title>지원 종료와 이전</title>
+      <p>TML SD는 2025년 12월부터 Code A에 새로운 문법과 언어기능을 추가하지 않는다. 기능 동결 뒤에도 컴파일러 오류수정, 새 하드웨어 백엔드의 호환유지, 표준 라이브러리 보안수정과 기존 제품지원은 계속하며 2040년에 이를 모두 종료할 예정이다.</p>
+      <p>성능이 중요한 커널·드라이버·신호처리부는 Core로, 직접 하드웨어 제어가 필요 없는 서비스는 Atlran으로 옮기는 것이 공식 권장경로이다. 기존 Code A 바이너리와 소스의 즉시 재작성을 강제하지 않으며 TMC-ABI 어댑터와 자동변환 보고서로 장기이행을 지원한다.</p>
+    </section>
+    <section>
+      <title>평가</title>
+      <p>C ABI를 제공해 기존 라이브러리를 호출할 수 있지만 안전성 검증은 외부 코드까지 보장하지 않는다. Orion 3 초기의 재작성도 모든 C 코드를 기계적으로 바꾼 것이 아니라 동작을 다시 명세하고 시험하는 장기작업이었다.</p>
+      <p>엄격한 소유권·효과 표기는 대규모 드라이버의 오류를 줄였으나 학습곡선과 컴파일 시간이 크다는 비판을 받았다. 이 문제와 오랫동안 누적된 예외규칙이 TML SD가 Code A를 동결하고 더 좁은 목적의 Core를 개발한 주요 배경으로 꼽힌다.</p>
     </section>
   </body>
 </document>

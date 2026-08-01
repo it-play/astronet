@@ -24,13 +24,14 @@
     </section>
     <section>
       <title>하드웨어</title>
-      <p>Origin은 ARM32·ARM64와 H.O.S의 ORO 명령체계를 정식 지원한다. <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref> 앱은 이식 가능한 중간표현으로 배포되어 설치 때 각 프로세서용으로 변환되고, 성능이 중요한 <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref> 구성요소는 ARM64와 ORO 실행파일을 함께 담을 수 있다.</p>
+      <p>Origin은 ARM32·ARM64와 H.O.S의 ORO 명령체계를 정식 지원한다. <ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref> 앱은 BIR로 배포되어 설치 때 각 프로세서용으로 변환되고, 성능이 중요한 <ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref> 구성요소는 ARM64와 ORO 실행파일을 함께 담을 수 있다.</p>
+      <p>Origin 12의 2026년 개발키트는 <ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core</ref> 드라이버 모듈과 <ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref> AIR 앱의 기술공개판을 제공한다. 실행지원은 ARM64와 ORO 장치에 한정되고 기본 프로젝트 틀은 아직 Code A·Code B를 사용한다. ARM32 장치는 기존 BIR 호환경로를 유지하며 양산용 기본언어 전환은 Origin 13에 맞춰 진행된다.</p>
       <p>H.O.S 칩을 요구하는 운영체제는 아니기 때문에 외부 제조사는 ARM 기반 장치에도 Origin을 탑재할 수 있다. 반대로 TML 전자 장치는 H.O.S 프로세서와 Origin의 공동 전력·가속기 스케줄링을 사용해 더 긴 배터리 수명과 빠른 카메라·AI 처리를 제공한다.</p>
     </section>
     <section>
       <title>응용프로그램 호환성</title>
       <p>네이티브 앱은 Origin Application Package 형식으로 배포된다. Android APK는 Droid Cell이 Dalvik·ART API와 주요 Android 프레임워크 호출을 Origin 서비스로 바꾸어 실행하며 앱별 가상장치와 권한중개를 사용한다.</p>
-      <p>APK 호환은 앱스토어·지도·결제와 같은 Google 전용서비스를 자동으로 제공하지 않는다. 커널 드라이버, 제조사 보안영역이나 비공개 서비스에 의존하는 앱은 별도 수정이 필요하다. 포팅도구는 Android 프로젝트의 UI·권한·백그라운드 작업을 Code B와 XWise Mobile 구조로 변환하는 보고서와 초안을 생성한다.</p>
+      <p>APK 호환은 앱스토어·지도·결제와 같은 Google 전용서비스를 자동으로 제공하지 않는다. 커널 드라이버, 제조사 보안영역이나 비공개 서비스에 의존하는 앱은 별도 수정이 필요하다. 포팅도구는 Android 프로젝트의 UI·권한·백그라운드 작업을 Code B 또는 Atlran과 XWise Mobile 구조로 변환하는 보고서와 초안을 생성한다.</p>
     </section>
     <section>
       <title>버전 역사</title>
@@ -49,6 +50,7 @@
           <tr><td>Origin 10</td><td>2023년</td><td>폴더블·대화면 창모드, 데스크톱형 멀티태스킹 도입</td></tr>
           <tr><td>Origin 11</td><td>2024년</td><td>차량 안전영역과 인포테인먼트 분리, 장기지원판 신설</td></tr>
           <tr><td>Origin 12</td><td>2025년</td><td>NPU 공통 API, ARM·ORO 기능동등성과 앱 상태이동 개선</td></tr>
+          <tr><td>Origin 13</td><td>2027년 예정</td><td>Atlran 신규 앱 기본틀, Core 양산용 드라이버 도구와 TMC-ABI 전면지원</td></tr>
         </tbody>
       </table>
     </section>
@@ -56,6 +58,7 @@
       <title>OpenOrigin과의 관계</title>
       <p><ref href="doc:vHEF5m4KdpbzS1avcLxXYQ">OpenOrigin</ref>은 다음 Origin 메이저판의 기능과 API를 먼저 공개하는 상위 오픈소스 프로젝트이다. 실험기능은 공개 빌드와 장치시험을 거친 뒤 안정성·전력·보안 기준을 통과한 경우에만 정식 Origin에 들어간다.</p>
       <p>2026년 OpenOrigin의 최신판은 13.0.41.2로 Origin 12보다 메이저 버전이 하나 앞선다. 숫자가 앞선다는 이유만으로 제조사와 일반 사용자가 OpenOrigin을 정식판 대신 설치하도록 권장되는 것은 아니다.</p>
+      <p>Origin 13은 2027년 출시를 목표로 Atlran을 신규 앱의 기본 권장언어로, Core를 고성능 드라이버·미디어·가속기 모듈의 권장언어로 채택할 예정이다. 기존 BIR 앱과 Code A 구성요소는 그대로 지원한다.</p>
     </section>
     <section>
       <title>시장</title>
