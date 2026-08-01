@@ -43,23 +43,27 @@
     <section>
       <title>문법 예시</title>
       <p>다음 예시는 웹 API에서 날씨자료를 받아 강수확률이 높은 항목만 남기는 Code B 26 코드이다. Java식 클래스·생성자·제네릭과 JavaScript식 <code>async</code>·<code>await</code>·화살표 함수를 한 코드 안에서 사용한다.</p>
-      <blockquote>
-        <p><code>package weather.client;</code></p>
-        <p><code>public final class ForecastService {</code></p>
-        <p><code>  private readonly Uri endpoint;</code></p>
-        <p><code>  public ForecastService(Uri endpoint) {</code></p>
-        <p><code>    this.endpoint = endpoint;</code></p>
-        <p><code>  }</code></p>
-        <p><code>  public async Task&lt;List&lt;Forecast&gt;&gt; rainyDays() {</code></p>
-        <p><code>    const Response response = await Web.fetch(endpoint);</code></p>
-        <p><code>    const List&lt;Forecast&gt; rows =</code></p>
-        <p><code>      await response.json&lt;List&lt;Forecast&gt;&gt;();</code></p>
-        <p><code>    return rows</code></p>
-        <p><code>      .map((Forecast item) =&gt; item.normalize())</code></p>
-        <p><code>      .filter((Forecast item) =&gt; item.rainChance &gt;= 0.40);</code></p>
-        <p><code>  }</code></p>
-        <p><code>}</code></p>
-      </blockquote>
+      <code-block language="code-b">
+        package weather.client;
+
+        public final class ForecastService {
+          private readonly Uri endpoint;
+
+          public ForecastService(Uri endpoint) {
+            this.endpoint = endpoint;
+          }
+
+          public async Task&lt;List&lt;Forecast&gt;&gt; rainyDays() {
+            const Response response = await Web.fetch(endpoint);
+            const List&lt;Forecast&gt; rows =
+              await response.json&lt;List&lt;Forecast&gt;&gt;();
+
+            return rows
+              .map((Forecast item) =&gt; item.normalize())
+              .filter((Forecast item) =&gt; item.rainChance &gt;= 0.40);
+          }
+        }
+      </code-block>
       <p><code>Web.fetch</code>는 브라우저 전용 기능이 아니라 Code B 표준 Web API의 네트워크 호출이다. 화살표 함수의 <code>item</code>이 Forecast가 아니거나 변환결과가 목록의 형식과 맞지 않으면 BIR을 만들기 전에 컴파일이 실패한다.</p>
     </section>
     <section>

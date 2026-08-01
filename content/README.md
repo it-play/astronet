@@ -32,6 +32,8 @@ See [`examples/document.xml`](./examples/document.xml) for the complete authorin
 - External links use `<external href="https://…">표시 문구</external>`.
 - Section numbers and fallback anchors are generated. Authors may add a stable lowercase section `id` for cross-document links.
 - `<footnote>` is inline, may contain safe emphasis and internal or external links, and cannot contain another footnote or block content.
+- `<quote>` contains one or more block elements for quoted declarations, speeches, poems, and other verbatim material. Legacy `<blockquote>` sources remain accepted as a compatibility alias.
+- `<code-block language="…">` contains text-only multiline code. The compiler removes surrounding blank lines and shared source indentation while preserving relative indentation and line breaks. XML-significant characters such as `<` and `&` must use entities; CDATA remains unsupported.
 - `<include-board ref="ID"/>` is the only reusable-content inclusion. General transclusion does not exist.
 
 ## Navigation boards

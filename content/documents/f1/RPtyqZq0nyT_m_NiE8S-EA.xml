@@ -40,18 +40,21 @@
     <section>
       <title>문법 예시</title>
       <p>다음은 두 실수배열에 <code>y = a×x + y</code> 연산을 적용하는 Core 2 예시이다. <code>domain vector</code>가 사용할 수 있는 연산을 한정하고 <code>schedule</code>이 벡터폭과 타일 크기를 지정한다.</p>
-      <blockquote>
-        <p><code>target ORO4;</code></p>
-        <p><code>domain vector Axpy {</code></p>
-        <p><code>  input x: f32[4096] align 64;</code></p>
-        <p><code>  inout y: f32[4096] align 64;</code></p>
-        <p><code>  param a: f32;</code></p>
-        <p><code>  pure update(i) = fma(a, x[i], y[i]);</code></p>
-        <p><code>  run forall i in 0..4096</code></p>
-        <p><code>    schedule vector(16), tile(256), unroll(4)</code></p>
-        <p><code>    write y[i] &lt;- update(i);</code></p>
-        <p><code>}</code></p>
-      </blockquote>
+      <code-block language="core">
+        target ORO4;
+
+        domain vector Axpy {
+          input x: f32[4096] align 64;
+          inout y: f32[4096] align 64;
+          param a: f32;
+
+          pure update(i) = fma(a, x[i], y[i]);
+
+          run forall i in 0..4096
+            schedule vector(16), tile(256), unroll(4)
+            write y[i] &lt;- update(i);
+        }
+      </code-block>
       <p><code>pure update</code>에는 외부상태를 바꾸는 연산을 넣을 수 없고 실제 저장은 <code>write</code>에 드러난다. 지정한 ORO4가 벡터폭이나 정렬조건을 만족하지 못하면 컴파일러가 조용히 느린 코드로 바꾸지 않고 계약실패를 보고한다.</p>
     </section>
     <section>

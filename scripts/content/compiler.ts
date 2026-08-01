@@ -28,8 +28,8 @@ import {
 import { buildSearchArtifacts } from './search-index';
 import { parseXml } from './xml';
 
-export const COMPILER_VERSION = '1.5.0';
-const SCHEMA_VERSION = 3;
+export const COMPILER_VERSION = '1.6.0';
+const SCHEMA_VERSION = 4;
 const RANDOM_PACK_SIZE = 256;
 const ARTICLE_PACK_BYTE_LIMIT = 4 * 1024 * 1024;
 const ARTICLE_BYTE_LIMIT = 1024 * 1024;

@@ -39,18 +39,20 @@
     <section>
       <title>문법 예시</title>
       <p>다음은 메모리 매핑 입출력 장치의 값을 읽는 Code A 25 예시이다. 실제 장치주소를 정수처럼 전달하지 않고 <code>cap&lt;mmio32&gt;</code> 권한형으로 받으며 함수가 입출력을 수행한다는 사실과 최대 실행시간을 서명에 함께 기록한다.</p>
-      <blockquote>
-        <p><code>module flight.sensor;</code></p>
-        <p><code>struct SensorPort {</code></p>
-        <p><code>  cap&lt;mmio32&gt; value;</code></p>
-        <p><code>  cap&lt;mmio32&gt; state;</code></p>
-        <p><code>};</code></p>
-        <p><code>public fn sample(borrow SensorPort port, u32 limit) -&gt; u32</code></p>
-        <p><code>  effects(io) time(max: 40us) {</code></p>
-        <p><code>  let u32 raw = unsafe(io) { port.value.read() };</code></p>
-        <p><code>  return raw &gt; limit ? limit : raw;</code></p>
-        <p><code>}</code></p>
-      </blockquote>
+      <code-block language="code-a">
+        module flight.sensor;
+
+        struct SensorPort {
+          cap&lt;mmio32&gt; value;
+          cap&lt;mmio32&gt; state;
+        };
+
+        public fn sample(borrow SensorPort port, u32 limit) -&gt; u32
+          effects(io) time(max: 40us) {
+          let u32 raw = unsafe(io) { port.value.read() };
+          return raw &gt; limit ? limit : raw;
+        }
+      </code-block>
       <p><code>borrow</code>는 포트의 소유권을 넘기지 않는 참조이고 <code>effects(io)</code>는 순수 계산함수에서 이 함수를 호출하지 못하게 한다. <code>unsafe(io)</code> 안의 실제 읽기는 위험연산이지만 위험범위와 필요한 권한이 소스에 드러난다.</p>
     </section>
     <section>

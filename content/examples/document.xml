@@ -24,9 +24,14 @@
         <li>순서 없는 항목</li>
         <li>두 번째 항목</li>
       </ul>
-      <blockquote>
+      <quote>
         <p>인용문도 안전한 블록 요소로 작성한다.</p>
-      </blockquote>
+      </quote>
+      <code-block language="code-a">
+        public fn add(i32 left, i32 right) -&gt; i32 {
+          return left + right;
+        }
+      </code-block>
       <table>
         <thead>
           <tr><th>항목</th><th>값</th></tr>

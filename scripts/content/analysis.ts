@@ -395,6 +395,7 @@ function referencesInBlock(block: BlockNode): LocatedReference[] {
       break;
     case 'section':
     case 'quote':
+    case 'code-block':
     case 'board':
     case 'rule':
       break;

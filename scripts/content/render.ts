@@ -119,7 +119,9 @@ function renderBlocks(
           return `<${tag}>${block.items.map((item) => `<li>${renderInline(item, context, true)}</li>`).join('')}</${tag}>`;
         }
         case 'quote':
-          return `<blockquote>${renderBlocks(block.blocks, context, numberPrefix, [])}</blockquote>`;
+          return `<blockquote class="article-quote">${renderBlocks(block.blocks, context, numberPrefix, [])}</blockquote>`;
+        case 'code-block':
+          return `<pre class="article-code-block" tabindex="0"${block.language ? ` data-language="${escapeAttribute(block.language)}"` : ''}><code>${escapeHtml(block.code)}</code></pre>`;
         case 'table':
           return `<div class="article-table-scroll" tabindex="0"><table><thead><tr>${block.head.map((cell) => `<th scope="col">${renderInline(cell, context, true)}</th>`).join('')}</tr></thead><tbody>${block.rows.map((row) => `<tr>${row.map((cell) => `<td>${renderInline(cell, context, true)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
         case 'figure':
@@ -284,6 +286,9 @@ function collectBlockText(blocks: BlockNode[], pieces: string[]): void {
         break;
       case 'quote':
         collectBlockText(block.blocks, pieces);
+        break;
+      case 'code-block':
+        pieces.push(block.code);
         break;
       case 'table':
         pieces.push(...block.head.map(inlineText), ...block.rows.flat().map(inlineText));

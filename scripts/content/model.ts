@@ -56,6 +56,12 @@ export interface QuoteBlock extends Located {
   blocks: BlockNode[];
 }
 
+export interface CodeBlock extends Located {
+  type: 'code-block';
+  language?: string;
+  code: string;
+}
+
 export interface TableBlock extends Located {
   type: 'table';
   head: InlineNode[][];
@@ -97,6 +103,7 @@ export type BlockNode =
   | ParagraphBlock
   | ListBlock
   | QuoteBlock
+  | CodeBlock
   | TableBlock
   | FigureBlock
   | VideoBlock
@@ -148,13 +155,17 @@ export interface SourceBoard extends Located {
 }
 
 const KOREAN_PATTERN = /[가-힣ㄱ-ㅎㅏ-ㅣ]/;
+const CODE_LANGUAGE_PATTERN = /^[a-z0-9][a-z0-9_+.-]{0,31}$/;
+const MAX_CODE_BLOCK_LENGTH = 32 * 1024;
 const INLINE_ELEMENTS = new Set(['em', 'strong', 'code', 'ref', 'external', 'footnote']);
 const BLOCK_ELEMENTS = new Set([
   'section',
   'p',
   'ul',
   'ol',
+  'quote',
   'blockquote',
+  'code-block',
   'table',
   'figure',
   'video-figure',
@@ -301,13 +312,16 @@ function parseBlock(element: XmlElementNode, source: string): BlockNode {
     case 'ul':
     case 'ol':
       return parseList(element, source);
+    case 'quote':
     case 'blockquote': {
       assertAttributes(element, source, []);
       assertNoMixedText(element, source);
       const blocks = parseBlocks(elementChildren(element), source);
-      if (blocks.length === 0) fail('Block quotation cannot be empty', location(element, source));
+      if (blocks.length === 0) fail('Quotation cannot be empty', location(element, source));
       return { ...location(element, source), type: 'quote', blocks };
     }
+    case 'code-block':
+      return parseCodeBlock(element, source);
     case 'table':
       return parseTable(element, source);
     case 'figure':
@@ -330,6 +344,48 @@ function parseBlock(element: XmlElementNode, source: string): BlockNode {
     default:
       fail('Unsupported block element', location(element, source));
   }
+}
+
+function parseCodeBlock(element: XmlElementNode, source: string): CodeBlock {
+  assertAttributes(element, source, ['language']);
+  const nested = element.children.find((child) => child.type === 'element');
+  if (nested) fail('Code block accepts text only', location(nested, source));
+
+  const language = optionalAttribute(element, 'language');
+  if (language && !CODE_LANGUAGE_PATTERN.test(language)) {
+    fail('Code block language is malformed', {
+      ...location(element, source),
+      element: element.name,
+      attribute: 'language',
+      target: language,
+    });
+  }
+
+  const lines = element.children
+    .filter((child) => child.type === 'text')
+    .map((child) => child.value)
+    .join('')
+    .replace(/\r\n?/g, '\n')
+    .split('\n');
+
+  while (lines[0]?.trim().length === 0) lines.shift();
+  while (lines.at(-1)?.trim().length === 0) lines.pop();
+  if (lines.length === 0) fail('Code block cannot be empty', location(element, source));
+
+  const indentation = Math.min(
+    ...lines
+      .filter((line) => line.trim().length > 0)
+      .map((line) => line.match(/^[ \t]*/)?.[0].length ?? 0),
+  );
+  const code = lines
+    .map((line) => (line.trim().length === 0 ? '' : line.slice(indentation)))
+    .join('\n');
+
+  if (code.length > MAX_CODE_BLOCK_LENGTH) {
+    fail(`Code block exceeds the ${MAX_CODE_BLOCK_LENGTH} character limit`, location(element, source));
+  }
+
+  return { ...location(element, source), type: 'code-block', language, code };
 }
 
 function parseSection(element: XmlElementNode, source: string): SectionBlock {

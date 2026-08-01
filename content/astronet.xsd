@@ -24,6 +24,20 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="codeLanguage">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-z0-9][a-z0-9_+.-]{0,31}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="codeBlockType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="language" type="codeLanguage"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
   <xs:complexType name="inlineContent" mixed="true">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="em" type="inlineContent"/>
@@ -75,7 +89,9 @@
       <xs:element name="p" type="inlineContent"/>
       <xs:element name="ul" type="listType"/>
       <xs:element name="ol" type="listType"/>
+      <xs:element name="quote" type="bodyType"/>
       <xs:element name="blockquote" type="bodyType"/>
+      <xs:element name="code-block" type="codeBlockType"/>
       <xs:element name="table" type="articleTableType"/>
       <xs:element name="figure" type="figureType"/>
       <xs:element name="video-figure" type="videoType"/>
