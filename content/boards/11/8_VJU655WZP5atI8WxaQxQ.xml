@@ -1,0 +1,18 @@
+<navigation-board id="8_VJU655WZP5atI8WxaQxQ" theme="default">
+  <header><title>J-Soft 소프트웨어 생태계</title></header>
+  <section id="company" label="기업" group="jsoft-company">
+    <document-links>
+      <document target="GlOs910prqmSU9_mqZaRDg">J-Soft(제이소프트)</document>
+    </document-links>
+  </section>
+  <section id="operating-system" label="운영체제" group="jsoft-operating-system">
+    <document-links>
+      <document target="G-W_UECRrnOKEBpdKQx8Qg">레드스타 사용자용체계</document>
+    </document-links>
+  </section>
+  <section id="game-engine" label="게임엔진" group="jsoft-game-engine">
+    <document-links>
+      <document target="8X-L4hu43VuJRfPFqVRZdg">J 시리즈 게임엔진</document>
+    </document-links>
+  </section>
+</navigation-board>

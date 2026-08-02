@@ -1,0 +1,44 @@
+<document id="8X-L4hu43VuJRfPFqVRZdg">
+  <title>J 시리즈 게임엔진</title>
+  <aliases>
+    <alias>J 시리즈</alias>
+    <alias>J Engine</alias>
+    <alias>J11</alias>
+    <alias>J14</alias>
+    <alias>J19</alias>
+    <alias>J22</alias>
+    <alias>J26</alias>
+  </aliases>
+  <body>
+    <include-board ref="8_VJU655WZP5atI8WxaQxQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>J 시리즈</strong>는 <ref href="doc:GlOs910prqmSU9_mqZaRDg">J-Soft</ref>가 개발하는 게임엔진 계열이다. J11·J14·J19·J22·J26의 다섯 판본으로 나뉜다.</p>
+    </section>
+    <section>
+      <title>판본</title>
+      <table>
+        <thead><tr><th>판본</th></tr></thead>
+        <tbody>
+          <tr><td>J11</td></tr>
+          <tr><td>J14</td></tr>
+          <tr><td>J19</td></tr>
+          <tr><td>J22</td></tr>
+          <tr><td>J26</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>J22</title>
+      <p><strong>J22</strong>는 거센 비판을 받은 판본이다.</p>
+      <p>비판은 다음과 같은 부분에 집중되었다.</p>
+      <ul>
+        <li>제공되는 공식 에셋이 부족했다.</li>
+        <li>공식 에디터가 시대에 뒤처졌다는 평가를 받았다.</li>
+        <li>서드파티 지원이 미흡했다.</li>
+        <li>출시 초기에는 이전 판의 라이선스를 J22로 이월할 수 없었다.</li>
+      </ul>
+      <p>라이선스 이월 문제는 이후 개발사가 이전 판의 라이선스도 J22로 이월할 수 있도록 변경하면서 해결되었다.</p>
+    </section>
+  </body>
+</document>

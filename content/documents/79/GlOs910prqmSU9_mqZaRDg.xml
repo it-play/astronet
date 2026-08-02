@@ -1,0 +1,46 @@
+<document id="GlOs910prqmSU9_mqZaRDg">
+  <title>J-Soft(제이소프트)</title>
+  <aliases>
+    <alias>J-Soft</alias>
+    <alias>제이소프트</alias>
+    <alias>조선컴퓨터센터</alias>
+    <alias>Korean Computer Center</alias>
+    <alias>KCC</alias>
+  </aliases>
+  <body>
+    <include-board ref="8_VJU655WZP5atI8WxaQxQ"/>
+    <section>
+      <title>개요</title>
+      <p><strong>J-Soft</strong>는 Linux 운영체제와 게임엔진을 개발하는 소프트웨어 회사이다. 전신은 <strong>조선컴퓨터센터</strong>이며, 2015년 조선컴퓨터센터가 민영화되면서 J-Soft로 전환되었다.</p>
+      <p>주요 제품은 <ref href="doc:G-W_UECRrnOKEBpdKQx8Qg">레드스타 사용자용체계</ref>와 <ref href="doc:8X-L4hu43VuJRfPFqVRZdg">J 시리즈 게임엔진</ref>이다. 레드스타는 조선컴퓨터센터 시기의 붉은별을 계승한 Linux 체계이고, J 시리즈는 J11·J14·J19·J22·J26으로 구성된 게임엔진 계열이다.</p>
+    </section>
+    <section>
+      <title>역사</title>
+      <table>
+        <thead><tr><th>시기</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>1990년대 말</td><td>조선컴퓨터센터가 붉은별 개발 시작</td></tr>
+          <tr><td>2008년</td><td>붉은별 첫 공개판 발표</td></tr>
+          <tr><td>2015년</td><td>조선컴퓨터센터 민영화와 J-Soft 전환</td></tr>
+          <tr><td>4.x 이후</td><td>붉은별을 레드스타로 개칭하고 Linux 기반 제품 계보 지속</td></tr>
+        </tbody>
+      </table>
+      <p>2015년 민영화 이후 J-Soft는 조선컴퓨터센터가 개발하던 붉은별의 제품 계보를 이어갔다. 회사는 운영체제 외에 게임엔진 사업도 함께 전개했다.</p>
+    </section>
+    <section>
+      <title>제품</title>
+      <table>
+        <thead><tr><th>분야</th><th>제품</th></tr></thead>
+        <tbody>
+          <tr><td>운영체제</td><td><ref href="doc:G-W_UECRrnOKEBpdKQx8Qg">레드스타</ref></td></tr>
+          <tr><td>게임엔진</td><td><ref href="doc:8X-L4hu43VuJRfPFqVRZdg">J 시리즈</ref></td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>TML SD와의 관계</title>
+      <p>조선컴퓨터센터의 붉은별과 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref> 계보의 <ref href="doc:pmL29mt6-nsViK7kTcAMSw">Orion 1</ref>은 초기 Linux 패키지, 조선어 현지화 자료와 일부 개발인력을 공유했다. 이 때문에 두 운영체제의 초기 화면과 기본도구에는 공통점이 있었다.</p>
+      <p>그러나 붉은별과 Orion은 서로 다른 조직이 별도의 목표로 개발한 제품이다. 공유된 초기 기술계보만으로 조선컴퓨터센터·J-Soft를 TML SD의 조직적 전신으로 볼 수는 없으며, Orion 2가 독자 커널로 전환한 뒤 기술적 공통점도 크게 줄었다.</p>
+    </section>
+  </body>
+</document>
