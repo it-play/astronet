@@ -19,7 +19,7 @@
           <tr><td>2008년</td><td><ref href="doc:pmL29mt6-nsViK7kTcAMSw">Orion 1</ref> 출시</td></tr>
           <tr><td>2010~2011년</td><td><ref href="doc:_ThcU4BisIIO6TmbFAVA5g">Orion 2</ref>와 Enterprise판 출시</td></tr>
           <tr><td>2012년</td><td>이동기기 개발조직과 Origin 커널 분기 독립</td></tr>
-          <tr><td>2013년</td><td><ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref> 출시</td></tr>
+          <tr><td>2013년</td><td><ref href="doc:lcHTVdI-tPfXosGGnO2nmw">Orion 3</ref> 출시, <ref href="doc:ycL_CW3W88gQua6EKd8FSg">Ararat Office</ref> 프로젝트 시작과 제1판 출시</td></tr>
           <tr><td>2014년</td><td><ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin 1</ref> 출시</td></tr>
           <tr><td>2017년</td><td>그룹 사명변경에 따라 TML SD 명칭 사용</td></tr>
           <tr><td>2019년</td><td><ref href="doc:vHEF5m4KdpbzS1avcLxXYQ">OpenOrigin</ref> 공개</td></tr>
@@ -37,7 +37,7 @@
         <thead><tr><th>분야</th><th>제품·사업</th></tr></thead>
         <tbody>
           <tr><td>운영체제</td><td><ref href="doc:SpBugADlRQyj1V9SIfMJ5Q">Orion</ref>, <ref href="doc:v8NCU4SCFE-yHdIWJPPvzw">Origin</ref>, <ref href="doc:vHEF5m4KdpbzS1avcLxXYQ">OpenOrigin</ref></td></tr>
-          <tr><td>업무용 소프트웨어</td><td>Ararat Office</td></tr>
+          <tr><td>업무용 소프트웨어</td><td><ref href="doc:ycL_CW3W88gQua6EKd8FSg">Ararat Office</ref></td></tr>
           <tr><td>개발</td><td><ref href="doc:RuwqN4gCN5acohKxtdcgRg">Code A</ref>·<ref href="doc:dO53MxvWZcGcvEkdtE9xOA">Code B</ref>·<ref href="doc:RPtyqZq0nyT_m_NiE8S-EA">Core</ref>·<ref href="doc:eKbaOOhIBNPJygwXaaVTzA">Atlran</ref>, 프로그래밍·디버깅·배포 도구</td></tr>
           <tr><td>그래픽</td><td><ref href="doc:GHntd54FRoKUUJiC2op71Q">XWise</ref> GUI·화면합성 엔진</td></tr>
           <tr><td>호환성</td><td><ref href="doc:Xok6myax2A1x3wmLIrhTmg">Continuum</ref> 실행환경</td></tr>

@@ -5,33 +5,26 @@
       <document target="3PnTt9l0i7x4KN-AR0IetQ">TML SD(소프트웨어 개발)</document>
     </document-links>
   </section>
-  <section id="orion" label="Orion" group="tml-sd-orion">
+  <section id="operating-systems" label="운영체제" group="tml-sd-operating-systems">
     <document-links>
       <document target="SpBugADlRQyj1V9SIfMJ5Q">Orion 운영체제</document>
       <document target="pmL29mt6-nsViK7kTcAMSw">Orion 1(운영체제)</document>
       <document target="_ThcU4BisIIO6TmbFAVA5g">Orion 2(운영체제)</document>
       <document target="lcHTVdI-tPfXosGGnO2nmw">Orion 3(운영체제)</document>
       <document target="eKlYVlIOhkBJ3OTwfzJVkw">Orion 4(운영체제)</document>
-    </document-links>
-  </section>
-  <section id="origin" label="Origin" group="tml-sd-origin">
-    <document-links>
       <document target="v8NCU4SCFE-yHdIWJPPvzw">Origin 운영체제</document>
       <document target="vHEF5m4KdpbzS1avcLxXYQ">OpenOrigin 프로젝트</document>
     </document-links>
   </section>
-  <section id="development" label="개발·그래픽" group="tml-sd-development">
+  <section id="software" label="기타 소프트웨어" group="tml-sd-software">
     <document-links>
+      <document target="ycL_CW3W88gQua6EKd8FSg">Ararat Office(아라라트 오피스)</document>
       <document target="RuwqN4gCN5acohKxtdcgRg">Code A 프로그래밍 언어</document>
       <document target="dO53MxvWZcGcvEkdtE9xOA">Code B 프로그래밍 언어</document>
       <document target="RPtyqZq0nyT_m_NiE8S-EA">Core 프로그래밍 언어</document>
       <document target="eKbaOOhIBNPJygwXaaVTzA">Atlran 프로그래밍 언어</document>
       <document target="GHntd54FRoKUUJiC2op71Q">XWise 그래픽 사용자 인터페이스 엔진</document>
       <document target="5IgKUeL6AjY2DT_t9Qb6Hg">GE 게임엔진 계열</document>
-    </document-links>
-  </section>
-  <section id="compatibility" label="호환체계" group="tml-sd-compatibility">
-    <document-links>
       <document target="Xok6myax2A1x3wmLIrhTmg">Continuum 호환 실행환경</document>
       <document target="TI6wBPGLeV2BkPBwAENw8g">K-Bridge 호환 계층</document>
     </document-links>

@@ -1,0 +1,25 @@
+<document id="ycL_CW3W88gQua6EKd8FSg">
+  <title>Ararat Office(아라라트 오피스)</title>
+  <aliases><alias>Ararat Office</alias><alias>아라라트 오피스</alias></aliases>
+  <body>
+    <include-board ref="kDb7VskcWPnfHPPUDswC6A"/>
+    <section>
+      <title>개요</title>
+      <p><strong>Ararat Office</strong>는 <ref href="doc:3PnTt9l0i7x4KN-AR0IetQ">TML SD</ref>가 개발하는 업무용 소프트웨어이다. 프로젝트는 2013년 1월 15일 시작되었으며 2026년 현재 네 개 판본이 나왔다.</p>
+    </section>
+    <section>
+      <title>판본 체계</title>
+      <p>제1판은 2013년 10월 15일 출시되었다. 이후 같은 날짜를 기준으로 4년마다 새 판본을 출시하고 있다.</p>
+      <table>
+        <thead><tr><th>구분</th><th>날짜</th></tr></thead>
+        <tbody>
+          <tr><td>프로젝트 시작</td><td>2013년 1월 15일</td></tr>
+          <tr><td>제1판</td><td>2013년 10월 15일</td></tr>
+          <tr><td>제2판</td><td>2017년 10월 15일</td></tr>
+          <tr><td>제3판</td><td>2021년 10월 15일</td></tr>
+          <tr><td>제4판</td><td>2025년 10월 15일</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</document>
