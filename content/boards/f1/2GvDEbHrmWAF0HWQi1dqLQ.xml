@@ -1,0 +1,15 @@
+<navigation-board id="2GvDEbHrmWAF0HWQi1dqLQ" theme="default">
+  <header><title>당산 광역권의 공항</title></header>
+  <section id="airports" label="공항" group="dangsan-metropolitan-airports">
+    <document-table>
+      <row label="국제선 취급">
+        <document target="Q9u9Hc3zQnSORIXpAyXltA">당산국제공항</document>
+        <document target="4mb8GqSSgijuU5amuPp_PA">영산국제공항</document>
+      </row>
+      <row label="국내선 전용">
+        <document target="5uePbeYqAK2jZebryTLzZA">당산도심공항</document>
+        <document target="ItKR4SOu4qmVZDSNYz1Ezw">북당산공항</document>
+      </row>
+    </document-table>
+  </section>
+</navigation-board>
