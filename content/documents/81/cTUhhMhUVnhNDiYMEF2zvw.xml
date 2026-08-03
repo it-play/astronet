@@ -1,0 +1,10 @@
+<document id="cTUhhMhUVnhNDiYMEF2zvw">
+  <title>TML C430 협동체 여객기</title>
+  <aliases><alias>C430</alias><alias>TML C430 협동체 항공기</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C430</strong>은 2015년 공개된 156석 주력 중거리 협동체 여객기이다. C4xx 가운데 표준 간선시장에 맞춘 독립 설계로, 대형 복합재 주익과 전기식 비행제어를 본격적으로 적용했다.</p><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>좌석</td><td>156석</td></tr><tr><td>엔진</td><td><ref href="doc:mnWEnkHuFq5FiXU3Z-emuA">AE2015F</ref>, LEAP-1A26 또는 PW1127G-JM 2기</td></tr><tr><td>최고속력</td><td>890km/h</td></tr><tr><td>항속거리</td><td>6,200km</td></tr><tr><td>최고 순항고도</td><td>12,500m</td></tr><tr><td>최고 상승고도</td><td>14,300m</td></tr><tr><td>발주</td><td>83기</td></tr></tbody></table></section>
+    <section><title>설계</title><p>동체와 시스템은 C420의 연장형이 아니라 더 높은 최대이륙중량과 중거리 운항을 전제로 새로 설계되었다. 복합재 주익, 전동식 보조계통과 통합정비진단으로 구조중량과 지상정비시간을 줄였다.</p><p>국산 AE2015F 장착형과 LEAP·PW1100G 계열형이 같은 명칭으로 판매된다. 인증받은 AE 엔진은 수출 시에도 교체할 필요가 없으며 외산 엔진은 현지 정비망을 중시한 선택사양이다.</p></section>
+    <section><title>운용과 평가</title><p>83기가 발주되었다. 개방 전에는 국내 간선과 제한된 국제노선을 담당했고 2023년 이후에는 국제감항인증과 함께 외국 항공사 주문이 늘었다.</p><p>성능과 객실밀도의 균형이 좋다는 평가를 받지만 기존 국제 협동체보다 운항자료가 적고, 여러 엔진형을 동시에 지원하는 초기 부품비용이 높다는 약점이 있다.</p></section>
+  </body>
+</document>

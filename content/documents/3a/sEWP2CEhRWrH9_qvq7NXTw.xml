@@ -1,6 +1,6 @@
 <document id="sEWP2CEhRWrH9_qvq7NXTw">
   <title>TML 에어로</title>
-  <aliases><alias>TML Aero</alias></aliases>
+  <aliases><alias>TML Aero</alias><alias>북조선항공기공업</alias></aliases>
   <body>
     <include-board ref="NMt_svl0AVCBFR3ZkL6Y3g"/>
     <section>
@@ -12,6 +12,7 @@
       <title>항공기 사업</title>
       <p>항공기 제품군은 임무와 크기에 따라 폭넓게 구성되어 있다. 국내 민간·군 수요가 초기 생산량을 떠받쳤으며 최근에는 외국 정부와 항공사에서도 주문을 받기 시작했다.</p>
       <p>2023년부터 기종별 국제감항인증을 취득하면서 TML 에어로가 생산한 항공기의 국제운항이 시작되었다. 인증 이전에는 높은 생산량에도 해외에서 운용할 수 있는 시장이 제한되었으나, 이후 수출계약과 국제정비망 구축이 본격화되었다.</p>
+      <p>주요 고정익기는 <ref href="doc:sq73vCf2VUt9yzZ6re3gMw">TML C 계열 항공기</ref>로 묶인다. 백의 자리는 크기 등급, 십의 자리는 독립 기종, 일의 자리는 같은 기종의 세부형을 뜻한다. TML 명칭을 사용하기 전에는 <strong>북조선항공기공업</strong>이라는 사명을 썼으며 <ref href="doc:s1kF6UpYG9YnqoUnacjIRg">C400</ref> 생산 당시에도 이 이름을 사용했다.</p>
     </section>
     <section>
       <title>그룹 내 관계</title>

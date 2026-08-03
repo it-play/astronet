@@ -1,0 +1,10 @@
+<document id="SOD-gzgDO-GSAJY5E9d9Rg">
+  <title>TML C110 경항공기</title>
+  <aliases><alias>C110</alias><alias>TML C110 항공기</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C110</strong>은 2004년 공개된 4인승 단발 터보프롭 다목적기이다. 군용 조립기에서 출발한 <ref href="doc:zkVNc-dOVibJsM9FhdCHUg">C100 계열</ref>과 달리 민간 운용비, 객실 편의와 관용 연락임무를 처음부터 함께 고려한 독립 기종이다.</p><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>승무원·승객</td><td>조종사 포함 4명</td></tr><tr><td>화물</td><td>최대 450kg</td></tr><tr><td>엔진</td><td><ref href="doc:Cq0eKDpN9oGzQzrvc24cuA">CM64T</ref> 또는 PT6A-34</td></tr><tr><td>최고속력</td><td>428km/h</td></tr><tr><td>항속거리</td><td>1,080km</td></tr><tr><td>최고 순항고도</td><td>8,700m</td></tr><tr><td>최고 상승고도</td><td>12,500m</td></tr><tr><td>생산</td><td>30기: 민간 25기·군용 5기</td></tr></tbody></table></section>
+    <section><title>설계</title><p>고정식 객실격벽 대신 접이식 뒷좌석과 평탄한 화물바닥을 사용해 연락·훈련·경화물 임무를 빠르게 바꿀 수 있다. 지방 비행장의 짧은 활주로를 고려해 저속양력장치를 크게 잡았지만 C100보다 고속순항 성능도 높였다.</p><p>CM64T와 PT6A-34는 같은 형식번호 아래에서 선택할 수 있다. 외산 엔진을 탑재하거나 수출되었다는 이유만으로 별도 파생번호를 부여하지 않는다.</p></section>
+    <section><title>운용과 평가</title><p>민간 비행학교, 기업·관용 연락, 소량화물 수송에 주로 사용되었다. 군용 5기는 기지간 연락과 조종사 기초교육에 투입되었으며 본격 고등훈련은 <ref href="doc:CGk_VtV_VAQ6os0usxCO6Q">C200</ref>이 담당했다.</p><p>객실이 작고 화물·승객을 동시에 충분히 실을 수 없다는 한계가 있었으나 단순한 구조와 낮은 유지비 덕분에 민간항공 시장의 기반을 넓힌 기종으로 평가된다.</p></section>
+  </body>
+</document>

@@ -1,0 +1,11 @@
+<document id="jz2QmNB-pxOcTmKQBXEiIA">
+  <title>TML C500 계열</title>
+  <aliases><alias>C500</alias><alias>C501</alias><alias>C502</alias><alias>C503</alias><alias>TML C500 협동체</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C500 계열</strong>은 2010년 공개된 중대형 협동체 여객기 계열이다. C500번대는 광동체가 아니라 단일통로 구조를 사용하며, 단거리 고밀도형부터 화물·장거리형까지 같은 기본기체에서 파생되었다.</p><table><thead><tr><th>항목</th><th>C500 기본형</th></tr></thead><tbody><tr><td>좌석</td><td>다등급 184석·최대 218석</td></tr><tr><td>유상하중</td><td>20.5t</td></tr><tr><td>엔진</td><td><ref href="doc:Cq0eKDpN9oGzQzrvc24cuA">CM112F</ref>, CFM56-5B 또는 V2500-A5 2기</td></tr><tr><td>최고속력</td><td>890km/h</td></tr><tr><td>항속거리</td><td>5,600km</td></tr><tr><td>최고 순항고도</td><td>12,500m</td></tr><tr><td>계열 발주·인도</td><td>36기·36기</td></tr></tbody></table></section>
+    <section><title>세부형</title><table><thead><tr><th>형식</th><th>공개</th><th>차이</th><th>수주/인도</th></tr></thead><tbody><tr><td>C500</td><td>2010</td><td>184/218석 기본형</td><td>12/12</td></tr><tr><td>C501</td><td>2011</td><td>비상구·객실바닥을 보강한 212/232석 고밀도형</td><td>8/8</td></tr><tr><td>C502</td><td>2012</td><td>최대 28t 적재 전용 화물형, 항속 4,600km</td><td>6/6</td></tr><tr><td>C503</td><td>2014</td><td>176/204석 장거리형, 항속 7,600km</td><td>10/10</td></tr></tbody></table></section>
+    <section><title>설계와 엔진</title><p>C4xx보다 넓은 객실과 큰 하부화물실을 사용하지만 통로는 하나이다. C502는 단순 좌석제거형이 아니라 강화바닥, 대형화물문과 화재억제구획을 갖춰 별도 세부번호를 받았다.</p><p>CM112F와 외산 CFM56·V2500형은 같은 형식 안에서 선택한다. 국산엔진 장착형도 인증을 받으면 그대로 수출되며 엔진이나 고객국가만 달라진 형식은 별도 번호로 나누지 않는다.</p></section>
+    <section><title>평가</title><p>동급 국제기종보다 낮은 도입가와 단순한 정비가 장점이었다. C501은 좌석당 비용을 크게 낮췄지만 화장실·갤리와 좌석간격을 지나치게 줄였다는 비판을 받았고, 초기 수입·국산 계통의 혼용은 운항사별 부품구성을 복잡하게 만들었다.</p></section>
+  </body>
+</document>

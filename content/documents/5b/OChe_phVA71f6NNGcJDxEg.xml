@@ -1,0 +1,12 @@
+<document id="OChe_phVA71f6NNGcJDxEg">
+  <title>TML C900 초대형 여객기</title>
+  <aliases><alias>C900</alias><alias>TML C900 초대형 여객기</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C900</strong>은 <ref href="doc:sEWP2CEhRWrH9_qvq7NXTw">TML 에어로</ref>가 2026년 공개한 쌍발 전층 복층 초대형 광동체 여객기이다. C 계열에서 가장 큰 항공기이며, 상부 객실이 동체 전체 길이에 걸쳐 이어지는 완전 복층구조를 채택했다.</p><table><thead><tr><th>항목</th><th>제원</th></tr></thead><tbody><tr><td>좌석</td><td>표준 680석/고밀도 850석</td></tr><tr><td>최대 유상하중</td><td>155t</td></tr><tr><td>엔진</td><td><ref href="doc:mnWEnkHuFq5FiXU3Z-emuA">AE2025</ref> 또는 제한중량형 GE9X 2기</td></tr><tr><td>최고속력</td><td>965km/h</td></tr><tr><td>항속거리</td><td>13,500km</td></tr><tr><td>최고 순항고도</td><td>13,400m</td></tr><tr><td>발주·인도</td><td>8기·2기</td></tr></tbody></table></section>
+    <section><title>개발</title><p>초대형 단층기인 <ref href="doc:7Ce3GzFqaDRB09ebUzC1Kg">C800 계열</ref>로도 처리하기 어려운 허브 간 수요와 슬롯부족을 겨냥해 개발되었다. 처음부터 두 개 층을 모두 객실로 쓰도록 동체 단면과 주익 중앙부를 설계했으며, 승객 850명을 정해진 시간 안에 탈출시키기 위한 출입문·계단·조명 배치가 개발의 핵심이었다.</p><p>정상 최대이륙중량과 공표 항속거리, 전체 좌석배치의 성능은 AE2025 장착형에서만 제공된다. GE9X 장착형도 해외시장용 별도 기종이 아니라 같은 C900이지만 추력과 열관리 한계 때문에 최대이륙중량을 낮춘 고밀도 중거리 운항조건으로만 인증되었다.</p></section>
+    <section><title>설계</title><p>상·하층에 독립된 객실통로와 주방, 화장실을 두고 전방과 후방 계단으로 연결했다. 공항에서는 두 층에 동시에 연결되는 탑승교를 사용하며, 지상조업이 가능한 공항이 제한되는 점을 고려해 화물과 수하물 적재계통을 자동화했다.</p><p>초대형 쌍발기라는 특성 때문에 엔진 하나가 정지했을 때의 상승성능과 전력공급을 중점적으로 보강했다. 고출력 보조동력장치, 독립 배터리 묶음과 전기식 환경제어계통이 남은 엔진의 부담을 나눠 맡는다.</p></section>
+    <section><title>운용</title><p>2026년 현재 8기가 발주되어 2기가 인도되었다. 초도기는 대규모 허브공항 사이의 정기편에 투입되었으며, 공항 측에는 전용 주기장과 복층 탑승교, 확대된 소방·구난절차가 요구된다.</p></section>
+    <section><title>논란</title><p>엔진 하나가 정지한 상태에서 초대형 기체가 충분한 상승성능을 유지할 수 있는지, 850명을 실제 운항환경에서 신속히 대피시킬 수 있는지를 놓고 공개 전부터 논쟁이 이어졌다. 감항시험을 통과했음에도 완전 복층기 수요가 제한적이어서 개발비를 회수하지 못할 수 있다는 우려도 크다.</p><p>반대로 공항 슬롯이 포화된 장거리 간선에서는 한 편당 수송량과 좌석당 비용이 압도적이라는 평가를 받는다. 성공 여부는 소수의 초대형 허브노선과 AE2025의 장기 신뢰성에 달렸다는 분석이 일반적이다.</p></section>
+  </body>
+</document>

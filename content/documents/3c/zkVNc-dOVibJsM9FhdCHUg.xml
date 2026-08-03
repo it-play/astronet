@@ -1,0 +1,12 @@
+<document id="zkVNc-dOVibJsM9FhdCHUg">
+  <title>TML C100 계열</title>
+  <aliases><alias>C100</alias><alias>C101</alias><alias>C102</alias><alias>C103</alias><alias>C104</alias><alias>TML C100</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C100 계열</strong>은 북조선항공기공업이 1999년 공개한 단발 터보프롭 경항공기와 그 세부형이다. 기본형 C100은 부품 약 80%와 완제품 엔진을 러시아에서 들여와 조립했으며, 북조선에서 조립된 최초의 자국 항공기라는 의의를 가진다.</p><p>C100 기본형 20기와 후속 세부형 30기를 합쳐 계열 전체 50기가 제작되었다. 초창기 조립·훈련 경험을 축적한 시험적 성격이 강했으며 이후 <ref href="doc:SOD-gzgDO-GSAJY5E9d9Rg">C110</ref>과 <ref href="doc:7_2RJHvZOg_sc_vInpQLIA">C120</ref>의 독자설계로 이어졌다.</p></section>
+    <section><title>제원</title><table><thead><tr><th>형식</th><th>공개</th><th>용도</th><th>엔진</th><th>최고속력</th><th>항속거리</th><th>순항/상승고도</th><th>생산</th></tr></thead><tbody><tr><td>C100</td><td>1999</td><td>단좌 경비·연락기</td><td>러시아제 옴스크 TVD-20</td><td>313km/h</td><td>420km</td><td>3,200m / 5,500m</td><td>20기: 민 2·군 18</td></tr><tr><td>C101</td><td>2000</td><td>복좌 초등훈련기</td><td>TVD-20 개량형</td><td>318km/h</td><td>550km</td><td>4,800m / 7,200m</td><td>8기: 민 4·군 4</td></tr><tr><td>C102</td><td>2001</td><td>단좌 경계·사진정찰기</td><td><ref href="doc:Cq0eKDpN9oGzQzrvc24cuA">CM48T</ref> 또는 TVD-20M</td><td>326km/h</td><td>720km</td><td>5,600m / 8,100m</td><td>7기: 민 3·군 4</td></tr><tr><td>C103</td><td>2003</td><td>복좌 민간훈련·투어링기</td><td>CM48T 또는 Walter M601E</td><td>342km/h</td><td>850km</td><td>6,500m / 9,400m</td><td>8기: 민 5·군 3</td></tr><tr><td>C104</td><td>2005</td><td>복좌 전천후 훈련·경계기</td><td>CM52T 또는 PT6A-25C</td><td>355km/h</td><td>980km</td><td>7,200m / 10,500m</td><td>7기: 민 3·군 4</td></tr></tbody></table></section>
+    <section><title>C100의 설계결함</title><p>C100의 조종석 캐노피는 압력차와 저온환경을 충분히 견디지 못했다. 최고 상승고도는 5,500m로 기록되었지만 그 이상에서는 조종사의 원활한 생존을 보장할 수 없었고, 이 결함은 단좌 경비기와 훈련기 사이에서 이미 애매했던 군 내 입지를 더 약화시켰다.</p><p>C101부터 캐노피 골격과 산소계통을 보강했으며 C104에서는 신형 캐노피와 제빙계통을 적용했다. 다만 기본형 C100의 구조를 근본적으로 개수하는 것보다 후속기를 도입하는 편이 경제적이라는 결론이 내려졌다.</p></section>
+    <section><title>운용과 보존</title><p>C100 18기는 조선인민군 반항공군에 우선 공급되었으나 2006년 전량 퇴역했다. 민간 판매분 2기 가운데 1기는 <ref href="doc:8mFXpOouBSC1kJSkazUCpQ">국립항공박물관</ref>에 기증되었고, 나머지 1기는 2026년에도 비행 가능한 상태로 개인이 소장한다.</p><p>후속형은 비행학교·국경경비·관용연락 임무에 분산 배치되었다. 국산 CM 엔진과 체코·캐나다계 외산 엔진을 같은 형식 안에서 선택하게 한 초기 사례이기도 하다.</p></section>
+    <section><title>평가</title><p>완성도만 놓고 보면 수입부품을 조립한 과도기 기종이었지만, 항공기 제작·감항·정비인력과 공급망을 실제 운용규모로 훈련했다는 의미가 크다. 캐노피 결함과 낮은 국산화율은 한계로 남았고, 후속형을 거치며 국산 엔진과 항전장비 비중이 높아졌다.</p></section>
+  </body>
+</document>

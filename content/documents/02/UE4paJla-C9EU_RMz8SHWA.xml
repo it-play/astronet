@@ -1,0 +1,10 @@
+<document id="UE4paJla-C9EU_RMz8SHWA">
+  <title>TML C440 장거리 여객기</title>
+  <aliases><alias>C440</alias><alias>TML C440 장거리 협동체</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C440</strong>은 2022년 공개된 144석 장거리 협동체 여객기이다. C430보다 좌석을 줄이는 대신 중앙연료탱크, 장거리 객실설비와 승무원 휴게공간을 설치했으며 2023년 국제감항인증을 대표한 기종으로 꼽힌다.</p><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>좌석</td><td>144석</td></tr><tr><td>엔진</td><td><ref href="doc:mnWEnkHuFq5FiXU3Z-emuA">AE2021F</ref>, LEAP-1A32 또는 PW1133G-JM 2기</td></tr><tr><td>최고속력</td><td>905km/h</td></tr><tr><td>항속거리</td><td>9,800km</td></tr><tr><td>최고 순항고도</td><td>12,800m</td></tr><tr><td>최고 상승고도</td><td>14,900m</td></tr><tr><td>발주</td><td>61기</td></tr></tbody></table></section>
+    <section><title>설계</title><p>백의 자리가 같은 C4xx이므로 광동체가 아니라 협동체 구조를 유지한다. 긴 항속거리는 동체 확대보다 좌석수 감소, 연료용적과 주익 효율을 높이는 방식으로 달성했다.</p><p>국산·외산 엔진형 모두 C440으로 판매된다. 장거리 쌍발운항 인증, 화재억제와 승무원 휴게시설이 초기 개발비의 큰 비중을 차지했다.</p></section>
+    <section><title>운용과 평가</title><p>61기가 발주되었으며 북중미·유럽 신규노선과 수요가 얇은 장거리 직항에 사용된다. 광동체보다 적은 승객으로 장거리 노선을 열 수 있다는 것이 최대 장점이다.</p><p>단일통로 객실의 장시간 탑승감과 느린 탑승·하기, 만석에서 제한되는 화물공간은 약점이다. C430보다 좌석이 적다는 이유로 숫자체계가 크기순이라는 오해를 자주 낳았다.</p></section>
+  </body>
+</document>

@@ -1,0 +1,11 @@
+<document id="s1kF6UpYG9YnqoUnacjIRg">
+  <title>TML C400 여객기</title>
+  <aliases><alias>C400</alias><alias>TML C400 여객기</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C400</strong>은 당시 북조선항공기공업이 개발한 52석 쌍발 터보제트 협동체 여객기이다. 2003년부터 2005년까지 29기가 생산되었으며, 국산 터보팬 상용화 전에 제트엔진과 여압식 여객기 기술을 검증하려는 성격이 강했다.</p><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>좌석</td><td>52석</td></tr><tr><td>엔진</td><td><ref href="doc:mnWEnkHuFq5FiXU3Z-emuA">AE2002</ref> 터보제트 2기</td></tr><tr><td>최고속력</td><td>835km/h</td></tr><tr><td>항속거리</td><td>1,350km</td></tr><tr><td>최고 순항고도</td><td>10,700m</td></tr><tr><td>최고 상승고도</td><td>12,500m</td></tr><tr><td>생산</td><td>29기</td></tr><tr><td>생산종료</td><td>2005년</td></tr><tr><td>민간운항 종료</td><td>2017년</td></tr></tbody></table></section>
+    <section><title>개발</title><p>AE2002는 실용 터보팬이라기보다 압축기·연소기·터빈과 제트기용 제어계통을 검증하는 시제품에 가까웠다. 그 엔진을 그대로 장착한 C400도 대규모 상업생산보다 제트 여객기 제작경험을 얻는 데 목적이 있었다.</p><p>국내에서 기체와 엔진을 함께 제작했다는 상징성은 컸지만, 21세기에 터보제트를 장착한 탓에 연료소모와 소음이 컸고 계열 수가 적어 전용부품 가격도 높았다.</p></section>
+    <section><title>운용과 퇴역</title><p>29기 모두 민간·관용 노선에 투입되었으나 운용사는 국산기라는 이유만으로 높은 비용을 감당해야 했다. 생산은 불과 2년 만인 2005년에 끝났고, 부품을 다른 엔진계열과 공유하지 못해 가동률이 빠르게 떨어졌다.</p><p>2017년을 끝으로 민간운항에서 사라졌다. 1기는 <ref href="doc:8mFXpOouBSC1kJSkazUCpQ">국립항공박물관</ref>에 기증되어 AE2002와 함께 보존된다.</p></section>
+    <section><title>의의</title><p>상업적으로는 실패에 가까웠지만 후속 <ref href="doc:2re9Nd8Vx_WYJmAY1axGbQ">C410</ref>의 터보팬, 여압계통과 제트기 생산공정을 준비한 기술실증기로 평가된다. C410 이후 C4xx 계열이 성공하면서 C400은 실패한 선행사업의 대표적인 사례가 되었다.</p></section>
+  </body>
+</document>

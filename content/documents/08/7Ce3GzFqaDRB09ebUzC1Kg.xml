@@ -1,0 +1,12 @@
+<document id="7Ce3GzFqaDRB09ebUzC1Kg">
+  <title>TML C800 계열</title>
+  <aliases><alias>C800</alias><alias>C801</alias><alias>C802</alias><alias>TML C800</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C800 계열</strong>은 <ref href="doc:sEWP2CEhRWrH9_qvq7NXTw">TML 에어로</ref>가 2024년 공개한 쌍발 초대형 단층 광동체 항공기이다. <ref href="doc:8PHJks17Ki4ooHHbWAgfFQ">C710 계열</ref>보다 넓고 긴 단층 객실을 사용하며, 대량수송 노선의 좌석당 비용을 낮추는 데 중점을 두었다.</p><table><thead><tr><th>항목</th><th>C800 기본형</th></tr></thead><tbody><tr><td>좌석</td><td>표준 520석/고밀도 610석</td></tr><tr><td>최대 유상하중</td><td>95t</td></tr><tr><td>엔진</td><td><ref href="doc:mnWEnkHuFq5FiXU3Z-emuA">AE2023</ref> 또는 GE9X 2기</td></tr><tr><td>최고속력</td><td>970km/h</td></tr><tr><td>항속거리</td><td>14,600km</td></tr><tr><td>최고 순항고도</td><td>13,700m</td></tr><tr><td>계열 발주·인도</td><td>10기·4기</td></tr></tbody></table></section>
+    <section><title>개발</title><p>복층기보다 구조중량과 객실운영의 복잡성을 줄이면서도 허브 간 초대량 수요를 처리한다는 발상에서 개발되었다. 동체직경과 객실길이를 동시에 늘리고 주익의 하중을 능동적으로 분산해 쌍발구성을 유지했다. 2024년 공개와 함께 AE2023 장착형이 먼저 인증을 받았으며 GE9X 선택사양이 뒤따랐다.</p><p>해외 항공사도 인증을 마친 AE2023을 내수형과 같은 구성으로 주문할 수 있다. GE9X 장착형은 엔진 자체의 추력과 통합조건 때문에 최대이륙중량과 항속거리가 일부 제한되지만 별도 수출형 번호로 구분하지 않는다.</p></section>
+    <section><title>세부형</title><table><thead><tr><th>형식</th><th>공개</th><th>주요 차이</th><th>수주/인도</th></tr></thead><tbody><tr><td>C800</td><td>2024</td><td>520/610석 기본 여객형</td><td>4/2</td></tr><tr><td>C801</td><td>2025</td><td>565/660석 동체연장형, 항속거리 13,100km</td><td>3/1</td></tr><tr><td>C802</td><td>2026</td><td>최대 150t 적재 화물형, 항속거리 9,000km</td><td>3/1</td></tr></tbody></table></section>
+    <section><title>설계</title><p>긴 단층 객실을 여러 구역으로 나누고 출입문과 주방을 분산해 승객 흐름을 관리한다. 대형 주익, 조향 가능한 주착륙장치와 지상기동 보조카메라를 사용하며, 비행제어계통이 선회 중 날개와 꼬리의 지상여유를 감시한다. C802는 화물 적재를 위해 바닥빔과 착륙장치를 보강한 전용 화물형이다.</p></section>
+    <section><title>운용과 평가</title><p>2026년까지 10기가 발주되고 4기가 인도되었다. 좌석을 충분히 채우는 노선에서는 좌석당 운항비가 낮고 단층 객실이라 객실승무원과 서비스 동선이 단순하다는 평가를 받는다.</p><p>기체가 지나치게 길고 커서 유도로 회전반경, 꼬리 지상여유와 탑승구 처리능력에 제약이 있다. 운항공항은 전용 유도선과 복수 탑승교, 확대된 계류장을 갖춰야 하며 수요가 작은 노선에서는 장점이 급격히 사라진다.</p></section>
+  </body>
+</document>

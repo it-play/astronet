@@ -1,0 +1,64 @@
+<navigation-board id="h-uKKebtaSQlu0EldmUZkw" theme="default">
+  <header><title>TML C 계열 항공기</title></header>
+  <section id="c100" label="100번대" group="tml-c-series">
+    <document-links>
+      <document target="zkVNc-dOVibJsM9FhdCHUg">C100 계열</document>
+      <document target="SOD-gzgDO-GSAJY5E9d9Rg">C110</document>
+      <document target="7_2RJHvZOg_sc_vInpQLIA">C120 계열</document>
+    </document-links>
+  </section>
+  <section id="c200" label="200번대" group="tml-c-series">
+    <document-links>
+      <document target="CGk_VtV_VAQ6os0usxCO6Q" retired="true">C200</document>
+      <document target="V4qJqeklqEMtllD4iqVkig">C210 계열</document>
+    </document-links>
+  </section>
+  <section id="c300" label="300번대" group="tml-c-series">
+    <document-links>
+      <document target="AhsiharfLVfbfLxcTVE_4w">C300 계열</document>
+      <document target="Kc456bSmziNe4vXV6fbGQQ">C310 계열</document>
+    </document-links>
+  </section>
+  <section id="c400" label="400번대" group="tml-c-series">
+    <document-links>
+      <document target="s1kF6UpYG9YnqoUnacjIRg" retired="true">C400</document>
+      <document target="2re9Nd8Vx_WYJmAY1axGbQ">C410</document>
+      <document target="LOt7vk2ljnW67lmfiKjPdQ">C420</document>
+      <document target="cTUhhMhUVnhNDiYMEF2zvw">C430</document>
+      <document target="UE4paJla-C9EU_RMz8SHWA">C440</document>
+    </document-links>
+  </section>
+  <section id="c500" label="500번대" group="tml-c-series">
+    <document-links>
+      <document target="jz2QmNB-pxOcTmKQBXEiIA">C500</document>
+      <document target="CgsbLiP9OxSrJ91u6ANUTQ">C510</document>
+      <document target="9tNQSOXF-ZUgigeyv0LtSA">C520</document>
+      <document target="J43yZavD_-6ahlZEIH8VlA">C530</document>
+    </document-links>
+  </section>
+  <section id="c600" label="600번대" group="tml-c-series">
+    <document-links>
+      <document target="NcHHm2Dhy4HanDeT_S7pgg">C600</document>
+      <document target="N4RiB_1jCrYaCg0nqsHQeQ">C610</document>
+      <document target="fPubrbQlg-rBmWUBjbScWQ">C620</document>
+    </document-links>
+  </section>
+  <section id="c700" label="700번대" group="tml-c-series">
+    <document-links>
+      <document target="5TQ9Ao0DcVJwaZzmlsXKVA">C700 계열</document>
+      <document target="8PHJks17Ki4ooHHbWAgfFQ">C710 계열</document>
+    </document-links>
+  </section>
+  <section id="c800" label="800번대" group="tml-c-series">
+    <document-links><document target="7Ce3GzFqaDRB09ebUzC1Kg">C800 계열</document></document-links>
+  </section>
+  <section id="c900" label="900번대" group="tml-c-series">
+    <document-links><document target="OChe_phVA71f6NNGcJDxEg">C900</document></document-links>
+  </section>
+  <section id="engines" label="관련 엔진" group="tml-c-engines">
+    <document-links>
+      <document target="mnWEnkHuFq5FiXU3Z-emuA">TML AE 항공엔진 계열</document>
+      <document target="Cq0eKDpN9oGzQzrvc24cuA">CM 항공엔진 계열</document>
+    </document-links>
+  </section>
+</navigation-board>

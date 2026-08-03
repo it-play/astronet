@@ -1,0 +1,10 @@
+<document id="2re9Nd8Vx_WYJmAY1axGbQ">
+  <title>TML C410 여객기</title>
+  <aliases><alias>C410</alias><alias>TML C410 여객기</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C410</strong>은 2006년 공개된 72석 단거리 쌍발 터보팬 협동체 여객기이다. <ref href="doc:s1kF6UpYG9YnqoUnacjIRg">C400</ref>의 실험적 터보제트를 실용 터보팬과 재설계한 객실·주익으로 대체해 C4xx 계열을 본격적인 베스트셀러로 만든 기종이다.</p><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>좌석</td><td>72석</td></tr><tr><td>엔진</td><td><ref href="doc:mnWEnkHuFq5FiXU3Z-emuA">AE2006F</ref> 2기, 2023년 이후 CF34-8E 선택 가능</td></tr><tr><td>최고속력</td><td>870km/h</td></tr><tr><td>항속거리</td><td>2,650km</td></tr><tr><td>최고 순항고도</td><td>11,900m</td></tr><tr><td>최고 상승고도</td><td>13,100m</td></tr><tr><td>발주</td><td>109기</td></tr><tr><td>상태</td><td>2026년 현역</td></tr></tbody></table></section>
+    <section><title>설계</title><p>C400의 생산설비 일부를 활용했지만 터보팬을 위한 파일런, 고양력장치와 연료계통을 새로 설계했다. 단거리에서 높은 회전율을 얻도록 출입문과 수하물실을 배치했고, 지방 공항에서도 운용할 수 있도록 활주로 요구조건을 낮췄다.</p><p>AE2006F 인증형은 그대로 국내외에 공급된다. CF34-8E는 2023년 이후 해외 정비망과 리스계약을 중시한 고객이 같은 C410 형식 안에서 선택할 수 있게 추가되었다.</p></section>
+    <section><title>운용과 평가</title><p>총 109기가 발주되어 2026년에도 정기여객편에서 꾸준히 운항한다. 작고 단순한 제트기라는 장점 덕분에 터보프롭을 대체하려는 지역항공사와 운항시간을 줄이려는 간선사업자 양쪽의 수요를 얻었다.</p><p>객실 폭과 수하물 공간이 작고 만석 장거리 운항에는 적합하지 않았으나 C400의 낮은 신뢰도와 연비 문제를 해결한 첫 실용 국산 제트 여객기라는 평가를 받는다.</p></section>
+  </body>
+</document>

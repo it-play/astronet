@@ -1,0 +1,10 @@
+<document id="Kc456bSmziNe4vXV6fbGQQ">
+  <title>TML C310 계열</title>
+  <aliases><alias>C310</alias><alias>C311</alias><alias>TML C310</alias></aliases>
+  <body>
+    <include-board ref="h-uKKebtaSQlu0EldmUZkw"/>
+    <section><title>개요</title><p><strong>TML C310 계열</strong>은 <ref href="doc:AhsiharfLVfbfLxcTVE_4w">C300 계열</ref>보다 넓은 동체와 새로운 주익을 사용하는 중형 쌍발 지역수송기이다. C300의 단순 연장형이 아니라 같은 C3xx 크기 등급에 속하는 별도 기본설계이다.</p><table><thead><tr><th>형식</th><th>공개</th><th>수송력</th><th>엔진</th><th>최고속력</th><th>항속거리</th><th>순항/상승고도</th><th>생산</th></tr></thead><tbody><tr><td>C310</td><td>2015</td><td>승객 48명 또는 화물 6t</td><td><ref href="doc:mnWEnkHuFq5FiXU3Z-emuA">AE2014E-2</ref> 또는 PW150A 2기</td><td>720km/h</td><td>2,300km</td><td>21,000m / 36,000m</td><td>40기: 민 20·군 20</td></tr><tr><td>C311</td><td>2021</td><td>승객 52명 또는 화물 6.5t</td><td>AE2021E 또는 PW150A 2기</td><td>744km/h</td><td>2,850km</td><td>23,000m / 39,500m</td><td>30기: 민 16·군 14</td></tr></tbody></table></section>
+    <section><title>설계</title><p>C310은 화물램프보다 민간 승객동선과 빠른 회항을 우선한 동체단면을 사용한다. 군용형은 객실레일과 측면화물문을 이용해 병력·화물·의무후송 모듈을 바꾼다.</p><p>C311은 복합재 주익, 개선된 여압계통과 국제운항용 항전장비를 도입했다. AE와 PW150A 선택형은 같은 형식증명 안에서 관리되며 별도의 수출명은 사용하지 않는다.</p></section>
+    <section><title>운용과 평가</title><p>민간 36기와 군용 34기가 생산되었다. C300보다 비싸고 거친 활주로 대응능력은 낮지만 객실 폭, 소음과 항속거리에서 유리해 수요가 겹치지 않았다.</p><p>C3xx 체급의 상한에 가까운 기종으로, 더 많은 좌석이 필요한 노선은 제트 협동체인 <ref href="doc:s1kF6UpYG9YnqoUnacjIRg">C400번대</ref>가 담당한다.</p></section>
+  </body>
+</document>
