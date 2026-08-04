@@ -1,0 +1,10 @@
+<document id="Nb2DV6LYa-WpJiV93pv5AQ">
+  <title>CFM56 항공엔진</title>
+  <aliases><alias>CFM56-5B</alias><alias>CFM56-7B</alias><alias>CFM56-7B22</alias></aliases>
+  <body>
+    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
+    <section><title>개요</title><p><strong>CFM56</strong>은 GE와 Safran Aircraft Engines의 합작사 CFM International이 생산한 2축 고바이패스 터보팬 계열이다. 1970년대 개발 이후 협동체 여객기의 대표 엔진으로 자리 잡았고, 단순하고 견고한 코어와 대규모 세계 정비망이 강점으로 꼽힌다.</p><p>TML은 -5B를 <ref href="doc:jz2QmNB-pxOcTmKQBXEiIA">C500</ref>·<ref href="doc:CgsbLiP9OxSrJ91u6ANUTQ">C510</ref>, -7B22를 <ref href="doc:LOt7vk2ljnW67lmfiKjPdQ">C420</ref>의 선택사양으로 통합했다. 본래 적용 기체와 다른 나셀·전자계통을 사용하므로 C 계열 통합인증은 엔진의 기존 형식증명과 별도로 진행됐다.</p></section>
+    <section><title>주요 형식</title><table><thead><tr><th>형식</th><th>추력범위</th><th>대표 적용</th><th>C 계열 적용</th></tr></thead><tbody><tr><td>CFM56-5B</td><td>약 21,600~32,000lbf</td><td>A318·A319·A320·A321</td><td>C500·C510</td></tr><tr><td>CFM56-7B</td><td>약 19,500~27,300lbf</td><td>737NG·BBJ와 군용 파생형</td><td>C420의 -7B22</td></tr></tbody></table><p>-5B는 1994년 A321에서, -7B는 1997년 737NG에서 상업운항을 시작했다. 후기형에는 고압압축기·터빈과 저배출 연소기를 개선한 Tech Insertion 및 -7BE 패키지가 적용됐다.</p></section>
+    <section><title>구조와 운용</title><p>저압계가 팬과 저압압축기·터빈을, 고압계가 고압압축기·연소기·고압터빈을 구동한다. 계열별 코어와 팬 크기가 달라 -5B와 -7B를 같은 파일런에서 서로 바꿀 수는 없지만, 대규모 운용경험과 정비절차의 표준화가 신규 제작사인 TML의 국제 진입장벽을 낮췄다.</p><p>C 계열에서는 AE·CM 엔진보다 연비가 반드시 우수해서가 아니라 리스잔존가치, 조종·정비인력과 예비엔진 조달의 확실성 때문에 선택됐다. 오래된 설계인 만큼 2020년대 신조기에서는 LEAP과 PW1000G에 비해 소음·연료효율의 한계가 뚜렷했다.</p></section>
+  </body>
+</document>

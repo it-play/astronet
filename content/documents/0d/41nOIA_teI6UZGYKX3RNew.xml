@@ -1,0 +1,10 @@
+<document id="41nOIA_teI6UZGYKX3RNew">
+  <title>IAE V2500 항공엔진</title>
+  <aliases><alias>V2500</alias><alias>V2500-A5</alias><alias>V2524-A5</alias></aliases>
+  <body>
+    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
+    <section><title>개요</title><p><strong>V2500</strong>은 International Aero Engines가 개발한 2축 고바이패스 터보팬이다. Pratt &amp; Whitney, 일본항공엔진협회, MTU 등 여러 회사가 모듈을 분담했으며 1989년 상업운항을 시작했다.</p><p>22,000~33,000lbf급 형식들로 구성돼 A319·A320·A321, MD-90과 C-390에 사용된다. TML C 계열에서는 V2500-A5가 <ref href="doc:jz2QmNB-pxOcTmKQBXEiIA">C500</ref>·<ref href="doc:CgsbLiP9OxSrJ91u6ANUTQ">C510</ref>, V2524-A5가 <ref href="doc:LOt7vk2ljnW67lmfiKjPdQ">C420</ref>의 선택사양이다.</p></section>
+    <section><title>설계</title><p>광폭 무슈라우드 팬, 10단 고압압축기, 환형 연소기, 2단 고압터빈과 다단 저압터빈을 사용하며 전권 디지털 엔진제어가 추력과 상태감시를 담당한다. 국제 공동개발 구조 덕분에 지역별 지원망이 넓지만 모듈별 책임회사와 계약이 나뉘어 대규모 개조 승인에는 시간이 걸린다.</p><table><thead><tr><th>형식</th><th>추력등급</th><th>C 계열</th></tr></thead><tbody><tr><td>V2524-A5</td><td>약 24,000lbf급</td><td>C420</td></tr><tr><td>V2500-A5 계열</td><td>약 22,000~33,000lbf</td><td>C500·C510</td></tr></tbody></table></section>
+    <section><title>C 계열 통합</title><p>개방 이전부터 확보한 기술자료만으로 통합한 것이 아니라 2023년 국제감항인증 과정에서 IAE 승인 인터페이스와 상태감시체계를 새로 적용했다. 엔진 코어는 원형을 유지하고 TML이 나셀·역추진장치·파일런과 기체 소프트웨어를 담당했다.</p><p>CFM56과 같은 성숙 엔진이어서 초기 인도위험은 낮았으나, 항공사가 이미 보유한 V2500 정비인프라가 없다면 AE·CM보다 운용비가 싸다고 보기는 어려웠다.</p></section>
+  </body>
+</document>

@@ -1,0 +1,11 @@
+<document id="x1vJe2cvuKjkFX6ZiFBs8g">
+  <title>GE9X 항공엔진</title>
+  <aliases><alias>GE9X-105B1A</alias><alias>GE9X 항공엔진</alias></aliases>
+  <body>
+    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
+    <section><title>개요</title><p><strong>GE9X</strong>는 GE Aerospace가 Boeing 777X용으로 개발한 2축 초고바이패스 터보팬이다. 인증형은 약 100,000~105,000lbf급이고 시험에서는 134,300lbf를 기록했으며 2020년 미국 형식증명을 취득했다.</p><p>TML C 계열에서는 <ref href="doc:8PHJks17Ki4ooHHbWAgfFQ">C710</ref>·<ref href="doc:7Ce3GzFqaDRB09ebUzC1Kg">C800</ref>·<ref href="doc:OChe_phVA71f6NNGcJDxEg">C900</ref>의 선택사양이다. 원래 예정된 777X 상업운항보다 앞서 TML 기체에 통합된 것은 2023년 체결된 선행 장착·시험협정과 북조선 감항당국의 별도 형식승인에 따른 것이다.</p></section>
+    <section><title>기술</title><table><thead><tr><th>요소</th><th>내용</th></tr></thead><tbody><tr><td>팬</td><td>134인치급, 16매 4세대 탄소섬유 복합재 블레이드와 복합재 케이스</td></tr><tr><td>고압압축기</td><td>압력비 약 27:1</td></tr><tr><td>전체압력비</td><td>약 60:1</td></tr><tr><td>연소기</td><td>TAPS III 저배출 연소기</td></tr><tr><td>고온부·생산</td><td>세라믹기지복합재와 적층제조 부품</td></tr></tbody></table><p>시험추력 134,300lbf는 인증된 상시 이륙정격이 아니다. C 계열 성능계산에는 각 기체의 승인 정격과 나셀·추력관리 제한값을 사용한다.</p></section>
+    <section><title>선행 통합</title><p>TML은 GE의 비행시험·내구시험 자료를 바탕으로 C710 시험기 한 대를 엔진 장착 검증기에 배정했다. 777X와 다른 주익·흡입유동 때문에 TML과 GE가 공동으로 흡입왜곡, 팬 블레이드 비산격납과 파일런 하중을 다시 검증했고, 초기 운항은 지정 정비기지와 제한된 항로에서만 허가됐다.</p><p>이 승인으로 GE9X 자체의 세계 상업운항 개시가 앞당겨진 것은 아니다. Boeing 기체의 인증·인도 일정과 TML 기체의 엔진 장착승인은 서로 별개의 절차다.</p></section>
+    <section><title>기종별 제한</title><p>C710은 XWB-97과 경쟁하는 정상 선택사양, C800은 AE2023보다 낮은 최대이륙중량을 적용한 선택사양이다. C900에서는 AE2025만 완전 설계중량을 제공하며 GE9X형은 추력과 열관리 한계 때문에 고밀도 중거리 운항조건으로 제한된다.</p><p>세계 정비망과 검증된 설계자료는 장점이지만 2026년에도 부품공급이 본격 양산 단계에 완전히 올라오지 않아 예비엔진 확보와 장기 가동률이 가장 큰 위험으로 남는다.</p></section>
+  </body>
+</document>

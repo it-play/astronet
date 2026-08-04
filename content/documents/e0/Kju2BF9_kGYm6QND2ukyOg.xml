@@ -1,0 +1,11 @@
+<document id="Kju2BF9_kGYm6QND2ukyOg">
+  <title>Rolls-Royce Trent 항공엔진</title>
+  <aliases><alias>트렌트 엔진</alias><alias>Trent 500</alias><alias>Trent 7000</alias><alias>Trent XWB-97</alias></aliases>
+  <body>
+    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
+    <section><title>개요</title><p><strong>Trent</strong>는 Rolls-Royce의 3축 고바이패스 터보팬 계열이다. 저·중·고압계가 서로 다른 최적 회전수로 작동하는 구조를 공통 기반으로 삼되 기체별 팬·코어·추력정격을 달리한다.</p><p>TML C 계열에는 Trent 500이 <ref href="doc:5TQ9Ao0DcVJwaZzmlsXKVA">C700</ref>, Trent 7000이 <ref href="doc:fPubrbQlg-rBmWUBjbScWQ">C620</ref>, Trent XWB-97이 <ref href="doc:8PHJks17Ki4ooHHbWAgfFQ">C710</ref>의 선택사양으로 통합됐다. 세 엔진은 같은 Trent 명칭을 쓰지만 서로 교환할 수 있는 파생형은 아니다.</p></section>
+    <section><title>주요 형식</title><table><thead><tr><th>형식</th><th>추력</th><th>본래 적용</th><th>C 계열</th></tr></thead><tbody><tr><td>Trent 500</td><td>53,000·56,000lbf</td><td>A340-500·-600</td><td>C700 4발형</td></tr><tr><td>Trent 7000</td><td>68,000~72,000lbf</td><td>A330-800·-900</td><td>C620 쌍발형</td></tr><tr><td>Trent XWB-97</td><td>약 97,000lbf</td><td>A350-1000·A350F</td><td>C710 쌍발형</td></tr></tbody></table></section>
+    <section><title>설계</title><p>Trent 500은 확산접합·초소성성형 광폭 팬과 단결정 고압터빈 블레이드를 사용한다. Trent 7000은 Trent 1000 TEN 계열 구조에 Trent XWB 기술을 결합하고 블리스크 코어와 중공 티타늄 팬 블레이드를 사용한다. XWB-97은 A350-1000용 고추력 코어와 고온부 재료를 갖춘 계열 최고추력형이다.</p><p>3축 구조는 각 압축기·터빈의 회전수를 최적화하고 엔진 길이를 줄이는 데 유리하지만 모듈과 베어링계통이 복잡하다. 정비사는 같은 Trent 계열이라도 각 형식별 자격과 공구를 갖춰야 한다.</p></section>
+    <section><title>TML 통합</title><p>C700은 본래 4발기용 Trent 500을 사용해 통합위험을 낮췄다. C620의 Trent 7000과 C710의 XWB-97은 각각 중형·대형 쌍발기 요구추력에 맞지만, 본래 기체와 다른 파일런·나셀·전력추출조건 때문에 Rolls-Royce와 공동으로 별도 장착승인을 받았다.</p><p>엔진이 달라도 기체번호는 유지된다. 다만 외산엔진형의 최대이륙중량·항속거리와 정비보증은 AE 장착형과 별도 표로 관리되며, TML은 Trent의 핵심 설계나 수명제한부품을 독자 변경할 권한이 없다.</p></section>
+  </body>
+</document>

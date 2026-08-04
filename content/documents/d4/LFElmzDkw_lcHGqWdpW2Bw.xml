@@ -1,0 +1,11 @@
+<document id="LFElmzDkw_lcHGqWdpW2Bw">
+  <title>Klimov TV7-117 항공엔진</title>
+  <aliases><alias>TV7-117</alias><alias>TV7-117S</alias><alias>TV7-117SM</alias><alias>TV7-117ST</alias></aliases>
+  <body>
+    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
+    <section><title>개요</title><p><strong>TV7-117</strong>은 UEC-Klimov가 개발한 터보프롭·터보샤프트 공통 코어 계열이다. 항공기용 S·SM·ST와 헬리콥터용 V 계열로 나뉘며, Il-114·Il-112V·Mi-38 등에 맞춰 출력과 감속기 구성이 달라진다.</p><p>북조선항공기공업은 TV7-117S와 SM을 <ref href="doc:CGk_VtV_VAQ6os0usxCO6Q">C200</ref>과 <ref href="doc:AhsiharfLVfbfLxcTVE_4w">C300 계열</ref>의 초기 동력계로 채택했다. 높은 출력과 당시 확보하기 쉬웠던 러시아 기술지원은 장점이었지만 수입부품 공급이 끊기면 기체 전체 가동률이 떨어지는 구조였다.</p></section>
+    <section><title>형식</title><table><thead><tr><th>형식</th><th>용도·출력</th><th>적용</th></tr></thead><tbody><tr><td>TV7-117S</td><td>초기 항공기용 터보프롭</td><td>Il-114, C200·C300</td></tr><tr><td>TV7-117SM</td><td>제어·고온성능을 개선한 파생형</td><td>C301~C304</td></tr><tr><td>TV7-117ST</td><td>전자식 전권제어, 이륙 약 3,000shp·비상 약 3,600shp</td><td>Il-112V 계열</td></tr><tr><td>TV7-117ST-01</td><td>ST의 민항기용 인증형</td><td>Il-114-300</td></tr><tr><td>TV7-117V</td><td>헬리콥터용 터보샤프트</td><td>Mi-38</td></tr></tbody></table><p>C 계열에는 ST가 아니라 S·SM 계열이 사용됐다. 출력이 큰 후기 ST 제원을 초기 C200이나 C300의 성능으로 소급하는 것은 잘못이다.</p></section>
+    <section><title>C 계열 운용</title><p>C200은 단발 장착을 위해 흡기와 감속기 제어를 훈련기 운용에 맞췄고, C300은 쌍발 수송기용 화재격리와 비대칭추력 제어를 추가했다. C301~C304의 TV7-117SM 장착기는 같은 계열 안에서 단거리 이착륙, 민수객실과 임무모듈에 맞춰 프로펠러와 소프트웨어가 달랐다.</p><p>2013년 C200의 전량 퇴역에는 일부 수입부품 공급문제가 직접 영향을 줬다. C300 계열은 재고와 분해부품으로 더 오래 운용했으나 2014년 <ref href="doc:mnWEnkHuFq5FiXU3Z-emuA">AE2014E</ref>가 등장한 뒤 신조기 중심이 국산엔진으로 이동했다.</p></section>
+    <section><title>평가</title><p>공통 코어와 높은 출력은 북조선의 훈련기·수송기 개발을 빠르게 시작하게 했지만, 한 국가의 공급망에 대한 의존이라는 한계도 드러냈다. TV7-117 운용자료는 이후 CM86T와 AE2014E의 고고도 재점화, 감속기와 전자제어 요구조건을 정하는 참고자료가 됐다.</p></section>
+  </body>
+</document>

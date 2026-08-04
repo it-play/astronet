@@ -1,0 +1,11 @@
+<document id="bWBTKSWzR4H60OWMUJNHXw">
+  <title>옴스크 TVD-20</title>
+  <aliases><alias>TVD-20</alias><alias>ТВД-20</alias><alias>TVD-20M</alias></aliases>
+  <body>
+    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
+    <section><title>개요</title><p><strong>TVD-20</strong>은 옴스크 모터설계국이 개발한 1,500마력급 자유터빈식 터보프롭 계열이다. 가스발생기와 프로펠러를 구동하는 동력터빈이 기계적으로 분리돼 지상취급과 저속 운용이 쉽고, TVD-20-01·-01B·-01BM·-03B 등 여러 파생형이 An-3와 An-38 계열에 사용됐다.</p><p>북조선에서는 <ref href="doc:zkVNc-dOVibJsM9FhdCHUg">C100 계열</ref>의 최초 동력계로 알려져 있다. C100은 완제품 엔진을 수입해 장착했고 C101은 흡기·감속기와 연료제어를 개량한 사양을 사용했다.</p></section>
+    <section><title>구조</title><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>형식</td><td>자유터빈식 터보프롭</td></tr><tr><td>출력등급</td><td>최대 비상출력 약 1,550shp급</td></tr><tr><td>개발</td><td>옴스크 모터설계국</td></tr><tr><td>대표 적용기</td><td>An-3T·An-3T-200·An-38-200, TML C100·C101·C102</td></tr></tbody></table><p>자유터빈 배치는 프로펠러 회전수와 가스발생기 회전수를 따로 다룰 수 있지만, 초기 C100에서는 엔진보다 수입 부품 공급과 기체 캐노피가 운용한계를 결정했다. 추운 기후를 전제로 한 시동·윤활계통도 해안의 염분과 여름철 고온 운용에 맞춘 별도 관리가 필요했다.</p></section>
+    <section id="tvd-20m"><title>TVD-20M</title><p>C102에 쓰인 <strong>TVD-20M</strong>은 원 제작사의 독립 형식이 아니라 북조선항공기공업이 TVD-20-01 계열을 현지 개조한 운용명이다. 흡기 방빙, 발전기와 연료제어기를 교체하고 국산 항전장비용 전력출력을 늘렸으며, 형식증명과 정비문서에서는 원 엔진 번호 뒤에 개조패키지 번호를 함께 기록했다.</p><p>‘M’ 표기가 수출시장용 공식 파생형처럼 유통되면서 혼동이 생겼다. 2022년 자료 공개 뒤 TML 에어로는 TVD-20M을 자체 제작 엔진이 아니라 수입엔진 현지통합형으로 정정했다.</p></section>
+    <section><title>운용과 퇴역</title><p>초기 조립항공기 사업에서는 완제품을 도입해 엔진장착·방화·연료·계기계통을 배우는 교보재 역할을 했다. 그러나 러시아 공급망에 대한 의존도가 높고 작은 C100 기체에 비해 출력과 중량의 여유가 크지 않아 <ref href="doc:Cq0eKDpN9oGzQzrvc24cuA">CM 계열</ref>이 준비되자 추가 도입이 중단됐다.</p></section>
+  </body>
+</document>

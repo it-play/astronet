@@ -1,0 +1,10 @@
+<document id="icjQpx5cR0G0WJopWreqJw">
+  <title>GE CF34 항공엔진</title>
+  <aliases><alias>CF34</alias><alias>CF34-8E</alias></aliases>
+  <body>
+    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
+    <section><title>개요</title><p><strong>CF34</strong>는 GE Aerospace가 생산한 2축 고바이패스 터보팬 계열이다. 군용 TF34를 바탕으로 민항용 신뢰성과 정비주기를 확보해 지역제트 시장에서 널리 쓰였으며, 후기 -8과 -10 계열은 신형 코어와 전권 디지털 엔진제어를 적용했다.</p><p>TML C 계열에서는 2023년부터 <ref href="doc:2re9Nd8Vx_WYJmAY1axGbQ">C410</ref>에 CF34-8E를 선택할 수 있다. AE2006F 장착형을 대체하는 별도 수출기가 아니라 해외 리스사와 정비망을 중시한 고객용 동력계 선택사양이다.</p></section>
+    <section><title>CF34-8E</title><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>형식</td><td>2축 고바이패스 터보팬</td></tr><tr><td>추력</td><td>약 14,000~14,510lbf급</td></tr><tr><td>제어</td><td>전권 디지털 엔진제어</td></tr><tr><td>대표 적용</td><td>Embraer 170·175, TML C410</td></tr></tbody></table><p>-8E는 CF34-8C와 터보기계 전체와 부품 대부분을 공유하도록 설계됐다. 계열 간 공통성은 부품비와 교육비를 낮추지만 C410의 AE 엔진과는 나셀·추력관리·정비체계가 호환되지 않는다.</p></section>
+    <section><title>C410 통합</title><p>C410용 형식은 엔진의 핵심부를 개조하지 않고 파일런, 흡입구, 역추진장치와 기체-엔진 데이터 인터페이스를 새로 인증했다. 더 무거운 엔진과 나셀을 반영해 무게중심 한계와 단거리 이륙성능이 AE2006F형과 다르다.</p><p>국제 공항에서 정비지원이 쉽다는 장점이 있었지만 이미 생산이 성숙한 엔진을 신형 기체에 뒤늦게 통합한 탓에 장기 공급계약이 제한적이라는 지적도 받았다.</p></section>
+  </body>
+</document>

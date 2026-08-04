@@ -55,10 +55,4 @@
   <section id="c900" label="900번대" group="tml-c-series">
     <document-links><document target="OChe_phVA71f6NNGcJDxEg">C900</document></document-links>
   </section>
-  <section id="engines" label="관련 엔진" group="tml-c-engines">
-    <document-links>
-      <document target="mnWEnkHuFq5FiXU3Z-emuA">TML AE 항공엔진 계열</document>
-      <document target="Cq0eKDpN9oGzQzrvc24cuA">CM 항공엔진 계열</document>
-    </document-links>
-  </section>
 </navigation-board>
