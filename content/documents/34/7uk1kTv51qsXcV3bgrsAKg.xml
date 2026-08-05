@@ -2,7 +2,6 @@
   <title>Pratt &amp; Whitney PW1000G 항공엔진</title>
   <aliases><alias>PW1000G</alias><alias>GTF</alias><alias>PW1100G-JM</alias><alias>PW1127G-JM</alias><alias>PW1133G-JM</alias></aliases>
   <body>
-    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
     <section><title>개요</title><p><strong>PW1000G</strong>는 Pratt &amp; Whitney의 기어드 터보팬 계열이다. 팬과 저압압축기·터빈 사이에 감속기어를 두어 큰 팬은 느리게, 압축기와 터빈은 빠르게 돌릴 수 있으며 계열 전체가 약 14,000~33,000lbf급 지역제트와 협동체 시장을 포괄한다.</p><p>PW1100G-JM은 A320neo 계열용 형식으로 약 24,000~33,000lbf, 81인치 팬과 약 12:1의 바이패스비를 갖는다. TML은 이 계열을 C430·C440·C520·C530·C610의 외산 선택사양으로 채택했다.</p></section>
     <section><title>감속기어</title><p>유성기어가 팬과 저압축의 회전수를 분리하면 팬 끝단속도를 낮춰 소음을 줄이는 동시에 저압터빈을 높은 효율점에서 작동시킬 수 있다. 그 결과 같은 추력에서 저압터빈 단수와 중량을 줄일 수 있지만 고출력 기어박스의 윤활·열관리와 내구성이 새로운 핵심 정비항목이 된다.</p><table><thead><tr><th>형식</th><th>대표 정격</th><th>C 계열</th></tr></thead><tbody><tr><td>PW1127G-JM</td><td>약 27,000lbf급</td><td>C430</td></tr><tr><td>PW1133G-JM</td><td>약 33,000lbf급</td><td>C440</td></tr><tr><td>PW1100G-JM 계열</td><td>약 24,000~33,000lbf</td><td>C520·C530·C610</td></tr></tbody></table></section>
     <section><title>C 계열 통합</title><p>TML은 엔진과 기체 사이의 전력·유압 추출, 역추진장치와 추력관리 소프트웨어를 재설계했다. PW1000G의 큰 팬 직경 때문에 일부 기체는 파일런 길이와 착륙장치 자세를 조정했으며, AE 장착형과 동일한 공표성능을 무조건 보장하지 않는다.</p><p>초기 해외고객에게는 익숙한 정비계약과 금융지원이 장점이었다. 반면 기어박스와 분말금속계 부품에 대한 국제 감항지시가 발생하면 TML이 독자적으로 해결할 수 없어 원 제작사의 검사·개조일정을 따라야 한다는 공급망 위험도 있다.</p></section>

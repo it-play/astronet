@@ -2,7 +2,6 @@
   <title>Pratt &amp; Whitney PW2000 항공엔진</title>
   <aliases><alias>PW2000</alias><alias>F117 항공엔진</alias></aliases>
   <body>
-    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
     <section><title>개요</title><p><strong>PW2000</strong>은 Pratt &amp; Whitney가 개발한 37,000~43,000lbf급 2축 터보팬 계열이다. 1984년 상업운항을 시작했고 Boeing 757 전 계열과 F117이라는 군용 형식명으로 C-17 수송기에 사용된다.</p><p><ref href="doc:NcHHm2Dhy4HanDeT_S7pgg">C600 계열</ref>에서는 CM166F·AE2013·PS-90A1과 함께 선택할 수 있다. 대규모 기존 운용망과 검증된 장거리 신뢰성을 활용하는 대신 신세대 엔진보다 연료소모와 소음에서 불리한 과도기 선택안이다.</p></section>
     <section><title>설계</title><p>2축 구조와 전권 디지털 엔진제어를 사용하며 상용 항공엔진에서 FADEC을 본격적으로 확산시킨 계열로 평가된다. 1990년대의 RTC 패키지는 고온부 내구성과 익상시간을 개선해 장기 운용성을 높였다.</p><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>추력</td><td>약 37,000~43,000lbf</td></tr><tr><td>상업운항</td><td>1984년 시작</td></tr><tr><td>대표 적용</td><td>Boeing 757, C-17의 F117, TML C600</td></tr><tr><td>특징</td><td>FADEC, 장거리 쌍발 운항 경험과 성숙한 정비체계</td></tr></tbody></table></section>
     <section><title>C600 통합</title><p>C600용 나셀은 757용 장착부를 그대로 복제하지 않고 TML 주익의 하중경로와 지상고에 맞춰 설계했다. 엔진제어 데이터는 기체 통합관리계통에 변환기를 거쳐 연결되며 핵심 FADEC 소프트웨어의 승인권은 원 제작사에 남는다.</p><p>중고엔진을 값싸게 확보할 수 있다는 장점 때문에 초기 국제운항사들이 관심을 보였으나 장기간 신조기 공급을 보장하기 어렵고 탄소배출·소음 규제가 강화되는 노선에서는 경쟁력이 낮다.</p></section>

@@ -2,7 +2,6 @@
   <title>CFM LEAP 항공엔진</title>
   <aliases><alias>LEAP</alias><alias>LEAP-1A</alias><alias>LEAP-1A26</alias><alias>LEAP-1A32</alias></aliases>
   <body>
-    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
     <section><title>개요</title><p><strong>LEAP</strong>은 CFM International이 CFM56의 후속으로 개발한 2축 고바이패스 터보팬 계열이다. LEAP-1A는 A320neo 계열용으로 최대 약 33,000lbf의 추력을 내며 2015년 첫 비행, 2016년 생산형 인도를 시작했다.</p><p>TML은 LEAP-1A를 <ref href="doc:cTUhhMhUVnhNDiYMEF2zvw">C430</ref>·<ref href="doc:UE4paJla-C9EU_RMz8SHWA">C440</ref>·<ref href="doc:9tNQSOXF-ZUgigeyv0LtSA">C520</ref>·<ref href="doc:J43yZavD_-6ahlZEIH8VlA">C530</ref>·<ref href="doc:N4RiB_1jCrYaCg0nqsHQeQ">C610</ref>의 외산 선택사양으로 제공한다. 세부 추력형은 기체중량과 항속형식에 맞춰 인증부록에서 정한다.</p></section>
     <section><title>기술</title><table><thead><tr><th>요소</th><th>내용</th></tr></thead><tbody><tr><td>팬</td><td>3차원 직조 탄소섬유 RTM 팬 블레이드와 복합재 팬 케이스</td></tr><tr><td>연소기</td><td>TAPS 계열 저배출 희박연소기</td></tr><tr><td>고온부</td><td>고압터빈 세라믹기지복합재 슈라우드</td></tr><tr><td>저압터빈</td><td>티타늄알루미나이드 블레이드</td></tr><tr><td>생산</td><td>적층제조 연료노즐</td></tr></tbody></table><p>복합재와 적층제조를 함께 사용하지만 <ref href="doc:LvDVK6lS91A2oOvm72vblw">LatticeCore</ref>와는 독립된 CFM의 설계·생산체계다. 비슷한 재료명이 등장한다는 이유로 두 엔진의 부품이나 공정이 호환되지는 않는다.</p></section>
     <section><title>C 계열 적용</title><p>C430은 LEAP-1A26, C440은 -1A32를 대표형으로 사용한다. C520·C530·C610은 고객의 운항중량에 따라 동일 계열의 정격을 선택하며, 엔진만 달라졌다는 이유로 기체 세부번호를 나누지 않는다.</p><p>세계 정비망과 높은 잔존가치는 장점이지만 AE 장착형보다 나셀 직경·중량이 커지는 일부 C 계열에서는 주익하중과 지상고를 다시 계산해야 했다. TML은 원 제작사의 코어를 손대지 않고 파일런과 흡입구, 전자식 인터페이스만 기체에 맞춰 인증했다.</p></section>

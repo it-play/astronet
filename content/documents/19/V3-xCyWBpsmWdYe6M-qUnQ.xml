@@ -2,7 +2,6 @@
   <title>Pratt &amp; Whitney Canada PT6A 항공엔진</title>
   <aliases><alias>PT6A</alias><alias>PT6A-25C</alias><alias>PT6A-34</alias><alias>PT6A-42</alias><alias>PT6A-67D</alias></aliases>
   <body>
-    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
     <section><title>개요</title><p><strong>PT6A</strong>는 Pratt &amp; Whitney Canada가 1960년대부터 생산한 2축 자유터빈식 터보프롭 계열이다. 약 500~1,900shp 범위에 70종 이상의 형식이 있으며 경비행기, 비즈니스기, 농업기, 수송기와 수륙양용기 등 130종이 넘는 항공기에 적용됐다.</p><p>TML C 계열에서는 소형기용 외산 표준 선택사양으로 쓰인다. <ref href="doc:zkVNc-dOVibJsM9FhdCHUg">C104</ref>의 PT6A-25C, <ref href="doc:SOD-gzgDO-GSAJY5E9d9Rg">C110</ref>의 -34, <ref href="doc:7_2RJHvZOg_sc_vInpQLIA">C120</ref>의 -42·-67D와 <ref href="doc:V4qJqeklqEMtllD4iqVkig">C211</ref>의 -67D가 대표적이다.</p></section>
     <section><title>구조와 정비성</title><p>다단 압축기와 역류식 연소기, 압축기를 돌리는 가스발생기 터빈, 프로펠러를 돌리는 독립 동력터빈과 유성감속기로 구성된다. 역류식 배치는 흡입구와 출력축을 기체 앞쪽에 모으면서 고온부를 뒤쪽에서 점검할 수 있게 해 다양한 기체에 장착하기 쉽다.</p><p>가스발생기와 프로펠러축이 분리돼 시동·지상운전이 간단하고 모듈별 정비가 가능하다. 세계 각지의 정비망과 중고부품 시장은 성능 자체만큼 큰 경쟁력이며, 국제 운항을 시작한 C 계열 고객이 PT6A를 요구한 가장 큰 이유이기도 하다.</p></section>
     <section><title>C 계열 선택사양</title><table><thead><tr><th>형식</th><th>C 계열 적용</th><th>성격</th></tr></thead><tbody><tr><td>PT6A-25C</td><td>C104 후기 재엔진형</td><td>훈련·경비용 저출력형</td></tr><tr><td>PT6A-34</td><td>C110</td><td>4인승 범용기의 운용비·정비망 중시</td></tr><tr><td>PT6A-42</td><td>C120</td><td>9인승 단거리 화객기용</td></tr><tr><td>PT6A-67D</td><td>C121·C211</td><td>고고도·장거리형의 출력여유 확보</td></tr></tbody></table><p>엔진이 달라도 기체의 형식번호는 바뀌지 않는다. CM 장착형과 PT6A 장착형은 엔진마운트, 계기·제어와 정비교범이 다르지만 객실·주익·감항형식은 공유한다.</p></section>

@@ -2,7 +2,6 @@
   <title>Engine Alliance GP7200 항공엔진</title>
   <aliases><alias>GP7200</alias><alias>GP7270</alias><alias>GP7272</alias></aliases>
   <body>
-    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
     <section><title>개요</title><p><strong>GP7200</strong>은 GE와 Pratt &amp; Whitney의 50:50 합작사 Engine Alliance가 A380용으로 개발한 2축 고바이패스 터보팬이다. GE90 계열 코어기술과 PW4000 계열 저압계 경험을 결합했으며 2005년 인증, 2008년 상업운항을 시작했다.</p><p>GP7270·GP7270E는 70,000lbf, GP7272·GP7272E는 72,000lbf 정격이다. <ref href="doc:5TQ9Ao0DcVJwaZzmlsXKVA">C700</ref>에는 AE2017·Trent 500과 함께 4기 장착 선택사양으로 제공된다.</p></section>
     <section><title>구조</title><table><thead><tr><th>요소</th><th>구성</th></tr></thead><tbody><tr><td>팬</td><td>중공 티타늄 광폭 팬</td></tr><tr><td>압축기</td><td>5단 저압압축기·9단 고압압축기</td></tr><tr><td>연소기</td><td>단환형 저배출 연소기</td></tr><tr><td>터빈</td><td>2단 고압터빈·6단 저압터빈</td></tr><tr><td>제어</td><td>전권 디지털 엔진제어</td></tr></tbody></table><p>대형 팬과 저압계는 초대형기의 낮은 순항연료소모에 맞춰져 있다. 4발 C700에서는 엔진 하나가 정지했을 때의 요·구조하중과 화재격리, 전력·유압 분배를 별도로 검증했다.</p></section>
     <section><title>C700 통합</title><p>A380용 나셀과 파일런을 그대로 사용할 수 없어 TML이 주익 구조에 맞는 장착부와 역추진장치를 설계하고 Engine Alliance가 하중·흡입왜곡 조건을 승인했다. 기체가 A380보다 작아 정격을 제한한 운용구간이 많지만 장거리·고온 이륙에서는 원 추력여유를 활용한다.</p><p>대형 4발기 시장이 축소되면서 예비엔진과 장기부품 공급이 주요 위험으로 꼽힌다. 반면 GP7200 운용사와 정비계약을 공유하는 고객에게는 검증된 초대형기 동력계라는 장점이 있다.</p></section>

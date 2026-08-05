@@ -2,7 +2,6 @@
   <title>GE GEnx 항공엔진</title>
   <aliases><alias>GEnx</alias><alias>GEnx-1B</alias></aliases>
   <body>
-    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
     <section><title>개요</title><p><strong>GEnx</strong>는 GE Aerospace가 GE90의 기술을 바탕으로 개발한 2축 고바이패스 터보팬 계열이다. 계열의 상업운항은 GEnx-2B가 2011년에 먼저 시작했고, Boeing 787-8·-9·-10용 GEnx-1B는 약 69,800~76,100lbf의 추력으로 2012년 상업운항을 시작했다.</p><p><ref href="doc:fPubrbQlg-rBmWUBjbScWQ">C620</ref>에서는 AE2019·Trent 7000과 함께 GEnx-1B를 선택할 수 있다. TML의 중형 광동체에 맞춘 감추력 정격과 새 나셀을 사용하지만 엔진 자체의 형식명은 유지한다.</p></section>
     <section><title>기술</title><table><thead><tr><th>요소</th><th>내용</th></tr></thead><tbody><tr><td>팬</td><td>18매 탄소섬유 복합재 팬 블레이드와 복합재 팬 케이스</td></tr><tr><td>압축기</td><td>고압비 코어와 2축 구조</td></tr><tr><td>연소기</td><td>TAPS 희박연소기</td></tr><tr><td>저압터빈</td><td>티타늄알루미나이드 블레이드</td></tr><tr><td>제어</td><td>FADEC III 계열 전자제어</td></tr></tbody></table><p>복합재 팬 케이스는 금속 케이스보다 중량을 줄이며 팬 블레이드 파손 시 에너지를 견디는 격납구조 역할도 한다. C620용 나셀과 파일런은 이 하중조건을 TML 주익에 전달하도록 별도 인증됐다.</p></section>
     <section><title>C620 운용</title><p>GEnx-1B 장착형은 전 세계 787 정비망과 예비엔진 시장을 일부 활용할 수 있어 장거리 국제노선 진입에 유리했다. 다만 C620은 787이 아니므로 나셀·역추진장치와 기체부품의 정비공통성까지 보장되지는 않는다.</p><p>AE2019형보다 엔진과 장착구조가 무거워 최대이륙중량과 항속거리의 인증값이 다르지만 별도 수출형 번호로 구분하지 않는다. 고객은 성능뿐 아니라 리스·정비계약과 보유기단의 공통성을 함께 비교한다.</p></section>

@@ -2,7 +2,6 @@
   <title>Aviadvigatel PS-90 항공엔진</title>
   <aliases><alias>PS-90</alias><alias>PS-90A</alias><alias>PS-90A1</alias></aliases>
   <body>
-    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
     <section><title>개요</title><p><strong>PS-90</strong>은 UEC-Aviadvigatel이 개발하고 Perm Motors가 생산하는 러시아의 고바이패스 터보팬 계열이다. 기본 PS-90A는 1992년 인증됐으며 Il-96·Tu-204·Tu-214와 수송기 계열에 사용됐다.</p><p>고추력 파생형 PS-90A1은 최대 약 17,400kgf의 추력을 내며 Il-96-400T·-400M용으로 개발됐다. TML은 <ref href="doc:NcHHm2Dhy4HanDeT_S7pgg">C600</ref>에 이 형식을 선택사양으로 통합했다.</p></section>
     <section><title>구조와 형식</title><p>2축 고바이패스 구조와 전자식 제어를 사용한다. PS-90A1은 더 큰 기체의 이륙중량을 감당하도록 팬·고온부와 추력정격을 높였으며 기본 PS-90A와 정비공통성을 유지하면서도 핵심 고온부품과 운용한계가 다르다.</p><table><thead><tr><th>형식</th><th>성격</th><th>대표 적용</th></tr></thead><tbody><tr><td>PS-90A</td><td>기본형</td><td>Il-96·Tu-204·Tu-214</td></tr><tr><td>PS-90A1</td><td>최대 약 17,400kgf 고추력형</td><td>Il-96-400 계열, TML C600</td></tr></tbody></table></section>
     <section><title>C600 통합</title><p>러시아계 항공기를 운용하던 고객의 장비·인력과 결합하기 쉬워 서방제 엔진과 다른 시장을 겨냥했다. TML은 나셀·역추진장치와 기체 데이터 변환을 담당하고 핵심 엔진은 러시아 형식승인을 유지했다.</p><p>CM166F·AE2013보다 해외정비 거점이 제한되고 국제제재나 부품수출통제에 영향을 받기 쉽다는 단점이 있다. 반대로 러시아·중앙아시아의 추운 기후와 비포장 공항 운용경험은 해당 지역 고객에게 장점으로 평가됐다.</p></section>

@@ -2,7 +2,6 @@
   <title>Pratt &amp; Whitney PW100·PW150 항공엔진</title>
   <aliases><alias>PW100</alias><alias>PW127</alias><alias>PW127F</alias><alias>PW127M</alias><alias>PW127XT-M</alias><alias>PW150A</alias></aliases>
   <body>
-    <include-board ref="anly1IvwKslmVNCciTdzYA"/>
     <section><title>개요</title><p><strong>PW100·PW150</strong>은 Pratt &amp; Whitney Canada가 생산하는 지역항공기용 3축 터보프롭 계열이다. 고·저압 압축기축과 프로펠러 감속기를 구동하는 독립 동력터빈축을 사용하며 계열 전체는 약 1,800~5,000shp 범위를 포괄한다.</p><p>1984년 Dash 8-100의 상업운항으로 자리 잡았고 PW127은 ATR 42·72, PW150A는 Dash 8-400의 대표 동력계가 됐다. TML은 검증된 프로펠러·정비 생태계를 활용하기 위해 <ref href="doc:AhsiharfLVfbfLxcTVE_4w">C300 계열</ref>과 <ref href="doc:Kc456bSmziNe4vXV6fbGQQ">C310 계열</ref>에 선택사양으로 통합했다.</p></section>
     <section><title>구조</title><p>PW118~PW127은 원심압축기를 중심으로 한 가스발생기와 역류식 연소기, 자유 동력터빈과 감속기를 사용한다. 더 큰 PW150은 약 5,000shp급 출력을 위해 압축기와 전자제어를 확대했으며 전권 디지털 엔진제어로 엔진·프로펠러를 함께 관리한다.</p><table><thead><tr><th>계열</th><th>출력등급</th><th>대표 적용</th></tr></thead><tbody><tr><td>PW127F·M</td><td>약 2,750shp급</td><td>ATR 계열, C302·C304~C306</td></tr><tr><td>PW127XT-M</td><td>기계출력 2,750shp·열역학 출력 3,360eshp</td><td>ATR 42·72, C307</td></tr><tr><td>PW150A</td><td>약 5,000shp급</td><td>Dash 8-400, C310·C311</td></tr></tbody></table></section>
     <section><title>PW127XT-M</title><p>PW127XT-M은 TML의 임의 운용명이 아니라 2021년 공개되고 2022년 캐나다 형식인증을 받은 정식 형식이다. PW127M보다 연료소모를 약 3% 줄이고 정비비 20% 절감과 익상시간 40% 연장을 목표로 압축기·터빈·윤활계통을 개량했다.</p><p>C307은 국제감항인증을 위해 PW127XT-M을 AE2014E-2와 함께 제공했다. 신형 엔진은 전자제어와 프로펠러 인터페이스가 달라 C306의 PW127M 나셀에 단순 교환할 수 없으며 개조키트와 별도 비행시험이 필요하다.</p></section>
